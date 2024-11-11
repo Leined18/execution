@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
+#    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/11 13:41:48 by danpalac         ###   ########.fr        #
+#    Updated: 2024/11/11 15:00:22 by mvidal-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ AR			:= ar rcs
 LIB			:= ranlib
 MKDIR 		:= mkdir -p
 IFLAGS		:= -I$(INC) -I$(BUILTINS_DIR) -I$(CMD_DIR) -I$(ENV_DIR) -I$(INC_LIBFT)
-LFLAGS		:= -L$(LIBFT_DIR) -L .
+LFLAGS		:= -L$(LIBFT_DIR) -L.
 
 #==========SOURCES============================================================#
 
@@ -109,23 +109,28 @@ $(OBJ_DIR)%.o: %.c Makefile
 	@$(MKDIR) $(dir $@)	
 	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) -MP -MMD -c $< -o $@
 
-$(NAME): $(OBJS)
+$(NAME): $(LIBFT) $(OBJS)
 	@$(AR) $(NAME) $(OBJS)
 	@$(LIB) $(NAME)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(NAME)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
 
 $(EXE): $(NAME)
-	@$(CC) $(CFLAGS) $(IFLAGS) $(LFLAGS) -o $(EXE) main.c $(NAME)
+	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -lft -o $(EXE)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(EXE)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
 
+$(LIBFT):
+	@make -sC $(LIBFT_DIR)
+	
 clean:
 	@$(RM) -rf $(OBJ_DIR) $(DEPS)
+	@make clean -sC $(LIBFT_DIR)
 	@echo "$(CYAN)[$(NAME)]:\tobject files $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 fclean: clean
 	@$(RM) -rf $(NAME) $(EXE)
+	@make fclean -sC $(LIBFT_DIR)
 	@echo "$(CYAN)[$(NAME)]:\tEXE. files $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 re: fclean all

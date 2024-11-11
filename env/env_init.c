@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 16:49:47 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/08 23:40:26 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/11/11 14:19:05 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // Finds the line that starts with "PATH=" in env, and, if exists
 // creates and array splitting the line with ":" and returns it.
-char	**split_path_env(char *env[], t_ref **ref)
+char	**split_path_env(char *env[])
 {
 	int		i;
 	char	*path;
@@ -36,32 +36,45 @@ char	**split_path_env(char *env[], t_ref **ref)
 		path_array = ft_split(path, ':');
 		i = 0;
 	}
-	ft_refadd_front(ref, ft_refnew((void **)&(path_array), "path_env",
-			STRING_ARRAY));
 	return (path_array);
 }
 
 // Genera una copia del entorno en una variable de tipo t_env (mirar minishell.h)
-int	copy_envp(t_env **environ, char **envp, t_ref **ref)
+int	copy_envp(t_env **environ, char **envp, t_list **list)
 {
-	int	counter;
+	int		counter;
+	t_list	*node_env;
+	char	*node_content;
 
+	//(void)list;
 	counter = 0;
-	(*environ) = ft_calloc_ref(1, sizeof(t_env), ref, "environ");
+	(*environ) = malloc(sizeof(t_env));
 	if (!(*environ))
 		return (0);
 	while (envp[counter])
 		counter++;
 	(*environ)->num_env = counter;
-	(*environ)->env = ft_calloc_ref((*environ)->num_env + 1, sizeof(char *),
-			ref, "env");
-	if (!(*environ)->env)
+	(*environ)->lst_env = NULL;
+	counter = 0;
+	while (counter < (*environ)->num_env)
 	{
-		free((*environ));
-		return (0);
+		node_content = ft_strdup(envp[counter]);
+		if (!node_content)
+			return (0);
+		ft_hold_mem(1, list, &node_content);
+		node_env = ft_lstnew((void **)&node_content); /////
+		if (!node_env)
+			return (0);
+		ft_hold_mem(1, list, &node_env);
+		ft_lstadd_back(&(*environ)->lst_env, node_env);
+		ft_printf("Contenido del 1 nodo: %s\n", *(char **)(*environ)->lst_env->content);
+		counter++;
 	}
-	while (--counter >= 0)
-		(*environ)->env[counter] = ft_strdup(envp[counter]);
-	(*environ)->path = split_path_env((*environ)->env, ref);
+	ft_printf("Contenido del primer nodo: %s\n", *(char **)(*environ)->lst_env->content);
+	ft_printf("Contenido del segundo nodo: %s\n", *(char **)(*environ)->lst_env->next->content);
+	ft_printf("Contenido del tercer nodo: %s\n", *(char **)(*environ)->lst_env->next->next->content);
+	(*environ)->path = split_path_env(envp);
+	ft_hold_mem(2, list, &(*environ), &(*environ)->path);
+	ft_lstadd_2d(list, (*environ)->path);
 	return (1);
 }
