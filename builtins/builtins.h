@@ -7,6 +7,7 @@
 # include "libft.h"
 
 int		cd_builtin(char *path, t_env ***envp);
-void	env_builtin(char **env);
+void	env_builtin(t_list **first);
+void	print_array(char **array);
 
 #endif // BUILTINS_H

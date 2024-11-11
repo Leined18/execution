@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:14 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/11 14:22:51 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/11 17:21:08 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,11 @@ void	env_builtin(t_list **first)
 
 	if (first != NULL)
 	{
-		ft_printf("ENNNNNNNNN\n");
 		aux = *first;
-		ft_printf("ENNNNNNNNNqqqqqqqqq\n");
 		while (aux)
 		{
-			ft_printf("%s\n", *(char **)(aux->content));
-			//ft_printf("%s\n", (char *)*(node_env->content));
+			ft_printf("%s\n", (char *)(aux->content));
 			aux = aux->next;
 		}
 	}
-	ft_printf("final----");
 }

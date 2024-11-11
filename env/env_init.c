@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/11 15:07:15 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/11/11 17:33:25 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "env.h"
+#include "builtins.h"
 
 // Finds the line that starts with "PATH=" in env, and, if exists
 // creates and array splitting the line with ":" and returns it.
@@ -41,15 +41,14 @@ char	**split_path_env(char *env[])
 }
 
 // Genera una copia del entorno en una variable de tipo t_env (mirar minishell.h)
-int	copy_envp(t_env **environ, char **envp, t_list **list)
+int	copy_envp(t_env **environ, char **envp)
 {
 	int		counter;
 	t_list	*node_env;
 	char	*node_content;
 
-	//(void)list;
 	counter = 0;
-	(*environ) = malloc(sizeof(t_env));
+	*environ = malloc(sizeof(t_env));
 	if (!(*environ))
 		return (0);
 	while (envp[counter])
@@ -62,20 +61,12 @@ int	copy_envp(t_env **environ, char **envp, t_list **list)
 		node_content = ft_strdup(envp[counter]);
 		if (!node_content)
 			return (0);
-		ft_hold_mem(1, list, &node_content);
-		node_env = ft_lstnew((void **)&node_content); /////
+		node_env = ft_lstnew((void *)node_content);
 		if (!node_env)
-			return (0);
-		ft_hold_mem(1, list, &node_env);
+			return (free(node_content), 0);
 		ft_lstadd_back(&(*environ)->lst_env, node_env);
-		ft_printf("Contenido del 1 nodo: %s\n", *(char **)(*environ)->lst_env->content);
 		counter++;
 	}
-	ft_printf("Contenido del primer nodo: %s\n", *(char **)(*environ)->lst_env->content);
-	ft_printf("Contenido del segundo nodo: %s\n", *(char **)(*environ)->lst_env->next->content);
-	ft_printf("Contenido del tercer nodo: %s\n", *(char **)(*environ)->lst_env->next->next->content);
 	(*environ)->path = split_path_env(envp);
-	ft_hold_mem(2, list, &(*environ), &(*environ)->path);
-	ft_lstadd_2d(list, (*environ)->path);
 	return (1);
 }

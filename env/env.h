@@ -12,7 +12,6 @@ typedef struct s_env
 
 
 void	print_array(char **array);
-int		copy_envp(t_env **environ, char **envp, t_list **list);
-//int		copy_envp(t_env **environ, char **envp);
+int		copy_envp(t_env **environ, char **envp);
 
 #endif // ENV_H
