@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 16:49:47 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/11 14:19:05 by mvidal-h         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/11/11 15:04:45 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "env.h"
 
 // Finds the line that starts with "PATH=" in env, and, if exists
 // creates and array splitting the line with ":" and returns it.
+char	**split_path_env(char *env[])
 char	**split_path_env(char *env[])
 {
 	int		i;

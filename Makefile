@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
+#    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/11 15:00:22 by mvidal-h         ###   ########.fr        #
+#    Updated: 2024/11/11 15:05:52 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,6 @@ MOVE_UP     = \033[1A
 
 NAME		:= exe.a
 EXE			:= exe
-LIBFT		:= $(LIBFT_DIR)libft.a
 
 #==========DIRECTORIES=======================================================#
 
@@ -71,7 +70,10 @@ BUILTINS_DIR	:= builtins/
 CMD_DIR			:= cmd/
 ENV_DIR			:= env/
 
+
+LIBFT		:= $(LIBFT_DIR)libft.a
 INC_LIBFT		:= $(LIBFT_DIR)$(INC)
+INCLUDES		:= $(INC)*.h $(BUILTINS_DIR)*.h $(CMD_DIR)*.h $(ENV_DIR)*.h $(INC_LIBFT)*.h
 
 #==========COMMANDS============================================================#
 
@@ -110,10 +112,13 @@ $(OBJ_DIR)%.o: %.c Makefile
 	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) -MP -MMD -c $< -o $@
 
 $(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT) $(OBJS)
 	@$(AR) $(NAME) $(OBJS)
 	@$(LIB) $(NAME)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(NAME)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
+	@$(MKDIR) obj/inc/
+	@cp -R $(INCLUDES) obj/inc/
 
 $(EXE): $(NAME)
 	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -lft -o $(EXE)
