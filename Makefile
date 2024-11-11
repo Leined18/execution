@@ -6,7 +6,7 @@
 #    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/11 11:05:16 by danpalac         ###   ########.fr        #
+#    Updated: 2024/11/11 13:41:48 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,17 +57,21 @@ MOVE_UP     = \033[1A
 #==========NAMES===============================================================#
 
 NAME		:= exe.a
-EXEC		:= exec
+EXE			:= exe
+LIBFT		:= $(LIBFT_DIR)libft.a
 
 #==========DIRECTORIES=======================================================#
 
 INC 			:= inc/
 SRC_DIR 		:= src/
 OBJ_DIR 		:= obj/
+LIBFT_DIR		:= ../libft/
 
-ALLOC_DIR		:= alloc/
-DEALLOC_DIR		:= dealloc/
-MEMTRACK_DIR	:= memtrack/
+BUILTINS_DIR	:= builtins/
+CMD_DIR			:= cmd/
+ENV_DIR			:= env/
+
+INC_LIBFT		:= $(LIBFT_DIR)$(INC)
 
 #==========COMMANDS============================================================#
 
@@ -77,18 +81,20 @@ RM			:= rm -rf
 AR			:= ar rcs
 LIB			:= ranlib
 MKDIR 		:= mkdir -p
-IFLAGS		:= -I$(INC)
-LFLAGS		:= -L.
+IFLAGS		:= -I$(INC) -I$(BUILTINS_DIR) -I$(CMD_DIR) -I$(ENV_DIR) -I$(INC_LIBFT)
+LFLAGS		:= -L$(LIBFT_DIR) -L .
 
 #==========SOURCES============================================================#
 
-ALLOC_FILES		:= #mt_calloc mt_malloc mt_realloc mt_strdup mt_strndup
-DEALLOC_FILES	:= #mt_free mt_free_all mt_free_node mt_free_list
-MEMTRACK_FILES	:= ft_mtnew
+BUILTINS_FILES	:= ft_cd ft_echo ft_env 
+CMD_FILES		:= 
+ENV_FILES		:= 
 
 #==========FILES==============================================================#
 
-SRC_FILES+=$(addprefix $(MEMTRACK_DIR), $(MEMTRACK_FILES))
+SRC_FILES+=$(addprefix $(BUILTINS_DIR), $(BUILTINS_FILES))
+SRC_FILES+=$(addprefix $(CMD_DIR), $(CMD_FILES))
+SRC_FILES+=$(addprefix $(ENV_DIR), $(ENV_FILES))
 
 SRCS := $(addsuffix .c, $(SRC_FILES))
 OBJS := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
@@ -101,7 +107,7 @@ all: $(NAME)
 
 $(OBJ_DIR)%.o: %.c Makefile
 	@$(MKDIR) $(dir $@)	
-	@$(CC) $(CFLAGS) $(IFLAGS) -MP -MMD -c $< -o $@
+	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) -MP -MMD -c $< -o $@
 
 $(NAME): $(OBJS)
 	@$(AR) $(NAME) $(OBJS)
@@ -109,9 +115,9 @@ $(NAME): $(OBJS)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(NAME)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
 
-exe: $(NAME)
-	@$(CC) $(CFLAGS) $(IFLAGS) $(LFLAGS) -o exec main.c $(NAME)
-	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(EXEC)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
+$(EXE): $(NAME)
+	@$(CC) $(CFLAGS) $(IFLAGS) $(LFLAGS) -o $(EXE) main.c $(NAME)
+	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(EXE)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
 
 clean:
@@ -119,8 +125,8 @@ clean:
 	@echo "$(CYAN)[$(NAME)]:\tobject files $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 fclean: clean
-	@$(RM) -rf $(NAME) $(EXEC)
-	@echo "$(CYAN)[$(NAME)]:\texec. files $(GREEN) => Cleaned!$(DEF_COLOR)"
+	@$(RM) -rf $(NAME) $(EXE)
+	@echo "$(CYAN)[$(NAME)]:\tEXE. files $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 re: fclean all
 

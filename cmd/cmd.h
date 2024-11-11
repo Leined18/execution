@@ -1,11 +1,17 @@
 #ifndef COMMANDS_H
 # define COMMANDS_H
 
-# include "config.h"
-# include "minishell.h"
+# include "libft.h"
 // Include any necessary headers here
 
 // Declare your function prototypes here
+
+typedef struct s_command
+{
+	char	*command;
+	char	*cmd_path;
+	char	**args;
+}			t_command;
 
 /* ************************************************************************** */
 /*                                 COMMANDS                                   */

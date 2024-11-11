@@ -1,5 +1,7 @@
 {
-	"files.associations": {
-		"memtrack.h": "c"
-	}
+"C_Cpp_Runner.msvcBatchPath": "",
+"files.associations": {
+    "builtins.h": "c",
+    "env.h": "c"
+}
 }
