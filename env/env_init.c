@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/11 15:04:45 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:07:15 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 // Finds the line that starts with "PATH=" in env, and, if exists
 // creates and array splitting the line with ":" and returns it.
-char	**split_path_env(char *env[])
 char	**split_path_env(char *env[])
 {
 	int		i;
