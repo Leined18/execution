@@ -13,5 +13,6 @@ typedef struct s_env
 
 void	print_array(char **array);
 int		copy_envp(t_env **environ, char **envp);
+int		ft_setenv(const char *name, const char *value, t_list **envp);
 
 #endif // ENV_H

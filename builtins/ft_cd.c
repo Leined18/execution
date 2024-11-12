@@ -3,38 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/11 13:34:17 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/11/12 17:49:06 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	cd_builtin(char *path, t_env ***envp)
-		// En progreso. ¿Quizas pasarle un t_command y añadirle t_env en el t_command?
+int	cd_builtin(char *path, t_env *envp) //todavia sin rutas relativas ni .. ni -
 {
-	char *prev_path;
+	char	*prev_path;
 
 	// Obtener el directorio de trabajo actual (sera el anterior)
 	(void)envp;
 	prev_path = getcwd(NULL, 0);
 	if (prev_path == NULL)
-	{
-		perror("getcwd");
-		return (1);
-	}
-	ft_printf("%s es el directorio antiguo\n", prev_path);
+		return (perror("getcwd"), 0);
 	// Si solo se ha escrito cd (sin ruta)
 	if (path == NULL)
 		path = getenv("HOME");
 	// Cambio de directorio
 	if (chdir(path) != 0)
-	{
-		perror("cd");
-		return (2);
-	}
-	ft_printf("Estoy en %s\n", path);
+		return (perror("cd"), 0);
+	ft_setenv("PWD", path, &envp->lst_env);
+	ft_setenv("OLDPWD", prev_path, &envp->lst_env);
 	return (free(prev_path), 0);
 }

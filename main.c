@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/11 17:58:08 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/12 17:12:40 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,44 +19,53 @@ static void	del_content(void *content)
 
 int	free_nodes_lst(t_list **list)
 {
-	t_list	*aux;
+	t_list	*current;
+	t_list	*next;
 
-	if (list != NULL)
+	if (list && *list)
 	{
-		aux = *list;
-		while (aux)
+		current = *list;
+		while (current)
 		{
-			ft_lstdelone(aux,del_content);
-			aux = aux->next;
+			next = current->next;
+			ft_lstdelone(current, del_content);
+			current = next;
 		}
 		return (1);
 	}
 	return (0);
 }
 
-void	free_array2d(char **array)
+int	free_array2d(char **array)
 {
 	int	i;
 
-	i = 0;
-	while (array[i])
+	if (array && *array)
 	{
-		free(array[i]);
-		i++;
+		i = 0;
+		while (array[i])
+		{
+			free(array[i]);
+			i++;
+		}
+		free(array);
+		return (1);
 	}
-	free(array);
+	return (0);
 }
 
-// int	free_environment()
-// {
-	
-// }
+void	free_environment(t_env *environ)
+{
+	free_nodes_lst(&environ->lst_env);
+	free_array2d(environ->path);
+	free(environ);
+}
 
 int	main(int ac, char **av, char **ev)
 {
 	t_env *environ;
 
-    (void)av;
+	(void)av;
 	if (ac != 1)
 	{
 		ft_printf("Usage: ./exe\n");
@@ -67,10 +76,14 @@ int	main(int ac, char **av, char **ev)
 	/* sigaction_setup(&sigaction_handler);
 	if (!shell_loop(&mem))
 		return (clean_up(&mem), ft_error(ERROR, 0), 0); */
+	ft_printf("---------------ENV---------------\n");
 	env_builtin(&environ->lst_env);
+	ft_printf("---------------PATH---------------\n");
 	print_array(environ->path);
-	free_nodes_lst(&environ->lst_env);
-	free_array2d(environ->path);
-	free(environ);
+	ft_printf("---------------PRUEBA DE CD---------------\n");
+	cd_builtin(NULL, environ);
+	ft_printf("---------------ENV MODIFICADA---------------\n");
+	env_builtin(&environ->lst_env);
+	free_environment(environ);
 	return (ft_successful(SUCCESS, 1), 0);
 }
