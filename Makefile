@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
+#    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/12 16:34:48 by mvidal-h         ###   ########.fr        #
+#    Updated: 2024/11/13 13:37:50 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,8 @@ MOVE_UP     = \033[1A
 
 #==========NAMES===============================================================#
 
-NAME		:= exe.a
+NAME		:= libexe.a
+MEMTRACK	:= libmemtrack.a
 EXE			:= exe
 
 #==========DIRECTORIES=======================================================#
@@ -65,26 +66,27 @@ INC 			:= inc/
 SRC_DIR 		:= src/
 OBJ_DIR 		:= obj/
 LIBFT_DIR		:= ../libft/
+LIB_DIR			:= ../lib/
+MEMTRACK_DIR	:= ../memtrack/
+
 
 BUILTINS_DIR	:= builtins/
 CMD_DIR			:= cmd/
 ENV_DIR			:= env/
 
-
-LIBFT		:= $(LIBFT_DIR)libft.a
-INC_LIBFT		:= $(LIBFT_DIR)$(INC)
-INCLUDES		:= $(INC)*.h $(BUILTINS_DIR)*.h $(CMD_DIR)*.h $(ENV_DIR)*.h $(INC_LIBFT)*.h
+LIBFT			:= $(LIBFT_DIR)libft.a
+INCLUDES		:= $(INC)*.h $(BUILTINS_DIR)*.h $(CMD_DIR)*.h $(ENV_DIR)*.h
 
 #==========COMMANDS============================================================#
 
 CC			:= gcc
-CFLAGS		:= -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS		:= -Wall -Wextra -Werror -g3 -fsanitize=address
 RM			:= rm -rf
 AR			:= ar rcs
 LIB			:= ranlib
 MKDIR 		:= mkdir -p
-IFLAGS		:= -I$(INC) -I$(BUILTINS_DIR) -I$(CMD_DIR) -I$(ENV_DIR) -I$(INC_LIBFT)
-LFLAGS		:= -L$(LIBFT_DIR) -L.
+IFLAGS		:= -I$(LIB_DIR) -I$(INC) -I$(BUILTINS_DIR) -I$(CMD_DIR) -I$(ENV_DIR) 
+LFLAGS		:= -L$(LIB_DIR) -L. -lmemtrack
 
 #==========SOURCES============================================================#
 
@@ -111,14 +113,13 @@ $(OBJ_DIR)%.o: %.c Makefile
 	@$(MKDIR) $(dir $@)	
 	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) -MP -MMD -c $< -o $@
 
-$(NAME): $(LIBFT) $(OBJS)
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(MEMTRACK) $(LIBFT) $(OBJS)
 	@$(AR) $(NAME) $(OBJS)
 	@$(LIB) $(NAME)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(NAME)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
-	@$(MKDIR) obj/inc/
-	@cp -R $(INCLUDES) obj/inc/
+	@$(MKDIR) $(LIB_DIR)
+	@cp -R $(INCLUDES) $(NAME) $(LIB_DIR)
 
 $(EXE): $(NAME)
 	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -lft -o $(EXE)
@@ -127,6 +128,9 @@ $(EXE): $(NAME)
 
 $(LIBFT):
 	@make -sC $(LIBFT_DIR)
+
+$(MEMTRACK):
+	@make -sC $(MEMTRACK_DIR)
 	
 clean:
 	@$(RM) -rf $(OBJ_DIR) $(DEPS)
