@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
+#    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/14 11:35:37 by danpalac         ###   ########.fr        #
+#    Updated: 2024/11/14 18:16:51 by mvidal-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,17 +81,17 @@ INCLUDES		:= $(INC)*.h $(BUILTINS_DIR)*.h $(CMD_DIR)*.h $(ENV_DIR)*.h
 #==========COMMANDS============================================================#
 
 CC			:= gcc
-CFLAGS		:= -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS		:= -Wall -Wextra -Werror -g3 #-fsanitize=address
 RM			:= rm -rf
 AR			:= ar rcs
 LIB			:= ranlib
 MKDIR 		:= mkdir -p
 IFLAGS		:= -I$(LIB_DIR) -I$(INC) -I$(BUILTINS_DIR) -I$(CMD_DIR) -I$(ENV_DIR) 
-LFLAGS		:= -L$(LIB_DIR) -lmt
+LFLAGS		:= -L$(LIB_DIR) -L.
 
 #==========SOURCES============================================================#
 
-BUILTINS_FILES	:= ft_cd ft_echo ft_env 
+BUILTINS_FILES	:= ft_echo ft_env ft_cd
 CMD_FILES		:= 
 ENV_FILES		:= env_init env_set
 
@@ -123,7 +123,7 @@ $(NAME): $(LIBFT) $(MEMTRACK) $(OBJS)
 	@cp -R $(INCLUDES) $(NAME) $(LIB_DIR)
 
 $(EXE): $(NAME)
-	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -L. -lft -o $(EXE)
+	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -lmt -lft -o $(EXE)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(EXE)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
 
@@ -141,6 +141,8 @@ clean:
 
 fclean: clean
 	@$(RM) -rf $(NAME) $(EXE)
+	@make fclean -sC $(LIBFT_DIR)
+	@make fclean -sC $(MEMTRACK_DIR)
 	@echo "$(CYAN)[$(NAME)]:\tEXE. files $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 re: fclean all
