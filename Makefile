@@ -6,7 +6,7 @@
 #    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/14 10:09:54 by danpalac         ###   ########.fr        #
+#    Updated: 2024/11/14 11:35:37 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,8 +57,8 @@ MOVE_UP     = \033[1A
 #==========NAMES===============================================================#
 
 NAME		:= libexe.a
-MEMTRACK	:= libmt.a
-LIBFT		:= libft.a
+MEMTRACK_LIB:= libmt.a
+LIBFT_LIB	:= libft.a
 EXE			:= exe
 
 #==========DIRECTORIES=======================================================#
@@ -70,7 +70,8 @@ LIBFT_DIR		:= ../libft/
 LIB_DIR			:= ../lib/
 MEMTRACK_DIR	:= ../memtrack/
 
-
+MEMTRACK		:= $(MEMTRACK_DIR)$(MEMTRACK_LIB)
+LIBFT			:= $(LIBFT_DIR)$(LIBFT_LIB)
 BUILTINS_DIR	:= builtins/
 CMD_DIR			:= cmd/
 ENV_DIR			:= env/
@@ -106,14 +107,14 @@ DEPS := $(addprefix $(OBJ_DIR), $(addsuffix .d, $(SRC_FILES)))
 
 #==========RULES==============================================================#
 
-all: $(NAME)
 -include $(DEPS)
+all: $(NAME)
 
 $(OBJ_DIR)%.o: %.c Makefile
 	@$(MKDIR) $(dir $@)	
 	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) -MP -MMD -c $< -o $@
 
-$(NAME): $(LIBFT) $(MEMTRACK)  $(OBJS)
+$(NAME): $(LIBFT) $(MEMTRACK) $(OBJS)
 	@$(AR) $(NAME) $(OBJS)
 	@$(LIB) $(NAME)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(NAME)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
