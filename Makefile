@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
+#    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/13 13:37:50 by danpalac         ###   ########.fr        #
+#    Updated: 2024/11/14 10:09:54 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,8 @@ MOVE_UP     = \033[1A
 #==========NAMES===============================================================#
 
 NAME		:= libexe.a
-MEMTRACK	:= libmemtrack.a
+MEMTRACK	:= libmt.a
+LIBFT		:= libft.a
 EXE			:= exe
 
 #==========DIRECTORIES=======================================================#
@@ -74,7 +75,6 @@ BUILTINS_DIR	:= builtins/
 CMD_DIR			:= cmd/
 ENV_DIR			:= env/
 
-LIBFT			:= $(LIBFT_DIR)libft.a
 INCLUDES		:= $(INC)*.h $(BUILTINS_DIR)*.h $(CMD_DIR)*.h $(ENV_DIR)*.h
 
 #==========COMMANDS============================================================#
@@ -86,7 +86,7 @@ AR			:= ar rcs
 LIB			:= ranlib
 MKDIR 		:= mkdir -p
 IFLAGS		:= -I$(LIB_DIR) -I$(INC) -I$(BUILTINS_DIR) -I$(CMD_DIR) -I$(ENV_DIR) 
-LFLAGS		:= -L$(LIB_DIR) -L. -lmemtrack
+LFLAGS		:= -L$(LIB_DIR) -lmt
 
 #==========SOURCES============================================================#
 
@@ -113,7 +113,7 @@ $(OBJ_DIR)%.o: %.c Makefile
 	@$(MKDIR) $(dir $@)	
 	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) -MP -MMD -c $< -o $@
 
-$(NAME): $(MEMTRACK) $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT) $(MEMTRACK)  $(OBJS)
 	@$(AR) $(NAME) $(OBJS)
 	@$(LIB) $(NAME)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(NAME)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
@@ -122,7 +122,7 @@ $(NAME): $(MEMTRACK) $(LIBFT) $(OBJS)
 	@cp -R $(INCLUDES) $(NAME) $(LIB_DIR)
 
 $(EXE): $(NAME)
-	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -lft -o $(EXE)
+	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -L. -lft -o $(EXE)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(EXE)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
 
@@ -135,11 +135,11 @@ $(MEMTRACK):
 clean:
 	@$(RM) -rf $(OBJ_DIR) $(DEPS)
 	@make clean -sC $(LIBFT_DIR)
+	@make clean -sC $(MEMTRACK_DIR)
 	@echo "$(CYAN)[$(NAME)]:\tobject files $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 fclean: clean
 	@$(RM) -rf $(NAME) $(EXE)
-	@make fclean -sC $(LIBFT_DIR)
 	@echo "$(CYAN)[$(NAME)]:\tEXE. files $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 re: fclean all
