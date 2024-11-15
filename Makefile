@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
+#    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/14 18:16:51 by mvidal-h         ###   ########.fr        #
+#    Updated: 2024/11/15 12:47:31 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,7 @@ INCLUDES		:= $(INC)*.h $(BUILTINS_DIR)*.h $(CMD_DIR)*.h $(ENV_DIR)*.h
 #==========COMMANDS============================================================#
 
 CC			:= gcc
-CFLAGS		:= -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS		:= -Wall -Wextra -Werror -g3 -fsanitize=address
 RM			:= rm -rf
 AR			:= ar rcs
 LIB			:= ranlib

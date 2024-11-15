@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/14 20:12:14 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/15 12:47:32 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,18 @@
 
 int	main(int ac, char **av, char **ev)
 {
-	t_env *environ;
+	t_env	*environ;
 
 	(void)av;
+	environ = NULL;
 	if (ac != 1)
 	{
 		ft_printf("Usage: ./exe\n");
 		return (0);
 	}
-	if(!copy_envp(&environ, ev))
+	if (!copy_envp(&environ, ev))
 		return (0);
-	ft_printf("---------------ENV---------------\n");
+	/* ft_printf("---------------ENV---------------\n");
 	env_builtin(&environ->mt_env);
 	ft_printf("---------------PATH---------------\n");
 	print_array(environ->path);
@@ -81,7 +82,7 @@ int	main(int ac, char **av, char **ev)
 	// cd_builtin(NULL, environ);
 	// ft_printf("---------------ENV MODIFICADA---------------\n");
 	// env_builtin(&environ->mt_env);
-	ft_printf("num_env = %d\n", environ->num_env);
-	chaosmatrix(0, 0, -1);
+	ft_mtprint(environ->mt_env, 1, " ");
+	ft_printf("num_env = %d\n", environ->num_env); */
 	return (ft_successful(SUCCESS, 1), 0);
 }

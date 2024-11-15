@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/14 17:09:59 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/15 12:43:02 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ char	**split_path_env(char *env[])
 int	copy_envp(t_env **environ, char **envp)
 {
 	int		counter;
-	t_mt	*node_env;
 	char	*node_content;
 
 	counter = 0;
@@ -60,10 +59,7 @@ int	copy_envp(t_env **environ, char **envp)
 		node_content = ft_strmtdup(envp[counter]);
 		if (!node_content)
 			return (0);
-		node_env = ft_mtnew_chaos((void *)node_content);
-		if (!node_env)
-			return (0);
-		ft_mtadd_back(&(*environ)->mt_env, node_env);
+		ft_mtpush_data_back(&(*environ)->mt_env, node_content);
 		counter++;
 	}
 	(*environ)->path = split_path_env(envp);
