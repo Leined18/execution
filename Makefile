@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
+#    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/15 12:50:59 by danpalac         ###   ########.fr        #
+#    Updated: 2024/11/18 16:00:32 by mvidal-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,7 +93,7 @@ LFLAGS		:= -L$(LIB_DIR) -L.
 
 BUILTINS_FILES	:= ft_echo ft_env ft_cd
 CMD_FILES		:= 
-ENV_FILES		:= env_init env_set
+ENV_FILES		:= env_init env_set env_get
 
 #==========FILES==============================================================#
 

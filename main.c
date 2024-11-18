@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/15 12:50:59 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:33:32 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,15 @@ int	main(int ac, char **av, char **ev)
 	}
 	if (!copy_envp(&environ, ev))
 		return (0);
-	/* ft_printf("---------------ENV---------------\n");
+	ft_printf("---------------ENV-------------------------------------------------------------------------\n");
 	env_builtin(&environ->mt_env);
-	ft_printf("---------------PATH---------------\n");
+	ft_printf("---------------PATH---------------------------------------------------------------------------\n");
 	print_array(environ->path);
-	// ft_printf("---------------PRUEBA DE CD---------------\n");
-	// cd_builtin(NULL, environ);
-	// ft_printf("---------------ENV MODIFICADA---------------\n");
-	// env_builtin(&environ->mt_env);
-	ft_mtprint(environ->mt_env, 1, " ");
-	ft_printf("num_env = %d\n", environ->num_env); */
+	ft_printf("---------------PRUEBA DE CD--------------------------------------------------------------------\n");
+	cd_builtin(NULL, environ);
+	ft_printf("---------------ENV MODIFICADA---------------------------------------------------------------\n");
+	env_builtin(&environ->mt_env);
+	// ft_mtprint(environ->mt_env, 1, "\n");
+	// ft_printf("num_env = %d\n", environ->num_env);
 	return (ft_successful(SUCCESS, 1), 0);
 }

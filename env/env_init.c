@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/15 12:43:02 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:27:06 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**split_path_env(char *env[])
 	return (path_array);
 }
 
-// Genera una copia del entorno en una variable de tipo t_env (mirar minishell.h)
+// Genera una copia del entorno en una variable de tipo t_env
 int	copy_envp(t_env **environ, char **envp)
 {
 	int		counter;
