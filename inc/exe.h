@@ -6,6 +6,8 @@
 # include "env.h"
 # include "libft.h"
 # include "memtrack.h"
+# include <readline/history.h>
+# include <readline/readline.h>
 
 # define SUCCESS "\033[1;32m✅ Success: Function finished well!\n\033[0m"
 // Verde

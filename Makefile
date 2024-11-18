@@ -6,7 +6,7 @@
 #    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/11/18 16:00:32 by mvidal-h         ###   ########.fr        #
+#    Updated: 2024/11/18 18:18:39 by mvidal-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,6 +88,7 @@ LIB			:= ranlib
 MKDIR 		:= mkdir -p
 IFLAGS		:= -I$(LIB_DIR) -I$(INC) -I$(BUILTINS_DIR) -I$(CMD_DIR) -I$(ENV_DIR) 
 LFLAGS		:= -L$(LIB_DIR) -L.
+RDLFLAGPRUEBA		:= -lreadline
 
 #==========SOURCES============================================================#
 
@@ -123,7 +124,7 @@ $(NAME): $(LIBFT) $(MEMTRACK) $(OBJS)
 	@cp -R $(INCLUDES) $(NAME) $(LIB_DIR)
 
 $(EXE): $(NAME)
-	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -lmt -lft -o $(EXE)
+	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -lmt -lft $(RDLFLAGPRUEBA) -o $(EXE)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(EXE)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
 
