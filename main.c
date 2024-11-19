@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/19 12:01:56 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:27:54 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,19 @@
 // 	}
 // }
 
+/* void *cortexarchive(int count, size_t size, t_mt **list) FUTURO
+{
+	void *ptr;
+	t_mt *new_node;
+
+	ptr = malloc(count * size);
+
+	new_node = ft_mtnew(ptr);
+	ft_mtadd_back(list, new_node);
+	return ptr;
+} */
+
+
 int	shell_loop(t_env *environ)
 {
 	char	*input;
@@ -105,6 +118,15 @@ int	shell_loop(t_env *environ)
 			add_history(input);
 		if (ft_strlen(input) == 3 && ft_strncmp(input, "env", 3) == 0)
 			env_builtin(&environ->mt_env);
+		else if (ft_strlen(input) == 4 && ft_strncmp(input, "path", 4) == 0)
+		{
+			if (!environ->path)
+			{
+    			ft_printf("Error: path is NULL\n");
+    			return (0);
+			}
+			env_builtin(environ->path);
+		}	
 		else
 			cd_builtin(input, environ);
 		// liberamos input para leer uno nuevo y que no se quede sin liberar.
@@ -125,16 +147,7 @@ int	main(int ac, char **av, char **ev)
 	}
 	if (!copy_envp(&environ, ev))
 		return (0);
+	print_lst_data(environ->path);
 	shell_loop(environ);
-	// ft_printf("---------------ENV-------------------------------------------------------------------------\n");
-	// env_builtin(&environ->mt_env);
-	// ft_printf("---------------PATH---------------------------------------------------------------------------\n");
-	// print_array(environ->path);
-	// ft_printf("---------------PRUEBA DE CD--------------------------------------------------------------------\n");
-	// cd_builtin(NULL, environ);
-	// ft_printf("---------------ENV MODIFICADA---------------------------------------------------------------\n");
-	// env_builtin(&environ->mt_env);
-	// ft_mtprint(environ->mt_env, 1, "\n");
-	// ft_printf("num_env = %d\n", environ->num_env);
 	return (ft_successful(SUCCESS, 1), 0);
 }

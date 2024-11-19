@@ -6,21 +6,28 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:14 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/14 11:29:18 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:19:42 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-void	print_array(char **array)
+void	print_lst_data(t_mt **array)
 {
-	int i;
+	t_mt	*node;
 
-	i = 0;
-	while (array[i])
+	if (array && *array)
 	{
-		ft_printf("%s\n", array[i]);
-		i++;
+		node = *array;
+		while (node)
+		{
+			ft_printf("[%s]", (char *)(node->data));
+			node = node->next;
+			if (node)
+				ft_printf("->");
+			else
+				ft_printf("\n");
+		}
 	}
 }
 

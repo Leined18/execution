@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:51:27 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/18 17:12:59 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:21:43 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_setenv(const char *name, const char *value, t_mt *envp)
 		env_str = ft_getenv(name, envp);
 		new_env = build_new_env(name, value, total_len);
 		if(env_str)
-			ft_mtreplace(envp, env_str, new_env, ft_strncmp, ft_strlen(env_str));
+			ft_mtreplace_data(envp, env_str, new_env, ft_strncmp, ft_strlen(env_str));
 		else
 			ft_mtpush_data_back(&envp, new_env);
 		return (1);
