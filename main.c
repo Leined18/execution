@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/18 18:25:11 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:01:56 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,28 +61,52 @@
 // 	free(environ);
 // }
 
-int	shell_loop(void)//introducir environ
+// int	shell_loop(t_env *environ)
+// {
+// 	char	*input;
+
+// 	while (1)
+// 	{
+// 		// Muestra el prompt y espera la entrada del usuario
+// 		input = readline("MINISHELL>");
+// 		// Si no puede leer, liberamos historial y salimos con 0(error)
+// 		if (!input)
+// 			return (rl_clear_history(), 0);
+// 		// Si la entrada es "exit" salimos con 1 (correcto)
+// 		if (ft_strlen(input) == 4 && ft_strncmp(input, "exit", 4) == 0)
+// 			return (free_null((void **)&input), rl_clear_history(), 1);
+// 		// Si el usuario escribió algo, se agrega al historial y se procesa.
+// 		if (*input)
+// 		{
+// 			add_history(input);
+// 			cd_builtin(input, environ);
+// 			//$DIVIDIR ENTRADA EN COMANDOS (PARSEAR Y DEMAS)
+// 			//$se encargará de hacer el bucle en todos los comandos (desde solo 1 a n)
+// 		}
+// 		// liberamos input para leer uno nuevo y que no se quede sin liberar.
+// 		free_null((void **)&input);
+// 	}
+// }
+
+int	shell_loop(t_env *environ)
 {
 	char	*input;
 
 	while (1)
 	{
 		// Muestra el prompt y espera la entrada del usuario
-		input = readline("MIGUEL>");
+		input = readline("MINISHELL>");
 		// Si no puede leer, liberamos historial y salimos con 0(error)
-		if (!input)
-			return (rl_clear_history(), 0);
 		// Si la entrada es "exit" salimos con 1 (correcto)
 		if (ft_strlen(input) == 4 && ft_strncmp(input, "exit", 4) == 0)
 			return (free_null((void **)&input), rl_clear_history(), 1);
 		// Si el usuario escribió algo, se agrega al historial y se procesa.
 		if (*input)
-		{
 			add_history(input);
-			ft_printf("comando = %s\n", input);
-			//$DIVIDIR ENTRADA EN COMANDOS (PARSEAR Y DEMAS)
-			//$se encargará de hacer el bucle en todos los comandos (desde solo 1 a n)
-		}
+		if (ft_strlen(input) == 3 && ft_strncmp(input, "env", 3) == 0)
+			env_builtin(&environ->mt_env);
+		else
+			cd_builtin(input, environ);
 		// liberamos input para leer uno nuevo y que no se quede sin liberar.
 		free_null((void **)&input);
 	}
@@ -101,7 +125,7 @@ int	main(int ac, char **av, char **ev)
 	}
 	if (!copy_envp(&environ, ev))
 		return (0);
-	shell_loop();
+	shell_loop(environ);
 	// ft_printf("---------------ENV-------------------------------------------------------------------------\n");
 	// env_builtin(&environ->mt_env);
 	// ft_printf("---------------PATH---------------------------------------------------------------------------\n");
