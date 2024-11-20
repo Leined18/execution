@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/19 12:02:28 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:58:32 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,8 @@ int	cd_builtin(char *path, t_env *envp) //todavia sin rutas relativas ni .. ni -
 	if (prev_path == NULL)
 		return (perror("getcwd"), 0);
 	// Si solo se ha escrito cd (sin ruta)
-	if (path == NULL)
-	{
+	if (!(*path))
 		path = ft_getenv_value("HOME", envp->mt_env);
-		ft_printf("path = %s\n", path);
-	}
 	// Cambio de directorio
 	if (chdir(path) != 0)
 		return (free(prev_path), perror("cd"), 0);

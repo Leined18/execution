@@ -6,13 +6,13 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:38:20 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/18 17:31:57 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:50:55 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-//return a pointer to the value of the nave env.
+//return a pointer to the value of the name env.
 char	*ft_getenv_value(const char *name, t_mt *envp)
 {
 	t_mt	*aux;
@@ -23,7 +23,7 @@ char	*ft_getenv_value(const char *name, t_mt *envp)
 	return (NULL);
 }
 
-//return a pointer to the whole nave env.
+//return a pointer to the whole name env.
 char	*ft_getenv(const char *name, t_mt *envp)
 {
 	t_mt	*aux;
