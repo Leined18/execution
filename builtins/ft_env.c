@@ -6,19 +6,19 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:14 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/19 14:19:42 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:17:34 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-void	print_lst_data(t_mt **array)
+void	print_lst_data(t_mt *array)
 {
 	t_mt	*node;
 
-	if (array && *array)
+	if (array)
 	{
-		node = *array;
+		node = array;
 		while (node)
 		{
 			ft_printf("[%s]", (char *)(node->data));

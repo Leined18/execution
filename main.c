@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/19 16:27:54 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:26:26 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	shell_loop(t_env *environ)
     			ft_printf("Error: path is NULL\n");
     			return (0);
 			}
-			env_builtin(environ->path);
+			print_lst_data(environ->path);
 		}	
 		else
 			cd_builtin(input, environ);
@@ -147,7 +147,6 @@ int	main(int ac, char **av, char **ev)
 	}
 	if (!copy_envp(&environ, ev))
 		return (0);
-	print_lst_data(environ->path);
 	shell_loop(environ);
 	return (ft_successful(SUCCESS, 1), 0);
 }
