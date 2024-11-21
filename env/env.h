@@ -15,6 +15,7 @@ void	print_lst_data(t_mt *array);
 int		copy_envp(t_env **environ, char **envp);
 int		ft_setenv(const char *name, const char *value, t_mt *envp);
 char	*ft_getenv(const char *name, t_mt *envp);
-char	*ft_getenv_value(const char *name, t_mt *envp);
+char	*ft_getenv_value(const char *name, t_mt *envp, int flag);
+int 	ft_find_env(const char *s1, const char *s2, size_t n);
 
 #endif // ENV_H

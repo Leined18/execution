@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/20 18:51:33 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:32:18 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,28 +73,50 @@
 	return ptr;
 } */
 
+//Return the length of the value of env var named "name".
+// If flag ==1 and var is "HOME" return 1. (~ in prompt).
+//else return the normal length.
+size_t	get_len_env(char *name, t_mt *mt_env, int flag)
+{
+	char	*value;
+	char	*home;
+	home = ft_getenv_value("HOME", mt_env, 0);
+	value = ft_getenv_value(name, mt_env, 0);
+	if (ft_find_env(value, home, ft_strlen(home)) == 0 && flag)
+		return (1);
+	else
+		return (ft_strlen(value));
+}
+
 char	*generate_prompt(t_mt	*mt_env)
 {
 	char	*str_prompt;
 	size_t	len;
+	char *	prueba;
 	
-	len = 5;
+	len = 4;
+	ft_printf("len = %d\n", len);
 	len += ft_strlen(PURPLE);
-	len += ft_strlen(ft_getenv_value("USER", mt_env));
-	len += ft_strlen(ft_getenv_value("HOSTNAME", mt_env));
-	len += ft_strlen(YELLOW);
-	len += ft_strlen(ft_getenv_value("PWD", mt_env));
+	ft_printf("len = %d\n", len);
+	len += ft_strlen("MINISHELL");
+	ft_printf("len = %d\n", len);
+	len += ft_strlen(GREEN);
+	ft_printf("len = %d\n", len);
+	len += get_len_env("PWD", mt_env, 1);
+	ft_printf("len = %d\n", len);
 	len += ft_strlen(RESET);
+	ft_printf("len = %d\n", len);
 	str_prompt = ft_calloc(len, sizeof(char));
 	if (!str_prompt)
 		return (NULL);
 	ft_strlcat(str_prompt, PURPLE, len);
-	ft_strlcat(str_prompt, ft_getenv_value("USER", mt_env), len);
-	ft_strlcat(str_prompt, "@", len);
-	ft_strlcat(str_prompt, ft_getenv_value("HOSTNAME", mt_env), len);
+	ft_strlcat(str_prompt, "MINISHELL", len);
 	ft_strlcat(str_prompt, ":", len);
-	ft_strlcat(str_prompt, YELLOW, len);
-	ft_strlcat(str_prompt, ft_getenv_value("PWD", mt_env), len);
+	ft_strlcat(str_prompt, GREEN, len);
+	prueba = ft_getenv_value("PWD", mt_env, 1); //SEGUIR AQUI
+	ft_printf("prueba[0] = %s\n");
+	ft_strlcat(str_prompt, prueba, len);
+	//ft_strlcat(str_prompt, ft_getenv_value("PWD", mt_env, 1), len);
 	ft_strlcat(str_prompt, "$ ", len);
 	ft_strlcat(str_prompt, RESET, len);
 	return (str_prompt);
@@ -108,15 +130,11 @@ int	shell_loop(t_env *environ)
 	while (1)
 	{
 		prompt = generate_prompt(environ->mt_env);
-		// Muestra el prompt y espera la entrada del usuario
 		input = readline(prompt);
-		// Si no puede leer, liberamos historial y salimos con 0(error)
 		if (input == NULL)
 			return (free(prompt), rl_clear_history() ,0);
-		// Si la entrada es "exit" salimos con 1 (correcto)
 		if (ft_strlen(input) == 4 && ft_strncmp(input, "exit", 4) == 0)
 			return (free(prompt), free_null((void **)&input), rl_clear_history(), 1);
-		// Si el usuario escribió algo, se agrega al historial y se procesa.
 		if (*input)
 			add_history(input);
 		if (ft_strlen(input) == 3 && ft_strncmp(input, "env", 3) == 0)
@@ -125,7 +143,6 @@ int	shell_loop(t_env *environ)
 			print_lst_data(environ->path);
 		else
 			cd_builtin(input, environ);
-		// liberamos input para leer uno nuevo y que no se quede sin liberar.
 		(free(prompt), free_null((void **)&input));
 	}
 }

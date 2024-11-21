@@ -6,11 +6,13 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/20 20:06:22 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:10:34 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+
 
 int	cd_builtin(char *path, t_env *envp) //todavia sin rutas relativas ni .. ni -
 {
@@ -22,11 +24,13 @@ int	cd_builtin(char *path, t_env *envp) //todavia sin rutas relativas ni .. ni -
 		return (perror("getcwd"), 0);
 	
 	if (!(*path) || (ft_strlen(path) == 1 && path[0] == '~')) // Si solo se ha escrito cd (sin ruta)
-		path = ft_getenv_value("HOME", envp->mt_env);
-	if (!path)
-		return (free(prev_path), perror("cd"), 0);
-	if (ft_strlen(path) == 1 && path[0] == '-')
-		path = ft_getenv_value("OLDPWD", envp->mt_env);
+		path = ft_getenv_value("HOME", envp->mt_env, 0);
+	
+	else if (ft_strlen(path) == 1 && path[0] == '-')
+	{
+		path = ft_getenv_value("OLDPWD", envp->mt_env, 0);
+		ft_printf("%s\n", path);
+	}
 	// Cambio de directorio
 	if (chdir(path) != 0)
 		return (free(prev_path), perror("cd"), 0);
