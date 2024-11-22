@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/22 12:31:29 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:54:41 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ int	cd_builtin(char *path, t_env *envp) //todavia sin rutas relativas ni .. ni -
 		ft_printf("%s\n", path);
 	}
 	// Cambio de directorio
+	// if (is_relative(path))
+	// {
+
+	// }
 	if (chdir(path) != 0)
 		return (free(prev_path), perror("cd"), 0);
 	ft_setenv("PWD", path, envp->mt_env);
