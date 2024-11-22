@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:38:20 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/21 17:19:42 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/22 12:16:37 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,13 @@ int ft_find_env(const char *s1, const char *s2, size_t n)
 //return a pointer to the value of the name env.
 //flag == 1 means that if the var is "HOME" it has to return the alias "~"
 //instead of the real value (prompt).
-char	*ft_getenv_value(const char *name, t_mt *envp, int flag)
+char	*ft_getenv_value(const char *name, t_mt *envp)
 {
 	t_mt	*aux;
 
 	aux = ft_mtfind_cmp(envp, (void *)name, ft_find_env, ft_strlen(name));
 	if (aux)
-	{
-		if (ft_find_env(aux->data, "HOME", 4) == 0 && flag)
-			return ("~");
 		return (aux->data + ft_strlen(name) + 1);
-	}
 	return (NULL);
 }
 

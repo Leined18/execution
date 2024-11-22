@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/21 17:32:18 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/22 12:35:11 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,32 +80,38 @@ size_t	get_len_env(char *name, t_mt *mt_env, int flag)
 {
 	char	*value;
 	char	*home;
-	home = ft_getenv_value("HOME", mt_env, 0);
-	value = ft_getenv_value(name, mt_env, 0);
+	home = ft_getenv_value("HOME", mt_env);
+	value = ft_getenv_value(name, mt_env);
 	if (ft_find_env(value, home, ft_strlen(home)) == 0 && flag)
 		return (1);
 	else
 		return (ft_strlen(value));
 }
 
-char	*generate_prompt(t_mt	*mt_env)
+int	pwd_is_home(t_mt *mt_env)
+{
+	char	*pwd;
+	char	*home;
+	pwd = ft_getenv_value("PWD", mt_env); //SEGUIR AQUI
+	home = ft_getenv_value("HOME", mt_env);
+	if (ft_find_env(pwd, home, ft_strlen(home)))
+		return (0);
+	else
+		return (1);
+
+}
+
+char	*generate_prompt(t_mt *mt_env)
 {
 	char	*str_prompt;
 	size_t	len;
-	char *	prueba;
 	
 	len = 4;
-	ft_printf("len = %d\n", len);
 	len += ft_strlen(PURPLE);
-	ft_printf("len = %d\n", len);
 	len += ft_strlen("MINISHELL");
-	ft_printf("len = %d\n", len);
 	len += ft_strlen(GREEN);
-	ft_printf("len = %d\n", len);
 	len += get_len_env("PWD", mt_env, 1);
-	ft_printf("len = %d\n", len);
 	len += ft_strlen(RESET);
-	ft_printf("len = %d\n", len);
 	str_prompt = ft_calloc(len, sizeof(char));
 	if (!str_prompt)
 		return (NULL);
@@ -113,10 +119,10 @@ char	*generate_prompt(t_mt	*mt_env)
 	ft_strlcat(str_prompt, "MINISHELL", len);
 	ft_strlcat(str_prompt, ":", len);
 	ft_strlcat(str_prompt, GREEN, len);
-	prueba = ft_getenv_value("PWD", mt_env, 1); //SEGUIR AQUI
-	ft_printf("prueba[0] = %s\n");
-	ft_strlcat(str_prompt, prueba, len);
-	//ft_strlcat(str_prompt, ft_getenv_value("PWD", mt_env, 1), len);
+	if(pwd_is_home(mt_env))
+		ft_strlcat(str_prompt, "~", len);
+	else
+		ft_strlcat(str_prompt, ft_getenv_value("PWD", mt_env), len);
 	ft_strlcat(str_prompt, "$ ", len);
 	ft_strlcat(str_prompt, RESET, len);
 	return (str_prompt);

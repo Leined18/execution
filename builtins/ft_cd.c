@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/21 17:10:34 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/22 12:31:29 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	cd_builtin(char *path, t_env *envp) //todavia sin rutas relativas ni .. ni -
 		return (perror("getcwd"), 0);
 	
 	if (!(*path) || (ft_strlen(path) == 1 && path[0] == '~')) // Si solo se ha escrito cd (sin ruta)
-		path = ft_getenv_value("HOME", envp->mt_env, 0);
+		path = ft_getenv_value("HOME", envp->mt_env);
 	
 	else if (ft_strlen(path) == 1 && path[0] == '-')
 	{
-		path = ft_getenv_value("OLDPWD", envp->mt_env, 0);
+		path = ft_getenv_value("OLDPWD", envp->mt_env);
 		ft_printf("%s\n", path);
 	}
 	// Cambio de directorio
