@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/25 16:46:55 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:38:07 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,38 +80,38 @@ size_t	get_len_env(char *name, t_mt *mt_env, int flag)
 {
 	char	*value;
 	char	*home;
+	size_t	len;
 	home = ft_getenv_value("HOME", mt_env);
 	value = ft_getenv_value(name, mt_env);
 	if (ft_find_env(value, home, ft_strlen(home)) == 0 && flag)
-		return (1);
+		len = 1;
 	else
-		return (ft_strlen(value));
+		len = ft_strlen(value);
+	return (free(home), free(value), len);
 }
 
 int	pwd_is_home(t_mt *mt_env)
 {
 	char	*pwd;
 	char	*home;
-	pwd = ft_getenv_value("PWD", mt_env); //SEGUIR AQUI
+	pwd = ft_getenv_value("PWD", mt_env);
 	home = ft_getenv_value("HOME", mt_env);
 	if (ft_find_env(pwd, home, ft_strlen(home)))
-		return (0);
+		return (free(pwd), free(home), 0);
 	else
-		return (1);
+		return (free(pwd), free(home), 1);
 
 }
 
 char	*generate_prompt(t_mt *mt_env)
 {
 	char	*str_prompt;
+	char	*pwd;
 	size_t	len;
 	
-	len = 4;
-	len += ft_strlen(PURPLE);
-	len += ft_strlen("MINISHELL");
-	len += ft_strlen(GREEN);
+	len = ft_strlen(PURPLE) + ft_strlen("MINISHELL") + ft_strlen(GREEN);
 	len += get_len_env("PWD", mt_env, 1);
-	len += ft_strlen(RESET);
+	len += ft_strlen(RESET) + 4;
 	str_prompt = ft_calloc(len, sizeof(char));
 	if (!str_prompt)
 		return (NULL);
@@ -122,7 +122,11 @@ char	*generate_prompt(t_mt *mt_env)
 	if(pwd_is_home(mt_env))
 		ft_strlcat(str_prompt, "~", len);
 	else
-		ft_strlcat(str_prompt, ft_getenv_value("PWD", mt_env), len);
+	{
+		pwd = ft_getenv_value("PWD", mt_env);
+		ft_strlcat(str_prompt, pwd, len);
+		free(pwd);
+	}
 	ft_strlcat(str_prompt, "$ ", len);
 	ft_strlcat(str_prompt, RESET, len);
 	return (str_prompt);
@@ -148,8 +152,7 @@ int	shell_loop(t_env *environ)
 		else if (ft_strlen(input) == 4 && ft_strncmp(input, "path", 4) == 0)
 			print_lst_data(environ->path);
 		else
-			//cd_builtin(input, environ);
-			ft_printf("input = %s\n", input);
+			cd_builtin(input, environ);
 		(free(prompt), free_null((void **)&input));
 	}
 }
