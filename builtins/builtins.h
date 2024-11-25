@@ -14,6 +14,6 @@ void	env_builtin(t_mt **first);
 void	print_array(char **array);
 
 //cd_utils.c
-//int		is_relative(char *path);
+int		is_relative(char *path);
 
 #endif // BUILTINS_H

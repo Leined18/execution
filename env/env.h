@@ -17,5 +17,8 @@ int		ft_setenv(const char *name, const char *value, t_mt *envp);
 char	*ft_getenv(const char *name, t_mt *envp);
 char	*ft_getenv_value(const char *name, t_mt *envp);
 int 	ft_find_env(const char *s1, const char *s2, size_t n);
+//LUEGO CAMBIAR
+char	*ft_strrtrim(char const *s1, char const *set);
+char	*ft_strltrim(char const *s1, char const *set);
 
 #endif // ENV_H

@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/22 12:35:11 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:46:55 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,8 @@ int	shell_loop(t_env *environ)
 		else if (ft_strlen(input) == 4 && ft_strncmp(input, "path", 4) == 0)
 			print_lst_data(environ->path);
 		else
-			cd_builtin(input, environ);
+			//cd_builtin(input, environ);
+			ft_printf("input = %s\n", input);
 		(free(prompt), free_null((void **)&input));
 	}
 }

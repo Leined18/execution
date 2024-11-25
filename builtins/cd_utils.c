@@ -6,13 +6,13 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:12:25 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/22 15:20:43 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:46:09 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	is_relative(char *path)
 {
-	if (path[0] != '/')
+	if ((path[0] != '/') && (path[0] != '~') && (path[0] != '-'))
 		return (1);
 	return (0);
 }
