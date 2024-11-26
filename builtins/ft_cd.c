@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/26 18:31:49 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:41:28 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ int	cd_builtin(char *path, t_env *envp)
 		ft_printf("%s\n", new_path);
 	}
 	else if (new_path == NULL)
-		new_path = ft_strdup(path);
+		new_path = path;
 	if (chdir(new_path) != 0)
-		return (free(prev_path), free(new_path), perror("cd"), 0);
-	free(new_path);
+		return (free(prev_path), perror("cd"), 0);
 	new_path = getcwd(NULL, 0);
 	ft_setenv("PWD", new_path, envp->mt_env);
 	ft_setenv("OLDPWD", prev_path, envp->mt_env);

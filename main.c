@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/25 17:38:07 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:51:59 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ size_t	get_len_env(char *name, t_mt *mt_env, int flag)
 		len = 1;
 	else
 		len = ft_strlen(value);
-	return (free(home), free(value), len);
+	return (len);
 }
 
 int	pwd_is_home(t_mt *mt_env)
@@ -97,16 +97,15 @@ int	pwd_is_home(t_mt *mt_env)
 	pwd = ft_getenv_value("PWD", mt_env);
 	home = ft_getenv_value("HOME", mt_env);
 	if (ft_find_env(pwd, home, ft_strlen(home)))
-		return (free(pwd), free(home), 0);
+		return (0);
 	else
-		return (free(pwd), free(home), 1);
+		return (1);
 
 }
 
 char	*generate_prompt(t_mt *mt_env)
 {
 	char	*str_prompt;
-	char	*pwd;
 	size_t	len;
 	
 	len = ft_strlen(PURPLE) + ft_strlen("MINISHELL") + ft_strlen(GREEN);
@@ -122,11 +121,7 @@ char	*generate_prompt(t_mt *mt_env)
 	if(pwd_is_home(mt_env))
 		ft_strlcat(str_prompt, "~", len);
 	else
-	{
-		pwd = ft_getenv_value("PWD", mt_env);
-		ft_strlcat(str_prompt, pwd, len);
-		free(pwd);
-	}
+		ft_strlcat(str_prompt, ft_getenv_value("PWD", mt_env), len);
 	ft_strlcat(str_prompt, "$ ", len);
 	ft_strlcat(str_prompt, RESET, len);
 	return (str_prompt);

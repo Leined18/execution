@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:38:20 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/25 14:24:47 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:39:36 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_getenv_value(const char *name, t_mt *envp)
 
 	aux = ft_mtfind_cmp(envp, (void *)name, ft_find_env, ft_strlen(name));
 	if (aux)
-		return (ft_strdup(aux->data + ft_strlen(name) + 1));
+		return (aux->data + ft_strlen(name) + 1);
 	return (NULL);
 }
 
@@ -42,6 +42,6 @@ char	*ft_getenv(const char *name, t_mt *envp)
 
 	aux = ft_mtfind_cmp(envp, (void *)name, ft_find_env, ft_strlen(name));
 	if (aux)
-		return (ft_strdup(aux->data));
+		return (aux->data);
 	return (NULL);
 }
