@@ -13,4 +13,7 @@ int		cd_builtin(char *path, t_env *envp);
 void	env_builtin(t_mt **first);
 void	print_array(char **array);
 
+//ft_pwd.c
+void	pwd_builtin(t_mt *mt_env);
+
 #endif // BUILTINS_H

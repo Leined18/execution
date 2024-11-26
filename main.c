@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/26 18:51:59 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/26 19:47:55 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ size_t	get_len_env(char *name, t_mt *mt_env, int flag)
 	size_t	len;
 	home = ft_getenv_value("HOME", mt_env);
 	value = ft_getenv_value(name, mt_env);
-	if (ft_find_env(value, home, ft_strlen(home)) == 0 && flag)
+	if (ft_pmatch_str(value, home, ft_strlen(home)) == 0 && flag)
 		len = 1;
 	else
 		len = ft_strlen(value);
@@ -96,7 +96,7 @@ int	pwd_is_home(t_mt *mt_env)
 	char	*home;
 	pwd = ft_getenv_value("PWD", mt_env);
 	home = ft_getenv_value("HOME", mt_env);
-	if (ft_find_env(pwd, home, ft_strlen(home)))
+	if (ft_pmatch_str(pwd, home, ft_strlen(home)))
 		return (0);
 	else
 		return (1);
@@ -138,14 +138,16 @@ int	shell_loop(t_env *environ)
 		input = readline(prompt);
 		if (input == NULL)
 			return (free(prompt), rl_clear_history() ,0);
-		if (ft_strlen(input) == 4 && ft_strncmp(input, "exit", 4) == 0)
+		if (ft_pmatch_str(input, "exit", 4) == 0)
 			return (free(prompt), free_null((void **)&input), rl_clear_history(), 1);
 		if (*input)
 			add_history(input);
-		if (ft_strlen(input) == 3 && ft_strncmp(input, "env", 3) == 0)
+		if (ft_pmatch_str(input, "env", 3) == 0)
 			env_builtin(&environ->mt_env);
-		else if (ft_strlen(input) == 4 && ft_strncmp(input, "path", 4) == 0)
+		else if (ft_pmatch_str(input, "path", 4) == 0)
 			print_lst_data(environ->path);
+		else if (ft_pmatch_str(input, "pwd", 3) == 0)
+			pwd_builtin(environ->mt_env);
 		else
 			cd_builtin(input, environ);
 		(free(prompt), free_null((void **)&input));
