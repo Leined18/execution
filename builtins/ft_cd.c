@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/25 15:13:35 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:50:46 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 char	*generate_relative_path(char *path, char *add)
 {
 	char	*new;
+	char	*clean_path;
 	size_t	len;
 	
 	if (path && add)
 	{
-		len = ft_strlen(path) + ft_strlen(add) + 2;
+		clean_path = ft_strrtrim(path, "/");
+		len = ft_strlen(clean_path) + ft_strlen(add) + 2;
 		new = ft_calloc(len, sizeof(char));
-		ft_strlcat(new, path, len);
+		ft_strlcat(new, clean_path, len);
 		ft_strlcat(new, "/", len);
 		ft_strlcat(new, add, len);
-		return (new);
+		return (free(clean_path), new);
 	}
 	return (NULL);
 }
@@ -48,7 +50,7 @@ int	cd_builtin(char *path, t_env *envp)
 	else if (is_relative(path))
 		new_path = generate_relative_path(prev_path, path);
 	else if (new_path == NULL)
-		new_path = ft_strdup(path);
+		new_path = ft_strrtrim(path, "/");
 	ft_printf("new_path = %s\n", new_path);
 	if (chdir(new_path) != 0)
 		return (free(prev_path), free(new_path), perror("cd"), 0);
