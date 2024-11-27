@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:14 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/20 12:17:34 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/27 11:17:48 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	print_lst_data(t_mt *array)
 	}
 }
 
-void	env_builtin(t_mt **first)
+int	env_builtin(t_mt **first)
 {
 	t_mt	*aux;
 
@@ -43,5 +43,7 @@ void	env_builtin(t_mt **first)
 			ft_printf("%s\n", (char *)(aux->data));
 			aux = aux->next;
 		}
+		return (0);
 	}
+	return (1);
 }
