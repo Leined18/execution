@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/26 19:47:55 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:14:06 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,23 @@
 // 	return (0);
 // }
 
-// int	free_array2d(char **array)
-// {
-// 	int	i;
+int	free_array2d(char **array)
+{
+	int	i;
 
-// 	if (array && *array)
-// 	{
-// 		i = 0;
-// 		while (array[i])
-// 		{
-// 			free(array[i]);
-// 			i++;
-// 		}
-// 		free(array);
-// 		return (1);
-// 	}
-// 	return (0);
-// }
+	if (array && *array)
+	{
+		i = 0;
+		while (array[i])
+		{
+			free(array[i]);
+			i++;
+		}
+		free(array);
+		return (1);
+	}
+	return (0);
+}
 
 // void	free_environment(t_env *environ)
 // {
@@ -131,6 +131,7 @@ int	shell_loop(t_env *environ)
 {
 	char	*input;
 	char	*prompt;
+	char	**splitted_path;
 
 	while (1)
 	{
@@ -142,15 +143,9 @@ int	shell_loop(t_env *environ)
 			return (free(prompt), free_null((void **)&input), rl_clear_history(), 1);
 		if (*input)
 			add_history(input);
-		if (ft_pmatch_str(input, "env", 3) == 0)
-			env_builtin(&environ->mt_env);
-		else if (ft_pmatch_str(input, "path", 4) == 0)
-			print_lst_data(environ->path);
-		else if (ft_pmatch_str(input, "pwd", 3) == 0)
-			pwd_builtin(environ->mt_env);
-		else
-			cd_builtin(input, environ);
-		(free(prompt), free_null((void **)&input));
+		splitted_path = ft_split(input, ' ');
+		execute_builtin(splitted_path, environ);
+		(free_array2d(splitted_path), free(prompt), free_null((void **)&input));
 	}
 }
 

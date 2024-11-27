@@ -1,18 +1,14 @@
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
 // Include any necessary headers here
 
-# include "env.h"
 # include "libft.h"
+# include "types.h"
 
-typedef int (*t_builtin_func)(char **args, t_env *envp);
-
-typedef struct s_builtin
-{
-	char *name;
-	t_builtin_func func;
-} t_builtin;
+//builtin.h
+void init_builtins(t_builtin *builtins);
+int execute_builtin(char **args, t_env *envp);
 
 //ft_cd.c
 //int		cd_builtin(char *path, t_env *envp);
@@ -24,6 +20,7 @@ int		env_builtin(char **args, t_env *envp);
 void	print_array(char **array);
 
 //ft_pwd.c
-int	    pwd_builtin(t_mt *mt_env);
+//int	    pwd_builtin(t_mt *mt_env);
+int	    pwd_builtin(char **args, t_env *envp);
 
-#endif // BUILTINS_H
+#endif // BUILTIN_H

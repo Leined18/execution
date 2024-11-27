@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/20 12:23:49 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:07:32 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ int	copy_envp(t_env **environ, char **envp)
 		counter++;
 	}
 	(*environ)->path = split_path_env(envp);
+	init_builtins((*environ)->builtins);
 	return (1);
 }

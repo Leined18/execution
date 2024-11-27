@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 19:37:03 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/26 19:47:02 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:35:09 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,7 @@
 # define ENV_H
 
 # include "libft.h"
-# include "mt.h"
-
-typedef struct s_env
-{
-	t_mt	*mt_env;
-	t_mt	*path;
-	int		num_env;
-}			t_env;
+# include "exe.h"
 
 void	print_lst_data(t_mt *array);
 int		copy_envp(t_env **environ, char **envp);
