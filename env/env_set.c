@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:51:27 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/26 18:46:33 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/11/28 19:25:34 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_setenv(const char *name, const char *value, t_mt *envp)
 			ft_mtreplace_data(envp, env_str, new_env, ft_strncmp, ft_strlen(env_str));
 		else
 			ft_mtpush_data_back(&envp, new_env);
-		return (1);
+		return (free(env_str), 1);
 	}
 	return (0);
 }
