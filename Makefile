@@ -6,7 +6,7 @@
 #    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/12/03 12:50:18 by danpalac         ###   ########.fr        #
+#    Updated: 2024/12/03 13:22:37 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,7 +123,7 @@ $(NAME): $(LIBFT) $(MEMTRACK) $(OBJS)
 	@$(MKDIR) $(LIB_DIR)
 	@cp -R $(INCLUDES) $(NAME) $(LIB_DIR)
 
-$(EXE): $(NAME)
+$(EXE): main.c $(NAME)
 	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -lmt -lft $(RDLFLAGPRUEBA) -o $(EXE)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(EXE)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"

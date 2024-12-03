@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/03 12:46:18 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/03 13:22:16 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,13 @@ int	shell_loop(t_env *environ)
 	}
 }
 
+void	free_environment(t_env *environ)
+{
+	ft_mtclear(&environ->mt_env);
+	ft_mtclear(&environ->path);
+	free(environ);
+}
+
 int	main(int ac, char **av, char **ev)
 {
 	t_env	*environ;
@@ -157,5 +164,6 @@ int	main(int ac, char **av, char **ev)
 	if (!environ)
 		return (ft_error(ERROR, 0), 1);
 	shell_loop(environ);
+	/* free_environment(environ); */
 	return (ft_successful(SUCCESS, 1), 0);
 }
