@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/03 10:40:21 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/03 12:44:01 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,31 @@ t_mt	*split_path_env(char *env[])
 }
 
 // Genera una copia del entorno en una variable de tipo t_env
-int	copy_envp(t_env **environ, char **envp)
+t_env	*copy_envp(char **envp)
 {
 	int		counter;
 	char	*node_content;
+	t_env	*environ;
 
 	counter = 0;
-	*environ = chaosmatrix(1, sizeof(t_env), 0);
-	if (!(*environ))
-		return (0);
+	environ = ft_calloc(1, sizeof(t_env));
+	if (!(environ))
+		return (NULL);
 	while (envp[counter])
 		counter++;
-	(*environ)->num_env = counter;
-	(*environ)->mt_env = NULL;
+	environ->num_env = counter;
+	environ->mt_env = NULL;
 	counter = 0;
-	while (counter < (*environ)->num_env)
+	while (counter < environ->num_env)
 	{
-		node_content = ft_strmtdup(envp[counter]);
+		node_content = ft_strdup(envp[counter]);
 		if (!node_content)
-			return (0);
-		ft_mtpush_data_back(&(*environ)->mt_env, node_content, node_content,
+			return (NULL);
+		ft_mtpush_data_back(&environ->mt_env, node_content, node_content,
 			STRING);
 		counter++;
 	}
-	(*environ)->path = split_path_env(envp);
-	init_builtins((*environ)->builtins);
-	return (1);
+	environ->path = split_path_env(envp);
+	init_builtins(environ->builtins);
+	return (environ);
 }

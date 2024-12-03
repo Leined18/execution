@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/11/28 19:17:39 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/03 12:46:18 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,24 +70,24 @@ int	free_array2d(char **array)
 
 	new_node = ft_mtnew(ptr);
 	ft_mtadd_back(list, new_node);
-	return ptr;
+	return (ptr);
 } */
 
-//Return the length of the value of env var named "name".
+// Return the length of the value of env var named "name".
 // If flag ==1 and var is "HOME" return 1. (~ in prompt).
-//else return the normal length.
+// else return the normal length.
 
 int	pwd_is_home(t_mt *mt_env)
 {
 	char	*pwd;
 	char	*home;
+
 	pwd = ft_getenv_value("PWD", mt_env);
 	home = ft_getenv_value("HOME", mt_env);
 	if (ft_pmatch_str(pwd, home, ft_strlen(home)))
 		return (free(home), free(pwd), 0);
 	else
 		return (free(home), free(pwd), 1);
-
 }
 
 char	*generate_prompt(t_mt *mt_env)
@@ -95,7 +95,7 @@ char	*generate_prompt(t_mt *mt_env)
 	char	*str_prompt;
 	char	*pwd;
 	size_t	len;
-	
+
 	len = ft_strlen(PURPLE) + ft_strlen("MINISHELL") + ft_strlen(GREEN);
 	len += get_len_env("PWD", mt_env, 1);
 	len += ft_strlen(RESET) + 4;
@@ -106,7 +106,7 @@ char	*generate_prompt(t_mt *mt_env)
 	ft_strlcat(str_prompt, "MINISHELL", len);
 	ft_strlcat(str_prompt, ":", len);
 	ft_strlcat(str_prompt, GREEN, len);
-	if(pwd_is_home(mt_env))
+	if (pwd_is_home(mt_env))
 		ft_strlcat(str_prompt, "~", len);
 	else
 	{
@@ -130,9 +130,10 @@ int	shell_loop(t_env *environ)
 		prompt = generate_prompt(environ->mt_env);
 		input = readline(prompt);
 		if (input == NULL)
-			return (free(prompt), rl_clear_history() ,0);
+			return (free(prompt), rl_clear_history(), 0);
 		if (ft_pmatch_str(input, "exit", 4) == 0)
-			return (free(prompt), free_null((void **)&input), rl_clear_history(), 1);
+			return (free(prompt), free_null((void **)&input),
+				rl_clear_history(), 1);
 		if (*input)
 			add_history(input);
 		splitted_path = ft_split(input, ' ');
@@ -140,7 +141,6 @@ int	shell_loop(t_env *environ)
 		(free_array2d(splitted_path), free(prompt), free_null((void **)&input));
 	}
 }
-
 
 int	main(int ac, char **av, char **ev)
 {
@@ -153,8 +153,9 @@ int	main(int ac, char **av, char **ev)
 		ft_printf("Usage: ./exe\n");
 		return (0);
 	}
-	if (!copy_envp(&environ, ev))
-		return (0);
+	environ = copy_envp(ev);
+	if (!environ)
+		return (ft_error(ERROR, 0), 1);
 	shell_loop(environ);
 	return (ft_successful(SUCCESS, 1), 0);
 }
