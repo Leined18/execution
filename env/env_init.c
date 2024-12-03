@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/27 18:07:32 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/03 10:40:21 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	copy_envp(t_env **environ, char **envp)
 		node_content = ft_strmtdup(envp[counter]);
 		if (!node_content)
 			return (0);
-		ft_mtpush_data_back(&(*environ)->mt_env, node_content);
+		ft_mtpush_data_back(&(*environ)->mt_env, node_content, node_content,
+			STRING);
 		counter++;
 	}
 	(*environ)->path = split_path_env(envp);

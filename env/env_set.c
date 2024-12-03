@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_set.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:51:27 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/28 19:25:34 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:14:18 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 char	*build_new_env(const char *name, const char *value, int total_len)
 {
-		char	*str;
-		
-		str = chaosmatrix(total_len, sizeof(char), 0);
-		if (str == NULL)
-			return (NULL);
-		ft_strlcat(str, name, total_len);
-		ft_strlcat(str, "=", total_len);
-		ft_strlcat(str, value, total_len);
-		return (str);
+	char	*str;
+
+	str = chaosmatrix(total_len, sizeof(char), 0);
+	if (str == NULL)
+		return (NULL);
+	ft_strlcat(str, name, total_len);
+	ft_strlcat(str, "=", total_len);
+	ft_strlcat(str, value, total_len);
+	return (str);
 }
 
 int	ft_setenv(const char *name, const char *value, t_mt *envp)
@@ -39,10 +39,11 @@ int	ft_setenv(const char *name, const char *value, t_mt *envp)
 	{
 		env_str = ft_getenv(name, envp);
 		new_env = build_new_env(name, value, total_len);
-		if(env_str)
-			ft_mtreplace_data(envp, env_str, new_env, ft_strncmp, ft_strlen(env_str));
+		if (env_str)
+			ft_replace(ft_mtsearch_list(envp, env_str), new_env,
+				STRING);
 		else
-			ft_mtpush_data_back(&envp, new_env);
+			ft_mtpush_data_back(&envp, new_env, new_env, STRING);
 		return (free(env_str), 1);
 	}
 	return (0);

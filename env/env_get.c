@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_get.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:38:20 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/28 18:10:16 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:09:40 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*ft_getenv_value(const char *name, t_mt *envp)
 {
 	t_mt	*aux;
 
-	aux = ft_mtfind_cmp(envp, (void *)name, ft_pmatch_env, ft_strlen(name));
+	aux = ft_mtsearch_list(envp, name);
 	if (aux)
 		return (ft_strdup(aux->data + ft_strlen(name) + 1));
 	return (NULL);
@@ -65,7 +65,7 @@ char	*ft_getenv(const char *name, t_mt *envp)
 {
 	t_mt	*aux;
 
-	aux = ft_mtfind_cmp(envp, (void *)name, ft_pmatch_env, ft_strlen(name));
+	aux = ft_mtsearch_list(envp, name);
 	if (aux)
 		return (ft_strdup(aux->data));
 	return (NULL);

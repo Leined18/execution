@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:14 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/27 17:21:38 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/03 10:28:00 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_lst_data(t_mt *array)
 		while (node)
 		{
 			ft_printf("[%s]", (char *)(node->data));
-			node = node->next;
+			node = node->right;
 			if (node)
 				ft_printf("->");
 			else
@@ -42,7 +42,7 @@ int		env_builtin(char **args, t_env *envp)
 		while (aux)
 		{
 			ft_printf("%s\n", (char *)(aux->data));
-			aux = aux->next;
+			aux = aux->right;
 		}
 		return (0);
 	}
