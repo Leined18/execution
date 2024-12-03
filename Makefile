@@ -6,7 +6,7 @@
 #    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/12/03 13:22:37 by danpalac         ###   ########.fr        #
+#    Updated: 2024/12/03 13:34:08 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,7 @@ RDLFLAGPRUEBA		:= -lreadline
 
 BUILTINS_FILES	:= builtin ft_echo ft_env ft_cd ft_pwd
 CMD_FILES		:= 
-ENV_FILES		:= env_init env_set env_get ft_strrtrim ft_strltrim
+ENV_FILES		:= env_init env_set env_get env_free ft_strrtrim ft_strltrim
 
 #==========FILES==============================================================#
 

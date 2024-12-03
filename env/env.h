@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 19:37:03 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/03 12:40:23 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/03 13:34:32 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*ft_getenv_value(const char *name, t_mt *envp);
 size_t	get_len_env(char *name, t_mt *mt_env, int flag);
 int		ft_pmatch_env(const char *s1, const char *s2, size_t n);
 int		ft_pmatch_str(const char *s1, const char *s2, size_t n);
+void	ft_env_free(void **environ);
 // LUEGO CAMBIAR
 char	*ft_strrtrim(char const *s1, char const *set);
 char	*ft_strltrim(char const *s1, char const *set);

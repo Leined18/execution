@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:38:20 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/03 13:30:34 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/03 13:40:03 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	ft_pmatch_str(const char *s1, const char *s2, size_t n)
 
 int	ft_pmatch_env(const char *s1, const char *s2, size_t n)
 {
-    if (!s1 || !s2)
-        return (1);
+	if (!s1 || !s2)
+		return (1);
 	// Comparar los primeros n caracteres
 	if (ft_strncmp(s1, s2, n) != 0)
 		return (1);
