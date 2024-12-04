@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/03 13:32:10 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:14:12 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int	shell_loop(t_env *environ)
 		prompt = generate_prompt(environ->mt_env);
 		input = readline(prompt);
 		if (input == NULL)
-			return (free(prompt), rl_clear_history(), 0);
+			return (free(prompt), free(input), rl_clear_history(), 0);
 		if (ft_pmatch_str(input, "exit", 4) == 0)
 			return (free(prompt), free_null((void **)&input),
 				rl_clear_history(), 1);
@@ -141,8 +141,6 @@ int	shell_loop(t_env *environ)
 		(free_array2d(splitted_path), free(prompt), free_null((void **)&input));
 	}
 }
-
-
 
 int	main(int ac, char **av, char **ev)
 {
@@ -158,7 +156,7 @@ int	main(int ac, char **av, char **ev)
 	environ = copy_envp(ev);
 	if (!environ)
 		return (ft_error(ERROR, 0), 1);
-	shell_loop(environ);
-	/* free_environment(environ); */
+	//shell_loop(environ);
+	ft_env_free(environ);
 	return (ft_successful(SUCCESS, 1), 0);
 }
