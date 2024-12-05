@@ -6,7 +6,7 @@
 #    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/12/04 18:41:58 by mvidal-h         ###   ########.fr        #
+#    Updated: 2024/12/05 18:06:22 by mvidal-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,8 +75,9 @@ LIBFT			:= $(LIBFT_DIR)$(LIBFT_LIB)
 BUILTINS_DIR	:= builtins/
 CMD_DIR			:= cmd/
 ENV_DIR			:= env/
+UTILS_DIR		:= utils/
 
-INCLUDES		:= $(INC)*.h $(BUILTINS_DIR)*.h $(CMD_DIR)*.h $(ENV_DIR)*.h
+INCLUDES		:= $(INC)*.h $(BUILTINS_DIR)*.h $(CMD_DIR)*.h $(ENV_DIR)*.h $(UTILS_DIR)*.h
 
 #==========COMMANDS============================================================#
 
@@ -86,7 +87,7 @@ RM			:= rm -rf
 AR			:= ar rcs
 LIB			:= ranlib
 MKDIR 		:= mkdir -p
-IFLAGS		:= -I$(LIB_DIR) -I$(INC) -I$(BUILTINS_DIR) -I$(CMD_DIR) -I$(ENV_DIR) 
+IFLAGS		:= -I$(LIB_DIR) -I$(INC) -I$(BUILTINS_DIR) -I$(CMD_DIR) -I$(ENV_DIR) -I$(UTILS_DIR)
 LFLAGS		:= -L$(LIB_DIR) -lmt -lft 
 RDLFLAGPRUEBA		:= -lreadline
 
@@ -95,12 +96,14 @@ RDLFLAGPRUEBA		:= -lreadline
 BUILTINS_FILES	:= builtin ft_echo ft_env ft_cd ft_pwd ft_exit
 CMD_FILES		:= 
 ENV_FILES		:= env_init env_set env_get env_free ft_strrtrim ft_strltrim
+UTILS_FILES		:= array2d_utils tmlst_utils
 
 #==========FILES==============================================================#
 
 SRC_FILES+=$(addprefix $(BUILTINS_DIR), $(BUILTINS_FILES))
 SRC_FILES+=$(addprefix $(CMD_DIR), $(CMD_FILES))
 SRC_FILES+=$(addprefix $(ENV_DIR), $(ENV_FILES))
+SRC_FILES+=$(addprefix $(UTILS_DIR), $(UTILS_FILES))
 
 SRCS := $(addsuffix .c, $(SRC_FILES))
 OBJS := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))

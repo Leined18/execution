@@ -6,11 +6,29 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:32:22 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/04 11:09:25 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/05 09:57:15 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
+
+int	free_array2d(char **array)
+{
+	int	i;
+
+	if (array && *array)
+	{
+		i = 0;
+		while (array[i])
+		{
+			free(array[i]);
+			i++;
+		}
+		free(array);
+		return (1);
+	}
+	return (0);
+}
 
 void	ft_env_free(t_env *environ)
 {

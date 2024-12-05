@@ -3,7 +3,7 @@
 
 # include "mt.h"
 
-# define BUILTINS 4
+# define BUILTINS 5
 
 typedef struct s_env t_env;
 
@@ -22,6 +22,5 @@ typedef struct s_env
 	t_mt		*path;
 	t_builtin	builtins[BUILTINS];
 }			t_env;
-
 
 #endif

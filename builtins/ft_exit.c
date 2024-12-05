@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 16:50:32 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/04 18:12:57 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/05 12:56:01 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@ int	exit_builtin(char **args, t_env *envp)
 	}
 	if (envp)
 	{
-		ft_printf("llego aqui\n");
 		ft_env_free(envp);
-		ft_printf("llego aqui2\n");
+		free_array2d(args);
 	}
 	exit(exit_code);
 }

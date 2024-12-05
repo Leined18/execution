@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/04 18:38:15 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/05 12:56:52 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,6 @@
 // 	return (0);
 // }
 
-int	free_array2d(char **array)
-{
-	int	i;
-
-	if (array && *array)
-	{
-		i = 0;
-		while (array[i])
-		{
-			free(array[i]);
-			i++;
-		}
-		free(array);
-		return (1);
-	}
-	return (0);
-}
-
 // void	free_environment(t_env *environ)
 // {
 // 	free_nodes_lst(&environ->lst_env);
@@ -76,6 +58,22 @@ int	free_array2d(char **array)
 // Return the length of the value of env var named "name".
 // If flag ==1 and var is "HOME" return 1. (~ in prompt).
 // else return the normal length.
+
+static int	is_exit(char **splitted)
+{
+	if (ft_pmatch_str(splitted[0], "exit", 4) == 0)
+	{
+		if (splitted[1])
+		{
+			if (!ft_isstrnum(splitted[1]))
+				return (1);
+			else if (splitted[2])
+				return (0);
+		}
+		return (1);
+	}
+	return (0);
+}
 
 int	pwd_is_home(t_mt *mt_env)
 {
@@ -123,22 +121,22 @@ int	shell_loop(t_env *environ)
 {
 	char	*input;
 	char	*prompt;
-	char	**splitted_path;
+	char	**splitted;
 
 	while (1)
 	{
 		prompt = generate_prompt(environ->mt_env);
 		input = readline(prompt);
 		if (input == NULL)
-			return (free(prompt), free(input), rl_clear_history(), 0);
+			return (free(prompt), rl_clear_history(), 1);
 		if (*input)
 		{
-			if (ft_pmatch_str(input, "exit", 4) == 0)
-				return (free(prompt), free_null((void **)&input), rl_clear_history(), 1);
 			add_history(input);
-			splitted_path = ft_split(input, ' ');
-			execute_builtin(splitted_path, environ);
-			(free_array2d(splitted_path), free(prompt), free_null((void **)&input));
+			splitted = ft_split(input, ' ');
+			if (is_exit(splitted))
+				(free(prompt), free_null((void **)&input), rl_clear_history());
+			execute_builtin(splitted, environ);
+			(free_array2d(splitted), free(prompt), free_null((void **)&input));
 		}
 	}
 }

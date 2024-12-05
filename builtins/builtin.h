@@ -15,7 +15,6 @@ int		cd_builtin(char **args, t_env *envp);
 
 //ft_env.c
 int		env_builtin(char **args, t_env *envp);
-void	print_array(char **array);
 
 //ft_pwd.c
 int		pwd_builtin(char **args, t_env *envp);

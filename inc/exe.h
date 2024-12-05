@@ -4,6 +4,7 @@
 # include "builtin.h"
 # include "cmd.h"
 # include "env.h"
+# include "utils.h"
 # include "libft.h"
 # include "mt.h"
 # include "types.h"
