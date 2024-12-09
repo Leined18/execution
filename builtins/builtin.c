@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:39:30 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/05 10:21:21 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/09 12:25:28 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,11 @@ void init_builtins(t_builtin *builtins)
 	builtins[3].name = "exit";
 	builtins[3].func = exit_builtin;
 
-	builtins[4].name = NULL;
-	builtins[4].func = NULL;
+	builtins[4].name = "echo";
+	builtins[4].func = echo_builtin;
+
+	builtins[5].name = NULL;
+	builtins[5].func = NULL;
 }
 
 int execute_builtin(char **args, t_env *envp)

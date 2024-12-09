@@ -18,6 +18,4 @@
 // Amarillo
 # define WARNING "\033[1;33m⚠️ Warning: Warning in function!\n\033[0m"
 
-
-
 #endif

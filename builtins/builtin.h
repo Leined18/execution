@@ -22,4 +22,7 @@ int		pwd_builtin(char **args, t_env *envp);
 //ft_exit.c
 int		exit_builtin(char **args, t_env *envp);
 
+//ft_echo.c
+int		echo_builtin(char **args, t_env *envp);
+
 #endif
