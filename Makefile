@@ -6,7 +6,7 @@
 #    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/12/05 18:06:22 by mvidal-h         ###   ########.fr        #
+#    Updated: 2024/12/09 16:31:26 by mvidal-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,7 @@ LIBFT			:= $(LIBFT_DIR)$(LIBFT_LIB)
 BUILTINS_DIR	:= builtins/
 CMD_DIR			:= cmd/
 ENV_DIR			:= env/
-UTILS_DIR		:= utils/
+UTILS_DIR		:= exe_utils/
 
 INCLUDES		:= $(INC)*.h $(BUILTINS_DIR)*.h $(CMD_DIR)*.h $(ENV_DIR)*.h $(UTILS_DIR)*.h
 

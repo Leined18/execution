@@ -1,5 +1,5 @@
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef EXE_UTILS_H
+# define EXE_UTILS_H
 
 # include "exe.h"
 
