@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/09 15:54:18 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/10 11:32:19 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,5 @@ int	cd_builtin(char **args, t_env *envp)
 	new_path = getcwd(NULL, 0);
 	ft_setenv("PWD", new_path, envp->mt_env);
 	ft_setenv("OLDPWD", prev_path, envp->mt_env);
-	ft_printf("\n");
 	return (free(prev_path), free(new_path), 0);
 }

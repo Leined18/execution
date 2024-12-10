@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/05 12:56:52 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:21:55 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,9 @@ int	shell_loop(t_env *environ)
 			if (is_exit(splitted))
 				(free(prompt), free_null((void **)&input), rl_clear_history());
 			execute_builtin(splitted, environ);
-			(free_array2d(splitted), free(prompt), free_null((void **)&input));
+			free_array2d(splitted);
 		}
+		(free(prompt), free_null((void **)&input));
 	}
 }
 

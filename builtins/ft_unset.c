@@ -6,7 +6,13 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:53:30 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/09 09:53:35 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:37:52 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "exe.h"
+
+int	unset_builtin(char **args, t_env *envp)
+{
+    
+}

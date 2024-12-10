@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:11 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/09 16:47:50 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/10 11:53:24 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	echo_builtin(char **args, t_env *envp)
 	int		i;
 	int		opt;
 	int		num_args;
-	char	*aux;
+	// char	*aux;
 
 	(void)envp;
 	num_args = array2d_len(args);
@@ -62,12 +62,11 @@ int	echo_builtin(char **args, t_env *envp)
 			if (i++ < num_args - 1)
 				ft_printf(" ");
 		}
-		ft_printf("\n");
 		if (!opt)
 			ft_printf("\n");
-		aux = generate_echo_arg(args);//DE PRUEBA LUEGO BORRAR
-		ft_printf("-%s-\n", aux);//DE PRUEBA LUEGO BORRAR
-		free(aux);//DE PRUEBA LUEGO BORRAR
+		// aux = generate_echo_arg(args);//DE PRUEBA LUEGO BORRAR
+		// ft_printf("-%s-\n", aux);//DE PRUEBA LUEGO BORRAR
+		// free(aux);//DE PRUEBA LUEGO BORRAR
 	}
 	return (0);
 }

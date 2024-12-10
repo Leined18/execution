@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:14 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/09 15:38:54 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/10 11:32:25 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int		env_builtin(char **args, t_env *envp)
 			ft_printf("%s\n", (char *)(aux->data));
 			aux = aux->right;
 		}
-		ft_printf("\n");
 		return (0);
 	}
 	return (1);
