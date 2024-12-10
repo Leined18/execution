@@ -3,7 +3,7 @@
 
 # include "mt.h"
 
-# define BUILTINS 6
+# define BUILTINS 7
 
 typedef struct s_env t_env;
 

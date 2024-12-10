@@ -6,7 +6,7 @@
 #    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/12/09 16:31:26 by mvidal-h         ###   ########.fr        #
+#    Updated: 2024/12/10 14:56:55 by mvidal-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,7 +93,7 @@ RDLFLAGPRUEBA		:= -lreadline
 
 #==========SOURCES============================================================#
 
-BUILTINS_FILES	:= builtin ft_echo ft_env ft_cd ft_pwd ft_exit
+BUILTINS_FILES	:= builtin ft_echo ft_env ft_cd ft_pwd ft_exit ft_unset
 CMD_FILES		:= 
 ENV_FILES		:= env_init env_set env_get env_free ft_strrtrim ft_strltrim
 UTILS_FILES		:= array2d_utils tmlst_utils
