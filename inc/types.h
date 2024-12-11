@@ -19,6 +19,8 @@ typedef struct s_env
 {
 	t_mt		*mt_env;
 	int			num_env;
+	t_mt		*mt_var;
+	int			num_var;
 	t_mt		*path;
 	t_builtin	builtins[BUILTINS];
 }			t_env;

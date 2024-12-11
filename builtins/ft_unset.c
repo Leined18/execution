@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:53:30 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/10 17:01:32 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/11 13:11:32 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ int	unset_builtin(char **args, t_env *envp)
 	while (args[i])
 	{
 		del = ft_mtsearch_list(envp->mt_env, args[i++]);
-		if (del)	
+		if (del)
+		{
 			ft_mtdel_one(&envp->mt_env, del);
+			envp->num_env--;
+		}
 	}
 	return (0);
 }
