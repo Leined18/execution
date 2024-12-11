@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_get.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:38:20 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/03 13:40:03 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/11 15:45:32 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int	ft_pmatch_env(const char *s1, const char *s2, size_t n)
 		return (1);
 	return (0); // Coincidencia exacta
 }
-
+// Return the length of the value of env var named "name".
+// If flag ==1 and var is "HOME" return 1. (~ in prompt).
+// else return the normal length.
 size_t	get_len_env(char *name, t_mt *mt_env, int flag)
 {
 	char	*value;

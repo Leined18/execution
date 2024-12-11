@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:32:22 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/05 09:57:15 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/11 16:52:39 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	free_array2d(char **array)
 void	ft_env_free(t_env *environ)
 {
 	ft_mtclear(&environ->mt_env);
+	ft_mtclear(&environ->mt_var);
 	ft_mtclear(&environ->path);
 	free_null((void **)&environ);
 }
@@ -42,7 +43,8 @@ void 	ft_env_free_func(void **environ)
 	t_env	*env;
 
 	env = (t_env *)*environ;
-	ft_mtclear(&(env)->mt_env);
-	ft_mtclear(&(env)->path);
+	ft_mtclear(&env->mt_env);
+	ft_mtclear(&env->mt_var);
+	ft_mtclear(&env->path);
 	free_null(environ);
 }

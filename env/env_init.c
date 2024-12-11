@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/03 12:44:01 by danpalac         ###   ########.fr       */
+/*   Updated: 2024/12/11 16:38:01 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ t_env	*copy_envp(char **envp)
 		counter++;
 	environ->num_env = counter;
 	environ->mt_env = NULL;
+	environ->num_var = 0;
+	environ->mt_var = NULL;
 	counter = 0;
 	while (counter < environ->num_env)
 	{

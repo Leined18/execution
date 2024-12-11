@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/10 13:21:55 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/11 16:46:54 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,6 @@
 	ft_mtadd_back(list, new_node);
 	return (ptr);
 } */
-
-// Return the length of the value of env var named "name".
-// If flag ==1 and var is "HOME" return 1. (~ in prompt).
-// else return the normal length.
 
 static int	is_exit(char **splitted)
 {
@@ -133,7 +129,25 @@ int	shell_loop(t_env *environ)
 		{
 			add_history(input);
 			splitted = ft_split(input, ' ');
-			if (is_exit(splitted))
+			if (ft_pmatch_str(splitted[0], "path", 4) == 0)
+			{
+				print_lst_data(environ->path);
+				(free_array2d(splitted), free(prompt), free_null((void **)&input));
+				continue;
+			}
+			else if (ft_pmatch_str(splitted[0], "create", 6) == 0)
+			{
+				ft_setenv(splitted[1], splitted[2], &environ->mt_var, &environ->num_var);
+				(free_array2d(splitted), free(prompt), free_null((void **)&input));
+				continue;
+			}
+			else if (ft_pmatch_str(splitted[0], "vars", 4) == 0)
+			{
+				print_lst_data(environ->mt_var);
+				(free_array2d(splitted), free(prompt), free_null((void **)&input));
+				continue;
+			}
+			else if (is_exit(splitted))
 				(free(prompt), free_null((void **)&input), rl_clear_history());
 			execute_builtin(splitted, environ);
 			free_array2d(splitted);
