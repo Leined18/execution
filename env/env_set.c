@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:51:27 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/12 13:37:48 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:25:06 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,31 @@ char	*build_new_env(const char *name, const char *value, int total_len)
 	return (str);
 }
 
-int	ft_setenv(const char *name, const char *value, t_env *envp)
+int	ft_setenv(const char *name, const char *value, t_env *envp, int is_env)
 {
-	int		len_name;
 	int		total_len;
 	char	*env_str;
 	char	*new_env;
+	t_mt	**list;
 
-	len_name = ft_strlen(name);
-	total_len = len_name + 1 + ft_strlen(value) + 1;
-	env_str = ft_getenv(name, envp->mt_env);
+	total_len = ft_strlen(name) + 1 + ft_strlen(value) + 1;
 	new_env = build_new_env(name, value, total_len);
-	if (env_str)
-		ft_mtreplace(&envp->mt_env, ft_mtsearch_list(envp->mt_env, name),ft_mtnew(name, new_env, STRING));
+	if (is_env)
+		list = &envp->mt_env;
 	else
+		list = &envp->mt_var;
+	env_str = ft_getenv(name, *list);
+	if (env_str)
 	{
-		env_str = ft_getenv(name, envp->mt_var);
-		if (env_str)
-			ft_mtreplace(&envp->mt_var, ft_mtsearch_list(envp->mt_var, name),ft_mtnew(name, new_env, STRING));
-		else
-		{
-			ft_mtpush_data_back(&envp->mt_var, new_env, new_env, STRING);
-			envp->num_var++;
-		}
+		ft_mtreplace(list, ft_mtsearch_list(*list, name), ft_mtnew(name, new_env, STRING));
+		free(env_str);
 	}
-	return (free(env_str), 0);
+	else if (!is_env) // Si ya estamos en mt_var, añadimos al final
+	{
+		ft_mtpush_data_back(list, new_env, new_env, STRING);
+		envp->num_var++;
+	}
+	else // Si no está en mt_env, intentamos con mt_var
+		return (free(new_env), ft_setenv(name, value, envp, 0));
+	return (0);
 }
