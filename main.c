@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/11 16:46:54 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:01:26 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,13 +137,14 @@ int	shell_loop(t_env *environ)
 			}
 			else if (ft_pmatch_str(splitted[0], "create", 6) == 0)
 			{
-				ft_setenv(splitted[1], splitted[2], &environ->mt_var, &environ->num_var);
+				ft_setenv(splitted[1], splitted[2], environ);
 				(free_array2d(splitted), free(prompt), free_null((void **)&input));
 				continue;
 			}
 			else if (ft_pmatch_str(splitted[0], "vars", 4) == 0)
 			{
 				print_lst_data(environ->mt_var);
+				ft_printf("%d\n", environ->num_var);
 				(free_array2d(splitted), free(prompt), free_null((void **)&input));
 				continue;
 			}

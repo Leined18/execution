@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 19:37:03 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/11 16:41:42 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:41:03 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 //env_init.c
 t_env	*copy_envp(char **envp);
 //env_set.c
-int		ft_setenv(const char *name, const char *value, t_mt **envp, int *counter);
+int		ft_setenv(const char *name, const char *value, t_env *envp);
 //env_get.c
 char	*ft_getenv(const char *name, t_mt *envp);
 char	*ft_getenv_value(const char *name, t_mt *envp);
