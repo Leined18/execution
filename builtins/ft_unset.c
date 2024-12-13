@@ -6,24 +6,11 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:53:30 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/13 12:09:29 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:13:23 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
-
-void	ft_mtdel_one(t_mt **first, t_mt *node) //PONER EN memtrack/src/list
-{
-	if (!node)
-		return ;
-	if (node->left)
-		node->left->right = node->right;
-	else
-		*first = node->right;
-	if (node->right)
-		node->right->left = node->left;
-	ft_mtfree(node);
-}
 
 int	unset_builtin(char **args, t_env *envp)
 {

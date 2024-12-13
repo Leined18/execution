@@ -29,6 +29,6 @@ int		echo_builtin(char **args, t_env *envp);
 int		unset_builtin(char **args, t_env *envp);
 
 //ft_export.c
-//int		export_builtin(char **args, t_env *envp);
+int		export_builtin(char **args, t_env *envp);
 
 #endif

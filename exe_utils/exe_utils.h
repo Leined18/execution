@@ -9,5 +9,7 @@ void	print_array2d(char **array);
 
 //tmlst_utils.c.c
 void	print_lst_data(t_mt *array);
+void	ft_mtdel_one(t_mt **first, t_mt *node);
+t_mt	*ft_mtpop_one(t_mt **first, char* find);
 
 #endif
