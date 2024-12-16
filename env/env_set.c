@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:51:27 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/12 17:25:06 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:00:59 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ char	*build_new_env(const char *name, const char *value, int total_len)
 		return (NULL);
 	ft_strlcat(str, name, total_len);
 	ft_strlcat(str, "=", total_len);
-	ft_strlcat(str, value, total_len);
+	if(value)
+		ft_strlcat(str, value, total_len);
 	return (str);
 }
 
