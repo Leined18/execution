@@ -6,7 +6,7 @@
 #    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/12/13 15:48:45 by mvidal-h         ###   ########.fr        #
+#    Updated: 2024/12/18 12:53:25 by mvidal-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,10 +72,10 @@ MEMTRACK_DIR	:= ../memtrack/
 
 MEMTRACK		:= $(MEMTRACK_DIR)$(MEMTRACK_LIB)
 LIBFT			:= $(LIBFT_DIR)$(LIBFT_LIB)
-BUILTINS_DIR	:= builtins/
-CMD_DIR			:= cmd/
-ENV_DIR			:= env/
-UTILS_DIR		:= exe_utils/
+BUILTINS_DIR	:= $(SRC_DIR)builtins/
+CMD_DIR			:= $(SRC_DIR)cmd/
+ENV_DIR			:= $(SRC_DIR)env/
+UTILS_DIR		:= $(SRC_DIR)exe_utils/
 
 INCLUDES		:= $(INC)*.h $(BUILTINS_DIR)*.h $(CMD_DIR)*.h $(ENV_DIR)*.h $(UTILS_DIR)*.h
 
@@ -88,35 +88,23 @@ AR			:= ar rcs
 LIB			:= ranlib
 MKDIR 		:= mkdir -p
 IFLAGS		:= -I$(LIB_DIR) -I$(INC) -I$(BUILTINS_DIR) -I$(CMD_DIR) -I$(ENV_DIR) -I$(UTILS_DIR)
-LFLAGS		:= -L$(LIB_DIR) -lmt -lft 
-RDLFLAGPRUEBA		:= -lreadline
-
-#==========SOURCES============================================================#
-
-BUILTINS_FILES	:= builtin ft_echo ft_env ft_cd ft_pwd ft_exit ft_unset ft_export
-CMD_FILES		:= 
-ENV_FILES		:= env_init env_set env_get env_free ft_strrtrim ft_strltrim
-UTILS_FILES		:= array2d_utils tmlst_utils
+LFLAGS		:= -L$(LIB_DIR) -lmt -lft -lreadline
 
 #==========FILES==============================================================#
 
-SRC_FILES+=$(addprefix $(BUILTINS_DIR), $(BUILTINS_FILES))
-SRC_FILES+=$(addprefix $(CMD_DIR), $(CMD_FILES))
-SRC_FILES+=$(addprefix $(ENV_DIR), $(ENV_FILES))
-SRC_FILES+=$(addprefix $(UTILS_DIR), $(UTILS_FILES))
-
-SRCS := $(addsuffix .c, $(SRC_FILES))
-OBJS := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
-DEPS := $(addprefix $(OBJ_DIR), $(addsuffix .d, $(SRC_FILES)))
+# Variables de fuentes y objetos
+SRCS	:= $(shell find $(SRC_DIR) -type f -name "*.c")
+OBJS	:= $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRCS))
+DEPS	:= $(patsubst $(OBJ_DIR)%.o, $(OBJ_DIR)%.d, $(OBJS))
 
 #==========RULES==============================================================#
 
 -include $(DEPS)
 all: $(NAME)
 
-$(OBJ_DIR)%.o: %.c Makefile
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c Makefile
 	@$(MKDIR) $(dir $@)	
-	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) -MP -MMD -c $< -o $@
+	@$(CC) $(CFLAGS) $(IFLAGS) -MP -MMD -c $< -o $@
 
 $(NAME): $(LIBFT) $(MEMTRACK) $(OBJS)
 	@$(AR) $(NAME) $(OBJS)
@@ -127,7 +115,7 @@ $(NAME): $(LIBFT) $(MEMTRACK) $(OBJS)
 	@cp -R $(INCLUDES) $(NAME) $(LIB_DIR)
 
 $(EXE): main.c $(NAME)
-	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -lmt -lft $(RDLFLAGPRUEBA) -o $(EXE)
+	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -lmt -lft -o $(EXE)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(EXE)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
 
