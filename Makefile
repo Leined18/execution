@@ -6,7 +6,7 @@
 #    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/12/18 12:53:25 by mvidal-h         ###   ########.fr        #
+#    Updated: 2024/12/18 17:12:12 by mvidal-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ MOVE_UP     = \033[1A
 NAME		:= libexe.a
 MEMTRACK_LIB:= libmt.a
 LIBFT_LIB	:= libft.a
+PARSER_LIB	:= libparse.a
 EXE			:= exe
 
 #==========DIRECTORIES=======================================================#
@@ -69,9 +70,11 @@ OBJ_DIR 		:= obj/
 LIBFT_DIR		:= ../libft/
 LIB_DIR			:= ../lib/
 MEMTRACK_DIR	:= ../memtrack/
+PARSER_DIR		:= ../parser/
 
 MEMTRACK		:= $(MEMTRACK_DIR)$(MEMTRACK_LIB)
 LIBFT			:= $(LIBFT_DIR)$(LIBFT_LIB)
+PARSER			:= $(PARSER_DIR)$(PARSER_LIB)
 BUILTINS_DIR	:= $(SRC_DIR)builtins/
 CMD_DIR			:= $(SRC_DIR)cmd/
 ENV_DIR			:= $(SRC_DIR)env/
@@ -88,7 +91,7 @@ AR			:= ar rcs
 LIB			:= ranlib
 MKDIR 		:= mkdir -p
 IFLAGS		:= -I$(LIB_DIR) -I$(INC) -I$(BUILTINS_DIR) -I$(CMD_DIR) -I$(ENV_DIR) -I$(UTILS_DIR)
-LFLAGS		:= -L$(LIB_DIR) -lmt -lft -lreadline
+LFLAGS		:= -L$(LIB_DIR) -lparse -lft -lmt -lreadline
 
 #==========FILES==============================================================#
 
@@ -106,7 +109,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c Makefile
 	@$(MKDIR) $(dir $@)	
 	@$(CC) $(CFLAGS) $(IFLAGS) -MP -MMD -c $< -o $@
 
-$(NAME): $(LIBFT) $(MEMTRACK) $(OBJS)
+$(NAME): $(LIBFT) $(MEMTRACK) $(PARSER) $(OBJS)
 	@$(AR) $(NAME) $(OBJS)
 	@$(LIB) $(NAME)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(NAME)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
@@ -115,7 +118,7 @@ $(NAME): $(LIBFT) $(MEMTRACK) $(OBJS)
 	@cp -R $(INCLUDES) $(NAME) $(LIB_DIR)
 
 $(EXE): main.c $(NAME)
-	@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) main.c $(NAME) -lmt -lft -o $(EXE)
+	@$(CC) $(CFLAGS) $(IFLAGS) main.c $(NAME) $(LFLAGS) -o $(EXE)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(EXE)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
 
@@ -124,17 +127,22 @@ $(LIBFT):
 
 $(MEMTRACK):
 	@make -sC $(MEMTRACK_DIR)
+
+$(PARSER):
+	@make -sC $(PARSER_DIR)
 	
 clean:
 	@$(RM) -rf $(OBJ_DIR) $(DEPS)
 	@make clean -sC $(LIBFT_DIR)
 	@make clean -sC $(MEMTRACK_DIR)
+	@make clean -sC $(PARSER_DIR)
 	@echo "$(CYAN)[$(NAME)]:\tobject files $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 fclean: clean
 	@$(RM) -rf $(NAME) $(EXE)
 	@make fclean -sC $(LIBFT_DIR)
 	@make fclean -sC $(MEMTRACK_DIR)
+	@make fclean -sC $(PARSER_DIR)
 	@echo "$(CYAN)[$(NAME)]:\tEXE. files $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 re: fclean all

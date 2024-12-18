@@ -7,6 +7,7 @@
 # include "exe_utils.h"
 # include "libft.h"
 # include "mt.h"
+# include "parse.h"
 # include "types.h"
 # include <readline/history.h>
 # include <readline/readline.h>
