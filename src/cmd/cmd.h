@@ -2,6 +2,7 @@
 # define COMMANDS_H
 
 # include "libft.h"
+# include "mt.h"
 // Include any necessary headers here
 
 // Declare your function prototypes here
@@ -17,7 +18,10 @@ typedef struct s_command
 /*                                 COMMANDS                                   */
 /* ************************************************************************** */
 
-t_command	*create_command(char *cmd, char *arg);
+t_command	*create_command(t_mt *parsed_cmd, char **path);
+void		free_command(t_command *cmd);
+void	print_command(t_command *cmd);
+
 void		execute_command(t_command *cmd);
 void		redirect_output(int fd);
 void		redirect_input(int fd);
@@ -26,7 +30,6 @@ void		pipe_commands(t_command *cmd1, t_command *cmd2);
 void		handle_parent(int *pipefd, pid_t pid1, pid_t pid2);
 char		*get_cmd_path(char *cmd, char **envp);
 t_command	*parse_command(char *input, char **environ, t_list **lst);
-void		free_command(t_command **cmd);
 
 /* // Builtin functions
 int			execute_builtin(t_command *cmd);

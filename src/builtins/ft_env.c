@@ -6,17 +6,17 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:14 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/10 11:32:25 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:02:00 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-int		env_builtin(char **args, t_env *envp)
+int		env_builtin(t_command *cmd, t_env *envp)
 {
 	t_mt	*aux;
 
-	(void)args;
+	(void)cmd;
 	if (envp->mt_env != NULL)
 	{
 		aux = envp->mt_env;

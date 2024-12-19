@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:11 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/10 11:53:24 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:01:10 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*generate_echo_arg(char **args)
 	return (arg);
 }
 
-int	echo_builtin(char **args, t_env *envp)
+int	echo_builtin(t_command *cmd, t_env *envp)
 {
 	int		i;
 	int		opt;
@@ -50,15 +50,15 @@ int	echo_builtin(char **args, t_env *envp)
 	// char	*aux;
 
 	(void)envp;
-	num_args = array2d_len(args);
-	if (num_args > 1)
+	num_args = array2d_len(cmd->args);
+	if (num_args)
 	{
-		i = 1;
-		opt = check_opt(args[i]);
+		i = 0;
+		opt = check_opt(cmd->args[i]);
 		i += opt;
-		while (args[i])
+		while (cmd->args[i])
 		{
-			ft_printf("%s", args[i]);
+			ft_printf("%s", cmd->args[i]);
 			if (i++ < num_args - 1)
 				ft_printf(" ");
 		}

@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/12 16:46:35 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:05:51 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,15 @@ char	*get_expanded_path(char *path, t_env *envp)
 	return (expanded);
 }
 
-int	cd_builtin(char **args, t_env *envp)
+int	cd_builtin(t_command *cmd, t_env *envp)
 {
 	char	*prev_path;
 	char	*new_path;
 	char	*path;
 
-	path = args[1];
+	path = NULL;
+	if (cmd->args)
+		path = cmd->args[0];
 	prev_path = getcwd(NULL, 0);
 	if (prev_path == NULL)
 		return (perror("getcwd"), 1);

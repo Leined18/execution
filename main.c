@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/17 12:24:05 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:39:10 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@
 	return (ptr);
 } */
 
-static int	is_exit(char **splitted)
+static int	is_exit(t_command *cmd)
 {
-	if (ft_pmatch_str(splitted[0], "exit", 4) == 0)
+	if (ft_pmatch_str(cmd->command, "exit", 4) == 0)
 	{
-		if (splitted[1])
+		if (cmd->args)
 		{
-			if (!ft_isstrnum(splitted[1]))
+			if (!ft_isstrnum(cmd->args[0]))
 				return (1);
-			else if (splitted[2])
+			else if (cmd->args[1])
 				return (0);
 		}
 		return (1);
@@ -115,9 +115,10 @@ char	*generate_prompt(t_mt *mt_env)
 
 int	shell_loop(t_env *environ)
 {
-	char	*input;
-	char	*prompt;
-	char	**splitted;
+	char		*input;
+	char		*prompt;
+	t_mt		*parsed_cmd;
+	t_command	*cmd;
 
 	while (1)
 	{
@@ -128,30 +129,33 @@ int	shell_loop(t_env *environ)
 		if (*input)
 		{
 			add_history(input);
-			splitted = ft_split(input, ' ');
-			if (ft_pmatch_str(splitted[0], "path", 4) == 0)
+			parsed_cmd = parse_input(input);
+			cmd = create_command(parsed_cmd, environ->path);
+			ft_mtclear(&parsed_cmd);
+			//print_command(cmd);
+			if (ft_pmatch_str(cmd->command, "path", 4) == 0)
 			{
-				print_lst_data(environ->path);
-				(free_array2d(splitted), free(prompt), free_null((void **)&input));
+				print_array2d(environ->path);
+				(free_command(cmd), free(prompt), free_null((void **)&input));
 				continue;
 			}
-			else if (ft_pmatch_str(splitted[0], "create", 6) == 0)
+			else if (ft_pmatch_str(cmd->command, "create", 6) == 0)
 			{
-				ft_setenv(splitted[1], splitted[2], environ, 1);
-				(free_array2d(splitted), free(prompt), free_null((void **)&input));
+				ft_setenv(cmd->args[0], cmd->args[1], environ, 1);
+				(free_command(cmd), free(prompt), free_null((void **)&input));
 				continue;
 			}
-			else if (ft_pmatch_str(splitted[0], "vars", 4) == 0)
+			else if (ft_pmatch_str(cmd->command, "vars", 4) == 0)
 			{
 				print_lst_data(environ->mt_var);
 				ft_printf("%d\n", environ->num_var);
-				(free_array2d(splitted), free(prompt), free_null((void **)&input));
+				(free_command(cmd), free(prompt), free_null((void **)&input));
 				continue;
 			}
-			else if (is_exit(splitted))
+			if (is_exit(cmd))
 				(free(prompt), free_null((void **)&input), rl_clear_history());
-			execute_builtin(splitted, environ);
-			free_array2d(splitted);
+			execute_builtin(cmd, environ);
+			free_command(cmd);
 		}
 		(free(prompt), free_null((void **)&input));
 	}

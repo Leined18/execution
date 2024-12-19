@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 19:37:03 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/12 16:46:26 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/19 12:32:31 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int		ft_pmatch_str(const char *s1, const char *s2, size_t n);
 //env_free.c
 void	ft_env_free(t_env *environ);
 void	ft_env_free_func(void **environ);
-int		free_array2d(char **array);
 // LUEGO CAMBIAR
 char	*ft_strrtrim(char const *s1, char const *set);
 char	*ft_strltrim(char const *s1, char const *set);

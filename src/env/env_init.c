@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/11 16:38:01 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/19 11:10:16 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 // Finds the line that starts with "PATH=" in env, and, if exists
 // creates and array splitting the line with ":" and returns it.
-t_mt	*split_path_env(char *env[])
+char	**split_path_env(char *env[])
 {
 	int		i;
 	char	*path;
-	t_mt	*path_array;
+	char	**path_array;
 
 	i = 0;
 	path = NULL;
@@ -33,7 +33,7 @@ t_mt	*split_path_env(char *env[])
 	if (path)
 	{
 		path += 5;
-		path_array = ft_splitmt(path, ':');
+		path_array = ft_split(path, ':');
 		i = 0;
 	}
 	return (path_array);

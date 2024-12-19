@@ -4,6 +4,7 @@
 # include "exe.h"
 
 //arra2d_utils.c
+int		free_array2d(char **array);
 size_t	array2d_len(char **array);
 void	print_array2d(char **array);
 
