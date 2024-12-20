@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 19:37:03 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/19 12:32:31 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/20 16:32:11 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "libft.h"
 
 //env_init.c
+char	**split_path_env(char *env[]);
 t_env	*copy_envp(char **envp);
 //env_set.c
 int	ft_setenv(const char *name, const char *value, t_env *envp, int is_env);

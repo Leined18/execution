@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:19:55 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/20 15:28:12 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/20 16:06:12 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	free_array2d(char **array)
 			i++;
 		}
 		free(array);
-		array = NULL;
 		return (1);
 	}
 	return (0);

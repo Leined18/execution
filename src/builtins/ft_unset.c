@@ -6,11 +6,22 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:53:30 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/20 15:00:43 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/20 16:06:42 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
+
+void del_and_update(t_mt **list, t_mt *del, int *num, t_env **envp)
+{
+	if (ft_pmatch_str(del->key, "PATH", 4))
+	{
+		free_array2d((*envp)->path);
+		(*envp)->path = NULL;
+	}
+	ft_mtdel_one(list, del);
+	(*num)--;
+}
 
 int	unset_builtin(t_command *cmd, t_env *envp)
 {
@@ -32,10 +43,7 @@ int	unset_builtin(t_command *cmd, t_env *envp)
 			num = &envp->num_var;
 		}
 		if (del)
-		{
-			ft_mtdel_one(list, del);
-			(*num)--;
-		}
+			del_and_update(list, del, num, &envp);
 		i++; 
 	}
 	return (0);
