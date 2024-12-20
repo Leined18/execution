@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:53:25 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/19 16:05:15 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:00:07 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int		export_builtin(t_command *cmd, t_env *envp)
 	int		i;
 	char	**split_arg;
 
-	i = 0;
-	if (!cmd->args)
+	i = 1;
+	if (!cmd->args[i])
 		ft_print_export(envp->mt_env);
 	else
 	{

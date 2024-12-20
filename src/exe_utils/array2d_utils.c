@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:19:55 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/19 12:32:23 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:28:12 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	free_array2d(char **array)
 			i++;
 		}
 		free(array);
+		array = NULL;
 		return (1);
 	}
 	return (0);
@@ -55,4 +56,25 @@ void	print_array2d(char **array)
 		ft_printf("%s\n", array[i]);
 		i++;
 	}
+}
+
+char	**mtconvert_array2d(t_mt *list)
+{
+	char	**array;
+	size_t	list_size;
+	size_t	i;
+
+	if (!list)
+		return (NULL);
+	i = 0;
+	list_size = ft_mtcount_node(list);
+	array = ft_calloc(list_size + 1, sizeof(char *));
+	if (!array)
+		return (NULL);
+	while (list)
+	{
+		array[i++] = ft_strdup(list->data);
+		list = list->right;
+	}
+	return (array);
 }

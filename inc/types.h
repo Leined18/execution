@@ -2,10 +2,10 @@
 # define TYPES_H
 
 # include "mt.h"
-# include "cmd.h"
 
 # define BUILTINS 8
 
+typedef struct s_command t_command;
 typedef struct s_env t_env;
 
 typedef int (*t_builtin_func)(t_command *cmd, t_env *envp);

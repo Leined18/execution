@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:53:30 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/19 16:42:23 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:00:43 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	unset_builtin(t_command *cmd, t_env *envp)
 	t_mt	**list;
 	int		*num;
 
-	i = 0;
+	i = 1;
 	while (cmd->args && cmd->args[i])
 	{
 		del = ft_mtsearch_key(envp->mt_env, cmd->args[i]);

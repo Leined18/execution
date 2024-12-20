@@ -1,8 +1,10 @@
 #ifndef COMMANDS_H
 # define COMMANDS_H
 
+# include "types.h"
 # include "libft.h"
 # include "mt.h"
+
 // Include any necessary headers here
 
 // Declare your function prototypes here
@@ -20,9 +22,11 @@ typedef struct s_command
 
 t_command	*create_command(t_mt *parsed_cmd, char **path);
 void		free_command(t_command *cmd);
-void	print_command(t_command *cmd);
-
+void		print_command(t_command *cmd);
+int			execution(t_command *cmd, t_env *envp);
+void		exec_command(t_command *cmd, char **env);
 void		execute_command(t_command *cmd);
+
 void		redirect_output(int fd);
 void		redirect_input(int fd);
 void		create_child(t_command *cmd, int *pipefd, int child_num);
