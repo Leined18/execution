@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:43 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/20 14:39:02 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/23 09:49:34 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,40 +44,6 @@ char	**mtbranch_array2d(t_mt *list)
 	return (array);
 }
 
-//Checks if command exists. First checks if command exists in every
-// path of splith_path. If not, it checks if command exists as 
-//global path passed as parameter. It builds the path adding "/" 
-//and "cmd" to every path of split_path and check if it
-// exists. If exists it returns the path.
-char	*find_cmd_in_path(char **split_path, const char *cmd)
-{
-	int		i;
-	char	*path;
-	size_t	len;
-
-	i = 0;
-	path = NULL;
-	if (split_path)
-	{
-		while (split_path[i])
-		{
-			len = (ft_strlen(split_path[i]) + ft_strlen(cmd) + 2);
-			path = (char *)ft_calloc(len, sizeof(char));
-			if (path == NULL)
-				exit(1);
-			ft_strlcat(path, split_path[i++], len);
-			ft_strlcat(path, "/", len);
-			ft_strlcat(path, cmd, len);
-			if (access(path, F_OK) == 0)
-				return (path);
-			free(path);
-		}
-	}
-	if (access(cmd, F_OK) == 0)
-		return (ft_strdup(cmd));
-	return (NULL);
-}
-
 t_command	*create_command(t_mt *parsed_cmd, char **path)
 {
 	t_command	*new_command;
@@ -87,6 +53,6 @@ t_command	*create_command(t_mt *parsed_cmd, char **path)
 		ft_error("Error al crear el comando\n", 1);
 	new_command->command = ft_strdup(parsed_cmd->data);
 	new_command->args = mtbranch_array2d(parsed_cmd);
-	new_command->cmd_path = find_cmd_in_path(path, new_command->command);
+	new_command->cmd_path = get_cmd_path(path, new_command->command);
 	return (new_command);
 }
