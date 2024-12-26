@@ -34,6 +34,9 @@ char		*get_cmd_path(char **split_path, const char *cmd);
 int			execution(t_command *cmd, t_env *envp);
 void		exec_command(t_command *cmd, char **env);
 
+//ft_assignation.c
+int ft_assignation(t_command *cmd, t_env *envp);
+
 
 void		redirect_output(int fd);
 void		redirect_input(int fd);

@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/20 15:06:03 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/26 18:14:56 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,9 +139,9 @@ int	shell_loop(t_env *environ)
 				(free_command(cmd), free(prompt), free_null((void **)&input));
 				continue;
 			}
-			else if (ft_pmatch_str(cmd->command, "create", 6) == 0)
+			else if (ft_strchr(cmd->command, '='))
 			{
-				ft_setenv(cmd->args[1], cmd->args[2], environ, 1);
+				ft_assignation(cmd, environ);
 				(free_command(cmd), free(prompt), free_null((void **)&input));
 				continue;
 			}

@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:19:55 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/20 16:06:12 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:29:58 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ size_t	array2d_len(char **array)
 	size_t	len;
 
 	len = 0;
-	while (array[len])
+	while (array && array[len])
 		len++;
 	return (len);
 }
