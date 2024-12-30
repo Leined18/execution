@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:53:25 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/20 17:17:32 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:43:21 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_print_export(t_mt *lst_exp)
 		{
 			split_exp = ft_split((char *)(aux->data), '=');
 			ft_printf("declare -x %s=\"%s\"\n", split_exp[0], split_exp[1]);
-			aux = aux->right;
+			aux = aux->vect.right;
 			free_array2d(split_exp);
 		}
 	}
@@ -37,7 +37,7 @@ int	ft_mtmigrate_one(t_mt **src, t_mt **dest, char *migrate)
 	mig_nod = ft_mtpop_one(src, migrate);
 	if (mig_nod)
 	{
-		ft_mtadd_back(dest, mig_nod);
+		ft_mtadd_right(dest, mig_nod);
 		return (0);
 	}
 	return (1);

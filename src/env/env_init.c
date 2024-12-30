@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/19 11:10:16 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:45:33 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_env	*copy_envp(char **envp)
 		node_content = ft_strdup(envp[counter]);
 		if (!node_content)
 			return (NULL);
-		ft_mtpush_data_back(&environ->mt_env, node_content, node_content,
+		ft_mtpush_data_right(&environ->mt_env, node_content, node_content,
 			STRING);
 		counter++;
 	}

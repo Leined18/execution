@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:43 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/20 14:39:02 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:45:10 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@ char	**mtbranch_array2d(t_mt *list)
 	if (!list)
 		return (NULL);
 	i = 0;
-	list_size = ft_mtcount_node(list->children);
+	list_size = ft_mtcount_node(list->aux);
 	array = ft_calloc(1 + list_size + 1, sizeof(char *));
 	if (!array)
 		return (NULL);
 	array[i++] = ft_strdup(list->data);
-	list = list->children;
+	list = list->aux;
 	while (list)
 	{
 		array[i++] = ft_strdup(list->data);
-		list = list->right;
+		list = list->vect.right;
 	}
 	return (array);
 }

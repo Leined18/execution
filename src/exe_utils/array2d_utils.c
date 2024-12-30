@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array2d_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:19:55 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/20 16:06:12 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:46:20 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	**mtconvert_array2d(t_mt *list)
 	while (list)
 	{
 		array[i++] = ft_strdup(list->data);
-		list = list->right;
+		list = list->vect.right;
 	}
 	return (array);
 }

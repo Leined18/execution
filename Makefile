@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
+#    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2024/12/18 17:12:12 by mvidal-h         ###   ########.fr        #
+#    Updated: 2024/12/30 12:41:45 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ OBJ_DIR 		:= obj/
 LIBFT_DIR		:= ../libft/
 LIB_DIR			:= ../lib/
 MEMTRACK_DIR	:= ../memtrack/
-PARSER_DIR		:= ../parser/
+PARSER_DIR		:= ../parse/
 
 MEMTRACK		:= $(MEMTRACK_DIR)$(MEMTRACK_LIB)
 LIBFT			:= $(LIBFT_DIR)$(LIBFT_LIB)

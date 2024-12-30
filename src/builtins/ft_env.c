@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:14 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/19 16:02:00 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:42:22 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		env_builtin(t_command *cmd, t_env *envp)
 		while (aux)
 		{
 			ft_printf("%s\n", (char *)(aux->data));
-			aux = aux->right;
+			aux = aux->vect.right;
 		}
 		return (0);
 	}
