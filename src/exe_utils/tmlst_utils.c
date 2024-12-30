@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:22:21 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/07 12:22:39 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:46:58 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_mtdel_one(t_mt **first, t_mt *node) //PONER EN memtrack/src/list
 	ft_mtdelete(&node);
 }
 
-t_mt	*ft_mtpop_one(t_mt **first, char* find) //PONER EN memtrack/src/list
+t_mt	*ft_mtpop_one(t_mt **first, char *find) // PONER EN memtrack/src/list
 {
 	t_mt	*extract;
 
@@ -62,7 +62,7 @@ t_mt	*ft_mtpop_one(t_mt **first, char* find) //PONER EN memtrack/src/list
 
 void	print_lst_data(t_mt *array)
 {
-	t_mt	*node;
+	t_mt *node;
 
 	if (array)
 	{
