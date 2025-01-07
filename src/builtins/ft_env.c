@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:14 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/19 16:02:00 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:58:21 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ int		env_builtin(t_command *cmd, t_env *envp)
 		while (aux)
 		{
 			ft_printf("%s\n", (char *)(aux->data));
-			aux = aux->right;
+			aux = aux->vect[RIGHT];
 		}
+		ft_printf("numero de entorno: %d\n", envp->num_env);
 		return (0);
 	}
 	return (1);

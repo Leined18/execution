@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:19:55 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/26 17:29:58 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:23:02 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	**mtconvert_array2d(t_mt *list)
 	while (list)
 	{
 		array[i++] = ft_strdup(list->data);
-		list = list->right;
+		list = list->vect[RIGHT];
 	}
 	return (array);
 }

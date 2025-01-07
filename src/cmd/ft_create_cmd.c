@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:43 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/23 09:49:34 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/03 11:34:01 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@ char	**mtbranch_array2d(t_mt *list)
 	if (!list)
 		return (NULL);
 	i = 0;
-	list_size = ft_mtcount_node(list->children);
+	list_size = ft_mtcount_node(list->aux);
 	array = ft_calloc(1 + list_size + 1, sizeof(char *));
 	if (!array)
 		return (NULL);
 	array[i++] = ft_strdup(list->data);
-	list = list->children;
+	list = list->aux;
 	while (list)
 	{
 		array[i++] = ft_strdup(list->data);
-		list = list->right;
+		list = list->vect[RIGHT];
 	}
 	return (array);
 }

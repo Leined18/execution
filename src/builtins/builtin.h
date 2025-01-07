@@ -31,5 +31,6 @@ int		unset_builtin(t_command *cmd, t_env *envp);
 
 //ft_export.c
 int		export_builtin(t_command *cmd, t_env *envp);
+void	generate_path(char *var, t_env **envp);
 
 #endif

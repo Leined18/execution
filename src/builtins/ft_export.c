@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:53:25 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/20 17:17:32 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:32:40 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_print_export(t_mt *lst_exp)
 		{
 			split_exp = ft_split((char *)(aux->data), '=');
 			ft_printf("declare -x %s=\"%s\"\n", split_exp[0], split_exp[1]);
-			aux = aux->right;
+			aux = aux->vect[RIGHT];
 			free_array2d(split_exp);
 		}
 	}
@@ -37,7 +37,7 @@ int	ft_mtmigrate_one(t_mt **src, t_mt **dest, char *migrate)
 	mig_nod = ft_mtpop_one(src, migrate);
 	if (mig_nod)
 	{
-		ft_mtadd_back(dest, mig_nod);
+		ft_mtaddlast_right(dest, mig_nod);
 		return (0);
 	}
 	return (1);
@@ -74,17 +74,13 @@ int		export_builtin(t_command *cmd, t_env *envp)
 	{
 		while (cmd->args[i])
 		{
-			if (ft_strchr(cmd->args[i], '='))
-			{
-				split_arg = ft_split(cmd->args[i], '=');
+			split_arg = ft_split(cmd->args[i], '=');
+			if (split_arg[1])
 				ft_setenv(split_arg[0], split_arg[1], envp, 1);
-				if (ft_mtmigrate_one(&envp->mt_var, &envp->mt_env, split_arg[0]) == 0)
-					envp->num_var--;
-				generate_path(split_arg[0], &envp);
-				free_array2d(split_arg);
-			}
-			else if (ft_mtmigrate_one(&envp->mt_var, &envp->mt_env, cmd->args[i]) == 0)
-				envp->num_var--;
+			if (ft_mtmigrate_one(&envp->mt_var, &envp->mt_env, split_arg[0]) == 0)
+				(envp->num_var--, envp->num_env++);
+			generate_path(split_arg[0], &envp);
+			free_array2d(split_arg);
 			i++;
 		}
 	}

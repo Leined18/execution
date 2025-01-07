@@ -6,13 +6,14 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:36:22 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/26 17:46:41 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/07 17:46:33 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "types.h"
 #include "cmd.h"
 #include "exe_utils.h"
+#include "builtin.h"
 
 int	create_var(char **args, t_env *envp)
 {
@@ -27,6 +28,7 @@ int	create_var(char **args, t_env *envp)
 		value += 1;
 		split_arg = ft_split(args[0], '=');
 		ft_setenv(split_arg[0], value, envp, 1);
+		generate_path(split_arg[0], &envp);
 		free_array2d(split_arg);
 		result = 0;
 	}

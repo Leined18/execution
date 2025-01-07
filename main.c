@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/26 18:14:56 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:24:21 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,13 @@ int	shell_loop(t_env *environ)
 		{
 			add_history(input);
 			parsed_cmd = parse_input(input);
+			// ft_printf("parsed_cmd\n");
+			// print_lst_data(parsed_cmd);
+			// ft_printf("parsed_cmd->aux\n");
+			// print_lst_data(parsed_cmd->aux);
 			cmd = create_command(parsed_cmd, environ->path);
 			ft_mtclear(&parsed_cmd);
-			//print_command(cmd);
+			// print_command(cmd);
 			if (ft_pmatch_str(cmd->command, "path", 4) == 0)
 			{
 				print_array2d(environ->path);

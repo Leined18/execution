@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/19 11:10:16 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/02 12:18:56 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_env	*copy_envp(char **envp)
 		node_content = ft_strdup(envp[counter]);
 		if (!node_content)
 			return (NULL);
-		ft_mtpush_data_back(&environ->mt_env, node_content, node_content,
+		ft_mtpush_data_right(&environ->mt_env, node_content, node_content,
 			STRING);
 		counter++;
 	}
