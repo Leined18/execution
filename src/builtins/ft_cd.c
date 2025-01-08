@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/20 14:48:15 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/08 18:27:33 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*expand_home(char *where, t_env *envp)
 {
 	char	*expanded;
 	char	*cleaned;
+	char	*home_value;
 	size_t	len;
 
 	cleaned = ft_strltrim(where, "~");
@@ -27,9 +28,10 @@ char	*expand_home(char *where, t_env *envp)
 	expanded = ft_calloc(len, sizeof(char));
 	if (!expanded)
 		return (free(cleaned), NULL);
-	ft_strlcat(expanded, ft_getenv_value("HOME", envp->mt_env), len);
+	home_value = ft_getenv_value("HOME", envp->mt_env);
+	ft_strlcat(expanded, home_value, len);
 	ft_strlcat(expanded, cleaned, len);
-	return(free(cleaned), expanded);
+	return(free(cleaned), free(home_value), expanded);
 }
 
 char	*get_expanded_path(char *path, t_env *envp)
