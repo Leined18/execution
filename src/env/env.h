@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 19:37:03 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/12/20 16:32:11 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/09 11:51:05 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_setenv(const char *name, const char *value, t_env *envp, int is_env);
 //env_get.c
 char	*ft_getenv(const char *name, t_mt *envp);
 char	*ft_getenv_value(const char *name, t_mt *envp);
+char	*ft_getenv_ptr_value(const char *name, t_mt *envp);
 size_t	get_len_env(char *name, t_mt *mt_env, int flag);
 int		ft_pmatch_env(const char *s1, const char *s2, size_t n);
 int		ft_pmatch_str(const char *s1, const char *s2, size_t n);
