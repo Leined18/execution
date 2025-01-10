@@ -23,6 +23,8 @@ typedef struct s_env
 	t_mt		*mt_var;
 	int			num_var;
 	char		**path;
+	char		*prompt;
+	char		*input;
 	t_builtin	builtins[BUILTINS];
 }			t_env;
 

@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/08 17:53:00 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/10 19:49:03 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,21 @@
 	return (ptr);
 } */
 
-static int	is_exit(t_command *cmd)
-{
-	if (ft_pmatch_str(cmd->command, "exit", 4) == 0)
-	{
-		if (cmd->args)
-		{
-			if (!ft_isstrnum(cmd->args[0]))
-				return (1);
-			else if (cmd->args[1])
-				return (0);
-		}
-		return (1);
-	}
-	return (0);
-}
+// static int	is_exit(t_command *cmd)
+// {
+// 	if (ft_pmatch_str(cmd->command, "exit", 4) == 0)
+// 	{
+// 		if (cmd->args)
+// 		{
+// 			if (!ft_isstrnum(cmd->args[0]))
+// 				return (1);
+// 			else if (cmd->args[1])
+// 				return (0);
+// 		}
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
 int	pwd_is_home(t_mt *mt_env)
 {
@@ -113,55 +113,47 @@ char	*generate_prompt(t_mt *mt_env)
 	return (str_prompt);
 }
 
-int	shell_loop(t_env *environ)
+int	shell_loop(t_env *env)
 {
-	char		*input;
-	char		*prompt;
 	t_mt		*parsed_cmd;
 	t_command	*cmd;
 
 	while (1)
 	{
-		prompt = generate_prompt(environ->mt_env);
-		input = readline(prompt);
-		if (input == NULL)
-			return (free(prompt), rl_clear_history(), 1);
-		if (*input)
+		env->prompt = generate_prompt(env->mt_env);
+		env->input = readline(env->prompt);
+		if (env->input == NULL)
+			return (free(env->prompt), rl_clear_history(), 1);
+		if (*env->input)
 		{
-			add_history(input);
-			parsed_cmd = ft_parse_input(input);
-			// ft_printf("parsed_cmd\n");
-			// print_lst_data(parsed_cmd);
-			// ft_printf("parsed_cmd->aux\n");
-			// print_lst_data(parsed_cmd->aux);
-			cmd = create_command(parsed_cmd, environ->path);
+			add_history(env->input);
+			parsed_cmd = ft_parse_input(env->input);
+			cmd = create_command(parsed_cmd, env->path);
 			ft_mtclear(&parsed_cmd);
 			// print_command(cmd);
 			if (ft_pmatch_str(cmd->command, "path", 4) == 0)
 			{
-				print_array2d(environ->path);
-				(free_command(cmd), free(prompt), free_null((void **)&input));
+				print_array2d(env->path);
+				(free_command(cmd), free(env->prompt), free_null((void **)&env->input));
 				continue;
 			}
 			else if (ft_strchr(cmd->command, '='))
 			{
-				ft_assignation(cmd, environ);
-				(free_command(cmd), free(prompt), free_null((void **)&input));
+				ft_assignation(cmd, env);
+				(free_command(cmd), free(env->prompt), free_null((void **)&env->input));
 				continue;
 			}
 			else if (ft_pmatch_str(cmd->command, "vars", 4) == 0)
 			{
-				print_lst_data(environ->mt_var);
-				ft_printf("%d\n", environ->num_var);
-				(free_command(cmd), free(prompt), free_null((void **)&input));
+				print_lst_data(env->mt_var);
+				ft_printf("%d\n", env->num_var);
+				(free_command(cmd), free(env->prompt), free_null((void **)&env->input));
 				continue;
 			}
-			if (is_exit(cmd))
-				(free(prompt), free_null((void **)&input), rl_clear_history());
-			execution(cmd, environ);
+			execution(cmd, env);
 			free_command(cmd);
 		}
-		(free(prompt), free_null((void **)&input));
+		(free(env->prompt), free_null((void **)&env->input));
 	}
 }
 
