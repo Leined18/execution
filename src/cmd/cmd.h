@@ -35,7 +35,7 @@ int			execution(t_command *cmd, t_env *envp);
 void		exec_command(t_command *cmd, char **env);
 
 //ft_assignation.c
-int			ft_assignation(t_command *cmd, t_env *envp);
+int ft_assignation(t_mt *node, t_env *env);
 
 
 void		redirect_output(int fd);

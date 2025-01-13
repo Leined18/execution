@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/13 09:22:02 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:50:52 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,17 +88,18 @@ int	shell_loop(t_env *env)
 			add_history(env->input);
 			parsed_cmd = ft_parse_input(env->input);
 			cmd = create_command(parsed_cmd, env->path);
-			ft_mtclear(&parsed_cmd);
 			// print_command(cmd);
 			if (ft_pmatch_str(cmd->command, "path", 4) == 0)
 			{
 				print_array2d(env->path);
+				ft_mtclear(&parsed_cmd);
 				(free_command(cmd), free(env->prompt), free_null((void **)&env->input));
 				continue;
 			}
 			else if (ft_strchr(cmd->command, '='))
 			{
-				ft_assignation(cmd, env);
+				ft_assignation(parsed_cmd, env);
+				ft_mtclear(&parsed_cmd);
 				(free_command(cmd), free(env->prompt), free_null((void **)&env->input));
 				continue;
 			}
@@ -106,9 +107,11 @@ int	shell_loop(t_env *env)
 			{
 				print_lst_data(env->mt_var);
 				ft_printf("%d\n", env->num_var);
+				ft_mtclear(&parsed_cmd);
 				(free_command(cmd), free(env->prompt), free_null((void **)&env->input));
 				continue;
 			}
+			ft_mtclear(&parsed_cmd);
 			execution(cmd, env);
 			free_command(cmd);
 		}
