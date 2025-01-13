@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+         #
+#    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2025/01/08 18:44:43 by mvidal-h         ###   ########.fr        #
+#    Updated: 2025/01/13 11:23:07 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -132,18 +132,19 @@ $(PARSER):
 	@make -sC $(PARSER_DIR)
 	
 clean:
-	@$(RM) -rf $(OBJ_DIR) $(DEPS)
+	@if [ -d "$(OBJ_DIR)" ]; then \
+		$(RM) $(OBJ_DIR) $(LIB_DIR); \
+		echo "$(CYAN)[$(NAME)]:\tobject files $(GREEN) => Cleaned!$(DEF_COLOR)"; \
+	fi
 	@make clean -sC $(LIBFT_DIR)
 	@make clean -sC $(MEMTRACK_DIR)
 	@make clean -sC $(PARSER_DIR)
-	@echo "$(CYAN)[$(NAME)]:\tobject files $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 fclean: clean
 	@$(RM) -rf $(NAME) $(EXE)
 	@make fclean -sC $(LIBFT_DIR)
 	@make fclean -sC $(MEMTRACK_DIR)
 	@make fclean -sC $(PARSER_DIR)
-	@echo "$(CYAN)[$(NAME)]:\tEXE. files $(GREEN) => Cleaned!$(DEF_COLOR)"
 
 re: fclean all
 
