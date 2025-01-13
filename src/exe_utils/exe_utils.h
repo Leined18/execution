@@ -3,16 +3,19 @@
 
 # include "exe.h"
 
-//arra2d_utils.c
+// arra2d_utils.c
 int		free_array2d(char **array);
 size_t	array2d_len(char **array);
 void	print_array2d(char **array);
 char	**mtconvert_array2d(t_mt *list);
 
-//tmlst_utils.c.c
+int		pwd_is_home(t_mt *mt_env);
+char	*generate_prompt(t_mt *mt_env);
+
+// tmlst_utils.c.c
 void	print_lst_data(t_mt *array);
 void	ft_mtdel_one(t_mt **first, t_mt *node);
-t_mt	*ft_mtpop_one(t_mt **first, char* find);
+t_mt	*ft_mtpop_one(t_mt **first, char *find);
 size_t	ft_mtcount_node(t_mt *lst);
 
 #endif
