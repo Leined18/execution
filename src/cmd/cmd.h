@@ -21,7 +21,7 @@ typedef struct s_command
 /* ************************************************************************** */
 
 //ft_create_cmd.c
-t_command	*create_command(t_mt *parsed_cmd, char **path);
+t_command	*create_command(t_mt *parsed_cmd, t_env *envp);
 void		print_command(t_command *cmd);
 
 //ft_free_command.c
@@ -37,6 +37,8 @@ void		exec_command(t_command *cmd, char **env);
 //ft_assignation.c
 int ft_assignation(t_mt *node, t_env *envp);
 
+//ft_expand.c
+char	*ft_expand(char *str, t_env *envp);
 
 void		redirect_output(int fd);
 void		redirect_input(int fd);

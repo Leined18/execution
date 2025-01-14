@@ -6,13 +6,13 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:55:01 by danpalac          #+#    #+#             */
-/*   Updated: 2024/12/18 12:45:02 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/13 16:56:51 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cmd.h"
 
-void	pipe_commands(t_command *cmd1, t_command *cmd2)
+void	exe_pipe(t_command *cmd1, t_command *cmd2)
 {
 	int		pipefd[2];
 	pid_t	pid1;
