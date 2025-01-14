@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:28:34 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/14 13:40:44 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:15:44 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ char	*ft_expand(char *str, t_env *envp)
 			if (i > start)
 			{
 				var_name = ft_substr(str, start, i - start);
-				var_value = ft_getenv_value(var_name, envp->mt_env);
+				var_value = ft_getenv_ptr_value(var_name, envp->mt_env);
 				if (!var_value)
-					var_value = ft_getenv_value(var_name, envp->mt_var);
+					var_value = ft_getenv_ptr_value(var_name, envp->mt_var);
 				free(var_name);
 				if (var_value)
 					expanded = ft_strjoin(result, var_value);
@@ -72,6 +72,5 @@ char	*ft_expand(char *str, t_env *envp)
 			i++;
 		}
 	}
-	ft_printf("result = %s\n", result);
 	return (result);
 }
