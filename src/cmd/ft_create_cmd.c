@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:43 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/14 09:38:57 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/14 13:40:11 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	**mtbranch_array2d(t_mt *list, t_env *envp)
 	char	**array;
 	size_t	list_size;
 	size_t	i;
+	char	*aux;
 
 	if (!list)
 		return (NULL);
@@ -38,7 +39,9 @@ char	**mtbranch_array2d(t_mt *list, t_env *envp)
 	list = list->aux;
 	while (list)
 	{
-		array[i++] = ft_expand(list->data, envp);
+		aux = ft_expand(list->data, envp);
+		if (*aux)
+			array[i++] = aux;
 		list = list->vect[RIGHT];
 	}
 	return (array);
