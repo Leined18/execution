@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:43 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/14 17:11:53 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/15 20:13:32 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ char	**mtbranch_array2d(t_mt *list, t_env *envp)
 	array = ft_calloc(1 + list_size + 1, sizeof(char *));
 	if (!array)
 		return (NULL);
-	array[i++] = ft_expand(list->data, envp);
+	array[i++] = ft_expand(list->data, list->values.state, envp);
 	list = list->aux;
 	while (list)
 	{
-		aux = ft_expand(list->data, envp);
+		aux = ft_expand(list->data, list->values.state, envp);
 		if (*aux)
 			array[i++] = aux;
 		else
@@ -56,8 +56,9 @@ t_command	*create_command(t_mt *parsed_cmd, t_env *envp)
 	new_command = malloc(sizeof(t_command));
 	if (!new_command)
 		ft_error("Error al crear el comando\n", 1);
-	new_command->command = ft_expand(parsed_cmd->data, envp);
+	new_command->command = ft_expand(parsed_cmd->data, parsed_cmd->values.state, envp);
 	new_command->args = mtbranch_array2d(parsed_cmd, envp);
 	new_command->cmd_path = get_cmd_path(envp->path, new_command->command);
+	new_command->next = NULL;
 	return (new_command);
 }

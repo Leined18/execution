@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:36:22 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/14 09:59:28 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/15 20:15:37 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int ft_assignation(t_mt *node, t_env *envp)
 	{
 		value = ft_strchr(cmd->args[0], '=');
 		value += 1;
-		value = ft_expand(value, envp);
+		value = ft_expand(value, node->values.state, envp);
 		split_arg = ft_split(cmd->args[0], '=');
 		ft_setenv(split_arg[0], value, envp, 1);
 		generate_path(split_arg[0], &envp);

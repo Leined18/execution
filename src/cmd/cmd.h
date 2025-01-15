@@ -11,9 +11,10 @@
 
 typedef struct s_command
 {
-	char	*command;
-	char	*cmd_path;
-	char	**args;
+	char		*command;
+	char		*cmd_path;
+	char		**args;
+	t_command	*next;
 }			t_command;
 
 /* ************************************************************************** */
@@ -38,7 +39,7 @@ void		exec_command(t_command *cmd, char **env);
 int ft_assignation(t_mt *node, t_env *envp);
 
 //ft_expand.c
-char	*ft_expand(char *str, t_env *envp);
+char		*ft_expand(char *str, int state, t_env *envp);
 
 void		redirect_output(int fd);
 void		redirect_input(int fd);

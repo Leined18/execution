@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:28:34 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/14 18:53:07 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/15 20:40:03 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*ft_not_in_expansible(char *str, int i, char *result)
 		return (expanded);
 }
 
-char	*ft_expand(char *str, t_env *envp)
+char	*ft_expand(char *str, int state, t_env *envp)
 {
 	char	*result;
 	int		i;
@@ -62,7 +62,7 @@ char	*ft_expand(char *str, t_env *envp)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' && state != SINGLE_QUOTE)
 			result = ft_in_expansible(str, &i, result, envp);
 		else
 		{
@@ -72,3 +72,5 @@ char	*ft_expand(char *str, t_env *envp)
 	}
 	return (result);
 }
+
+//REVISAR ESTO DA ERROR: echo 'hola que tal '$HOSTNAME' adios'
