@@ -1,6 +1,9 @@
 #ifndef COMMANDS_H
 # define COMMANDS_H
 
+# define READ_END	0
+# define WRITE_END	1
+
 # include "types.h"
 # include "libft.h"
 # include "mt.h"

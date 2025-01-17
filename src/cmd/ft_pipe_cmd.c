@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:55:01 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/17 14:16:26 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/17 21:28:35 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 void	free_cmd_list(t_command *lst)
 {
 	t_command	*next_node;
-	ft_printf("freeing list of commands...\n");
 	while (lst)
 	{
 		next_node = lst->next;
 		free_command(lst);
 		lst = next_node;
 	}
-	ft_printf("Done!\n");
 }
 
 void	print_cmd_list(t_command * lst)
@@ -46,7 +44,6 @@ t_command	*lst_pipe_commands(t_mt *node, t_env *envp)
 
 	select = node;
 	first = NULL;
-	last = NULL;
 	while (select && ft_pmatch_str(select->data, "|", 1) == 0)
 	{
 		select->values.state = END;
@@ -63,37 +60,60 @@ t_command	*lst_pipe_commands(t_mt *node, t_env *envp)
 	new = create_command(prev->vect[RIGHT], envp);
 	prev->vect[RIGHT]->values.state = END;
 	last->next = new;
-	last = new;
 	return (first);
 }
 
+void	manage_childs(t_command	*lst_cmd, int n_cmd, int fdp[2][2], pid_t pid)
+//void	childs_management(t_px_args *args, int fdp[2][2], pid_t pid, int fd_ph)
+{
+	if (pid == -1)
+		exit(-1);
+	else if (pid == 0) //el proceso hijo
+	{
+		if (n_cmd == 0)
+			first_child(lst_cmd, fdp[(n_cmd) % 2]); //fd_ph solo si es el primero.
+		else if (!lst_cmd->next)
+			last_child(lst_cmd, fdp[((n_cmd) + 1) % 2]); // +1 es el anterior (izq). CREAR FUNCION QUE CON EL N_CMD DEVUELVA PUNTERO A ESE COMANDO
+		else
+			middle_child(lst_cmd, fdp); // al ser intermedio le paso los dos (fdp completo.)
+	}
+	else if (pid > 0) //el proceso padre
+	{ //Aqui siempre actuamos sobre el ya creado y usado. Ya sabemos lo que va a hacer el siguiente con él.
+		if (n_cmd == 0) //si es el primer comando cerramos la escritura
+			close(fdp[(n_cmd) % 2][WRITE_END]); //porque el siguiente hijo de esta pipe solo le queda leer.
+		else if (!lst_cmd->next) //si es el ultimo comando cerramos la lectura
+			close(fdp[(n_cmd + 1) % 2][READ_END]); // porque ya no vendrá ningun hijo más y asi queda cerrado todo tambien en el padre.
+		else //Si es intermedia
+		{
+			close(fdp[(n_cmd) % 2][WRITE_END]); //cerramos la escritura porque el hijo que va a escribir ya la ha recibido abierta y el siguiente hijo de ella solo va a leer.
+			close(fdp[(n_cmd + 1) % 2][READ_END]); //cerramos lectura de la anterior porque igualmente el hijo que va a ller ya la ha recibido abierta y asi el padre deja su copia totalmente cerrada ya.
+		}
+	}
+}
 
 int	exe_pipes(t_mt *node, t_env *envp)
 {
-	t_command	*lst;
+	t_command	*lst_cmd;
+	t_command	*first;
+	int			fd_pipe[2][2];
+	pid_t		pid;
+	int			num_cmd;
 
-	lst = lst_pipe_commands(node, envp);
-	print_cmd_list(lst);
-	free_cmd_list(lst);
-	// int		pipefd[2];
-	// pid_t	pid1;
-	// pid_t	pid2;
-
-	// if (!cmd1 || !cmd2)
-	// 	return ;
-	// if (pipe(pipefd) == -1)
-	// 	ft_error("Error al crear el pipe\n", 1);
-	// pid1 = fork();
-	// if (pid1 == -1)
-	// 	ft_error("Error al hacer fork\n", 1);
-	// if (pid1 == 0)
-	// 	create_child(cmd1, pipefd, 1);
-	// pid2 = fork();
-	// if (pid2 == -1)
-	// 	ft_error("Error al hacer fork\n", 1);
-	// if (pid2 == 0)
-	// 	create_child(cmd2, pipefd, 2);
-	// handle_parent(pipefd, pid1, pid2);
+	lst_cmd = lst_pipe_commands(node, envp);
+	first = lst_cmd;
+	// print_cmd_list(lst_cmd);
+	num_cmd = 0; //para saber que cmd estoy ejecutando
+	while (lst_cmd)
+	{
+		if (lst_cmd->next)
+			if (pipe(fd_pipe[num_cmd % 2]) == -1)
+				exit(-1);
+		pid = fork();
+		manage_childs(lst_cmd, num_cmd, fd_pipe, pid);
+		lst_cmd = lst_cmd->next;
+		num_cmd++;
+	}
+	free_cmd_list(first);
 
 	// int			pipefd[2];          // FDs del pipe actual
 	// int			prev_fd = -1;       // FD del pipe anterior
