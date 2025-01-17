@@ -41,6 +41,9 @@ int ft_assignation(t_mt *node, t_env *envp);
 //ft_expand.c
 char		*ft_expand(char *str, int state, t_env *envp);
 
+//ft_pipe_cmd.c
+int	exe_pipes(t_mt *node, t_env *envp);
+
 void		redirect_output(int fd);
 void		redirect_input(int fd);
 void		create_child(t_command *cmd, int *pipefd, int child_num);

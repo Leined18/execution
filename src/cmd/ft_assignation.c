@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:36:22 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/15 20:15:37 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/17 12:24:12 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int ft_assignation(t_mt *node, t_env *envp)
 	t_command 	*cmd;
 
 	if (!node || !envp)
-		return (0);
+		return (-1);
 	cmd = create_command(node, envp);
-	result = 1;
+	result = 0;
 	if (array2d_len(cmd->args) == 1)
 	{
 		value = ft_strchr(cmd->args[0], '=');
@@ -38,7 +38,7 @@ int ft_assignation(t_mt *node, t_env *envp)
 		generate_path(split_arg[0], &envp);
 		free(value);
 		free_array2d(split_arg);
-		result = 0;
+		result = 1;
 	}
 	else
 		ft_printf("assignation: '%s' is not found.\n", cmd->args[1]);
