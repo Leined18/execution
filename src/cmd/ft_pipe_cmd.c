@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:55:01 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/17 21:28:35 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/17 21:43:13 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,40 @@ t_command	*lst_pipe_commands(t_mt *node, t_env *envp)
 	return (first);
 }
 
-void	manage_childs(t_command	*lst_cmd, int n_cmd, int fdp[2][2], pid_t pid)
+void	middle_child(t_command *cmd, int n_cmd, int fdp[2][2])
+{
+	int		next_pipe;
+	int		prev_pipe;
+
+	prev_pipe = (n_cmd + 1) % 2;
+	next_pipe = n_cmd % 2;
+	close(fdp[next_pipe][READ_END]); //cerramos el read de la pipe que aun no esta usandose porque solo vamos a escribir en ella.
+	dup2(fdp[prev_pipe][READ_END], STDIN_FILENO); // STDIN ahora es la lectura de la pipe anterior
+	close(fdp[prev_pipe][READ_END]); // cerramos la lectura porque ya la tiene STDIN 
+	dup2(fdp[next_pipe][WRITE_END], STDOUT_FILENO); // STDOUT ahora es la escritura de la pipe siguiente
+	close(fdp[next_pipe][READ_END]); // cerramos la escritura porque ya la tiene STDOUT 
+	exec_command(split_argv, args->env, final_path); //y finalmente ejecutamos.TENGO QUE MODIFICAR AQUI
+}
+
+void	last_child(t_command *cmd, int fdp[2])
+{
+	dup2(fdp[READ_END], STDIN_FILENO); //la entrada estandar ahora es el pipe de entrada.
+	close(fdp[READ_END]); //lo cerramos porque STDIN ya lo tiene.
+	exec_command(split_argv, args->env, final_path); //y finalmente ejecutamos el comando.TENGO QUE MODIFICAR AQUI
+}
+
+void	first_child(t_command *cmd, int fdp[2])
+//void	first_child(t_px_args *args, int fdp[2], int fd_ph)
+{
+	int		fd;
+
+	close(fdp[READ_END]); // cierro read porque yo solo voy a escribir.
+	dup2(fdp[WRITE_END], STDOUT_FILENO); //en la salida estandar le decimos que escriba en la parte write del pipe pasado.
+	close(fdp[WRITE_END]); //cerramos porque ya esta en STDOUT con el dup
+	exec_command(split_argv, args->env, final_path); //Y finalmente ejecutamos. TENGO QUE MODIFICAR AQUI
+}
+
+void	manage_childs(t_command	*cmd, int n_cmd, int fdp[2][2], pid_t pid)
 //void	childs_management(t_px_args *args, int fdp[2][2], pid_t pid, int fd_ph)
 {
 	if (pid == -1)
@@ -71,17 +104,17 @@ void	manage_childs(t_command	*lst_cmd, int n_cmd, int fdp[2][2], pid_t pid)
 	else if (pid == 0) //el proceso hijo
 	{
 		if (n_cmd == 0)
-			first_child(lst_cmd, fdp[(n_cmd) % 2]); //fd_ph solo si es el primero.
-		else if (!lst_cmd->next)
-			last_child(lst_cmd, fdp[((n_cmd) + 1) % 2]); // +1 es el anterior (izq). CREAR FUNCION QUE CON EL N_CMD DEVUELVA PUNTERO A ESE COMANDO
+			first_child(cmd, fdp[(n_cmd) % 2]); //fd_ph solo si es el primero.
+		else if (!cmd->next)
+			last_child(cmd, fdp[((n_cmd) + 1) % 2]); // +1 es el anterior (izq). CREAR FUNCION QUE CON EL N_CMD DEVUELVA PUNTERO A ESE COMANDO
 		else
-			middle_child(lst_cmd, fdp); // al ser intermedio le paso los dos (fdp completo.)
+			middle_child(cmd, n_cmd, fdp); // al ser intermedio le paso los dos (fdp completo.)
 	}
 	else if (pid > 0) //el proceso padre
 	{ //Aqui siempre actuamos sobre el ya creado y usado. Ya sabemos lo que va a hacer el siguiente con él.
 		if (n_cmd == 0) //si es el primer comando cerramos la escritura
 			close(fdp[(n_cmd) % 2][WRITE_END]); //porque el siguiente hijo de esta pipe solo le queda leer.
-		else if (!lst_cmd->next) //si es el ultimo comando cerramos la lectura
+		else if (!cmd->next) //si es el ultimo comando cerramos la lectura
 			close(fdp[(n_cmd + 1) % 2][READ_END]); // porque ya no vendrá ningun hijo más y asi queda cerrado todo tambien en el padre.
 		else //Si es intermedia
 		{
