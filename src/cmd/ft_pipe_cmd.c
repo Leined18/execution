@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:55:01 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/17 21:43:13 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/20 19:21:26 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,26 @@ void	print_cmd_list(t_command * lst)
 		lst = lst->next;
 	}
 	ft_printf("------------------FIN------------------\n");
+}
+
+//Makes father process waiting for the children to ensure that all of them 
+//finish correctly and avoid zombies process.
+int	wait_for_children(int num_children)
+{
+	int	i;
+	int	status;
+
+	i = 0;
+	while (i < num_children)
+	{
+		if (wait(&status) == -1)
+		{
+			perror("wait");
+			return (-1);
+		}
+		i++;
+	}
+	return (0);
 }
 
 t_command	*lst_pipe_commands(t_mt *node, t_env *envp)
@@ -63,7 +83,7 @@ t_command	*lst_pipe_commands(t_mt *node, t_env *envp)
 	return (first);
 }
 
-void	middle_child(t_command *cmd, int n_cmd, int fdp[2][2])
+void	middle_child(t_command *cmd, int n_cmd, int fdp[2][2], t_env *envp)
 {
 	int		next_pipe;
 	int		prev_pipe;
@@ -75,28 +95,29 @@ void	middle_child(t_command *cmd, int n_cmd, int fdp[2][2])
 	close(fdp[prev_pipe][READ_END]); // cerramos la lectura porque ya la tiene STDIN 
 	dup2(fdp[next_pipe][WRITE_END], STDOUT_FILENO); // STDOUT ahora es la escritura de la pipe siguiente
 	close(fdp[next_pipe][READ_END]); // cerramos la escritura porque ya la tiene STDOUT 
-	exec_command(split_argv, args->env, final_path); //y finalmente ejecutamos.TENGO QUE MODIFICAR AQUI
+	execution(cmd, envp, 1); //y finalmente ejecutamos.TENGO QUE MODIFICAR AQUI
+	exit (0);
 }
 
-void	last_child(t_command *cmd, int fdp[2])
+void	last_child(t_command *cmd, int fdp[2], t_env *envp)
 {
 	dup2(fdp[READ_END], STDIN_FILENO); //la entrada estandar ahora es el pipe de entrada.
 	close(fdp[READ_END]); //lo cerramos porque STDIN ya lo tiene.
-	exec_command(split_argv, args->env, final_path); //y finalmente ejecutamos el comando.TENGO QUE MODIFICAR AQUI
+	execution(cmd, envp, 1); //y finalmente ejecutamos el comando.TENGO QUE MODIFICAR AQUI
+	exit (0);
 }
 
-void	first_child(t_command *cmd, int fdp[2])
+void	first_child(t_command *cmd, int fdp[2], t_env *envp)
 //void	first_child(t_px_args *args, int fdp[2], int fd_ph)
 {
-	int		fd;
-
 	close(fdp[READ_END]); // cierro read porque yo solo voy a escribir.
 	dup2(fdp[WRITE_END], STDOUT_FILENO); //en la salida estandar le decimos que escriba en la parte write del pipe pasado.
 	close(fdp[WRITE_END]); //cerramos porque ya esta en STDOUT con el dup
-	exec_command(split_argv, args->env, final_path); //Y finalmente ejecutamos. TENGO QUE MODIFICAR AQUI
+	execution(cmd, envp, 1); //Y finalmente ejecutamos. TENGO QUE MODIFICAR AQUI
+	exit (0);
 }
 
-void	manage_childs(t_command	*cmd, int n_cmd, int fdp[2][2], pid_t pid)
+void	man_child(t_command *cmd, int n_cmd, int fdp[2][2], pid_t pid, t_env *e)
 //void	childs_management(t_px_args *args, int fdp[2][2], pid_t pid, int fd_ph)
 {
 	if (pid == -1)
@@ -104,11 +125,11 @@ void	manage_childs(t_command	*cmd, int n_cmd, int fdp[2][2], pid_t pid)
 	else if (pid == 0) //el proceso hijo
 	{
 		if (n_cmd == 0)
-			first_child(cmd, fdp[(n_cmd) % 2]); //fd_ph solo si es el primero.
+			first_child(cmd, fdp[(n_cmd) % 2], e); //fd_ph solo si es el primero.
 		else if (!cmd->next)
-			last_child(cmd, fdp[((n_cmd) + 1) % 2]); // +1 es el anterior (izq). CREAR FUNCION QUE CON EL N_CMD DEVUELVA PUNTERO A ESE COMANDO
+			last_child(cmd, fdp[((n_cmd) + 1) % 2], e); // +1 es el anterior (izq). CREAR FUNCION QUE CON EL N_CMD DEVUELVA PUNTERO A ESE COMANDO
 		else
-			middle_child(cmd, n_cmd, fdp); // al ser intermedio le paso los dos (fdp completo.)
+			middle_child(cmd, n_cmd, fdp, e); // al ser intermedio le paso los dos (fdp completo.)
 	}
 	else if (pid > 0) //el proceso padre
 	{ //Aqui siempre actuamos sobre el ya creado y usado. Ya sabemos lo que va a hacer el siguiente con él.
@@ -134,7 +155,6 @@ int	exe_pipes(t_mt *node, t_env *envp)
 
 	lst_cmd = lst_pipe_commands(node, envp);
 	first = lst_cmd;
-	// print_cmd_list(lst_cmd);
 	num_cmd = 0; //para saber que cmd estoy ejecutando
 	while (lst_cmd)
 	{
@@ -142,12 +162,12 @@ int	exe_pipes(t_mt *node, t_env *envp)
 			if (pipe(fd_pipe[num_cmd % 2]) == -1)
 				exit(-1);
 		pid = fork();
-		manage_childs(lst_cmd, num_cmd, fd_pipe, pid);
+		man_child(lst_cmd, num_cmd, fd_pipe, pid, envp);
 		lst_cmd = lst_cmd->next;
 		num_cmd++;
 	}
 	free_cmd_list(first);
-
+	wait_for_children(num_cmd);
 	// int			pipefd[2];          // FDs del pipe actual
 	// int			prev_fd = -1;       // FD del pipe anterior
 	// pid_t		pid;
@@ -209,6 +229,5 @@ int	exe_pipes(t_mt *node, t_env *envp)
 	// // Espera a todos los procesos hijos
 	// while (wait(NULL) > 0)
 	// 	;
-
 	 return (1);
 }

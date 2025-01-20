@@ -35,7 +35,7 @@ void		free_command(t_command *cmd);
 char		*get_cmd_path(char **split_path, const char *cmd);
 
 //ft_execmd.c
-int			execution(t_command *cmd, t_env *envp);
+int			execution(t_command *cmd, t_env *envp, int is_child);
 void		exec_command(t_command *cmd, char **env);
 
 //ft_assignation.c

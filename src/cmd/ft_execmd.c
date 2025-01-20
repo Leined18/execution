@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/13 11:05:39 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/01/20 18:50:13 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,25 @@ void	exec_command(t_command *cmd, char **env)
 	free_array2d(env);
 	exit(1);
 }
+int	exe_in_child(t_command *cmd,  char **array_envp)
+{
+	pid_t	pid;
+	
+	pid = fork();
+	if (pid == 0) // hijo
+		exec_command(cmd, array_envp);
+	else if (pid < 0)
+		return (perror("FORK failed"), 1);
+	waitpid(pid, NULL, 0);
+	free_array2d(array_envp);
+	return (0);
+}
 
-int	execution(t_command *cmd, t_env *envp)
+int	execution(t_command *cmd, t_env *envp, int is_child)
 {
 	int			i;
 	t_builtin	*bltn;
 	char		**array_envp;
-	pid_t		pid;
-	int			status;
 
 	i = 0;
 	bltn = envp->builtins;
@@ -50,14 +61,12 @@ int	execution(t_command *cmd, t_env *envp)
 			return (bltn[i].func(cmd, envp));
 		i++;
 	}
-	pid = fork();
-	if (pid == 0) // hijo
+	array_envp = mtconvert_array2d(envp->mt_env);
+	if (!is_child)
 	{
-		array_envp = mtconvert_array2d(envp->mt_env);
-		exec_command(cmd, array_envp);
+		exe_in_child(cmd, array_envp);
+		return (0);
 	}
-	else if (pid < 0)
-		return (perror("FORK failed"), 1);
-	waitpid(pid, &status, 0);
+	exec_command(cmd, array_envp);
 	return (0);
 }
