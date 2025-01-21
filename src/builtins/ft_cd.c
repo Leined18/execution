@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/08 18:27:33 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/21 17:41:36 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,17 @@ int	cd_builtin(t_command *cmd, t_env *envp)
 		path = cmd->args[1];
 	prev_path = getcwd(NULL, 0);
 	if (prev_path == NULL)
-		return (perror("getcwd"), 1);
+		return (perror("getcwd"), envp->last_status = 1, 1);
 	new_path = get_expanded_path(path, envp);
 	if (chdir(new_path) != 0)
-		return (free(new_path), free(prev_path), perror("cd"), 1);
+	{
+		free(new_path);
+		free(prev_path);
+		return (perror("cd"), envp->last_status = 1, 1);
+	}
 	free(new_path);
 	new_path = getcwd(NULL, 0);
 	ft_setenv("PWD", new_path, envp, 1);
 	ft_setenv("OLDPWD", prev_path, envp, 1);
-	return (free(prev_path), free(new_path), 0);
+	return (free(prev_path), free(new_path), envp->last_status = 0, 0);
 }

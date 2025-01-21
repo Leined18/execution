@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:28:34 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/15 20:40:03 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/21 19:51:55 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 	char	*var_name;
 	char	*var_value;
 	char	*expanded;
+	char	*aux;
 
 	start = ++(*i);
 	expanded = NULL;
@@ -36,8 +37,15 @@ char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 			expanded = ft_strjoin(result, "");
 		free(result);
 	}
+	if (str[start] == '?' && (str[start+1] == ' ' || str[start+1] == '\0'))
+	{
+		aux = ft_itoa(envp->last_status);
+		expanded = ft_strjoin(result, aux);
+		(*i)++;
+		free(aux), free(result);
+	}
 	return (expanded);
-}
+}//TENGO QUE ARREGLAR EL NUMERO DE LINEAS
 
 char	*ft_not_in_expansible(char *str, int i, char *result)
 {
@@ -58,6 +66,8 @@ char	*ft_expand(char *str, int state, t_env *envp)
 	
 	if (!str)
 		return (NULL);
+	if (ft_pmatch_str(str, "$?", 2) == 0)
+		return	(ft_itoa(envp->last_status));
 	result = ft_strdup("");
 	i = 0;
 	while (str[i])

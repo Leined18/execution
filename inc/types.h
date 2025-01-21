@@ -25,6 +25,7 @@ typedef struct s_env
 	char		**path;
 	char		*prompt;
 	char		*input;
+	int			last_status;
 	t_builtin	builtins[BUILTINS];
 }			t_env;
 
