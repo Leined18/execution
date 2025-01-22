@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:53:25 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/07 19:01:31 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:06:28 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,5 @@ int		export_builtin(t_command *cmd, t_env *envp)
 			i++;
 		}
 	}
-	return (0);
+	return (envp->last_status = 0, 0);
 }

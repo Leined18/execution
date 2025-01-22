@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 16:50:32 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/10 19:41:31 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:06:09 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	exit_builtin(t_command *cmd, t_env *envp)
 		else if (cmd->args[2])
 		{
 			ft_printf("exit: too many arguments\n");
-			return (-1);
+			return (envp->last_status = -1, -1);
 		}
 		else
 			exit_code = ft_atoi(cmd->args[1]);

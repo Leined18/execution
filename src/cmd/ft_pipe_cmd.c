@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:55:01 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/20 19:21:26 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:41:19 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,21 @@ void	print_cmd_list(t_command * lst)
 
 //Makes father process waiting for the children to ensure that all of them 
 //finish correctly and avoid zombies process.
-int	wait_for_children(int num_children)
+int	wait_for_children(int num_children, t_env *envp)
 {
 	int	i;
 	int	status;
+	int last_exit_status;
 
 	i = 0;
 	while (i < num_children)
 	{
 		if (wait(&status) == -1)
-		{
-			perror("wait");
-			return (-1);
-		}
+			return(perror("wait"), envp->last_status = 1, 1);
+		last_exit_status = update_last_status(status);
 		i++;
 	}
+	envp->last_status = last_exit_status;
 	return (0);
 }
 
@@ -96,7 +96,6 @@ void	middle_child(t_command *cmd, int n_cmd, int fdp[2][2], t_env *envp)
 	dup2(fdp[next_pipe][WRITE_END], STDOUT_FILENO); // STDOUT ahora es la escritura de la pipe siguiente
 	close(fdp[next_pipe][READ_END]); // cerramos la escritura porque ya la tiene STDOUT 
 	execution(cmd, envp, 1); //y finalmente ejecutamos.TENGO QUE MODIFICAR AQUI
-	exit (0);
 }
 
 void	last_child(t_command *cmd, int fdp[2], t_env *envp)
@@ -104,7 +103,7 @@ void	last_child(t_command *cmd, int fdp[2], t_env *envp)
 	dup2(fdp[READ_END], STDIN_FILENO); //la entrada estandar ahora es el pipe de entrada.
 	close(fdp[READ_END]); //lo cerramos porque STDIN ya lo tiene.
 	execution(cmd, envp, 1); //y finalmente ejecutamos el comando.TENGO QUE MODIFICAR AQUI
-	exit (0);
+
 }
 
 void	first_child(t_command *cmd, int fdp[2], t_env *envp)
@@ -114,7 +113,6 @@ void	first_child(t_command *cmd, int fdp[2], t_env *envp)
 	dup2(fdp[WRITE_END], STDOUT_FILENO); //en la salida estandar le decimos que escriba en la parte write del pipe pasado.
 	close(fdp[WRITE_END]); //cerramos porque ya esta en STDOUT con el dup
 	execution(cmd, envp, 1); //Y finalmente ejecutamos. TENGO QUE MODIFICAR AQUI
-	exit (0);
 }
 
 void	man_child(t_command *cmd, int n_cmd, int fdp[2][2], pid_t pid, t_env *e)
@@ -167,7 +165,7 @@ int	exe_pipes(t_mt *node, t_env *envp)
 		num_cmd++;
 	}
 	free_cmd_list(first);
-	wait_for_children(num_cmd);
+	wait_for_children(num_cmd, envp);
 	// int			pipefd[2];          // FDs del pipe actual
 	// int			prev_fd = -1;       // FD del pipe anterior
 	// pid_t		pid;

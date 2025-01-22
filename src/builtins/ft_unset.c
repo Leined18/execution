@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:53:30 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/07 18:32:58 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:07:00 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,5 @@ int	unset_builtin(t_command *cmd, t_env *envp)
 			del_and_update(list, del, num, &envp);
 		i++; 
 	}
-	return (0);
+	return (envp->last_status = 0, 0);
 }
