@@ -24,6 +24,9 @@ typedef struct s_command
 /*                                 COMMANDS                                   */
 /* ************************************************************************** */
 
+//execution.c
+void		execute_tree(t_mt *node, t_env *env);
+
 //ft_create_cmd.c
 t_command	*create_command(t_mt *parsed_cmd, t_env *envp);
 void		print_command(t_command *cmd);
@@ -34,19 +37,24 @@ void		free_command(t_command *cmd);
 //ft_get_cmd_path.c
 char		*get_cmd_path(char **split_path, const char *cmd);
 
+//ft_execmd copy.c
+int	process_command(t_mt *node, t_env *env);
 //ft_execmd.c
-int			execution(t_command *cmd, t_env *envp, int is_child);
-void		exec_command(t_command *cmd, char **env);
-int			update_last_status(int status);
+// int			execution(t_command *cmd, t_env *envp, int is_child);
+// void		exec_command(t_command *cmd, char **env);
 
 //ft_assignation.c
-int ft_assignation(t_mt *node, t_env *envp);
+int			ft_assignation(t_mt *node, t_env *envp);
 
 //ft_expand.c
 char		*ft_expand(char *str, int state, t_env *envp);
 
+//ft_pipe_cmd copy.c
+void		execute_pipe(t_mt *node, t_env *env);
+int			update_last_status(int status);
+
 //ft_pipe_cmd.c
-int	exe_pipes(t_mt *node, t_env *envp);
+// int	exe_pipes(t_mt *node, t_env *envp);
 
 void		redirect_output(int fd);
 void		redirect_input(int fd);
@@ -54,13 +62,5 @@ void		create_child(t_command *cmd, int *pipefd, int child_num);
 void		pipe_commands(t_command *cmd1, t_command *cmd2);
 void		handle_parent(int *pipefd, pid_t pid1, pid_t pid2);
 t_command	*parse_command(char *input, char **environ, t_list **lst);
-
-/* // Builtin functions
-int			execute_builtin(t_command *cmd);
-int			execute_external(t_command *cmd);
-int			execute_pipe(t_command *cmd);
-int			execute_redirection(t_command *cmd);
-int			execute_semicolon(t_command *cmd);
-int	execute_tree(t_command *cmd); */
 
 #endif // COMMANDS_H
