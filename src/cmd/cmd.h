@@ -25,7 +25,7 @@ typedef struct s_command
 /* ************************************************************************** */
 
 //execution.c
-void		execute_tree(t_mt *node, t_env *env, int is_child);
+int			execute_tree(t_mt *node, t_env *env, int is_child);
 
 //ft_create_cmd.c
 t_command	*create_command(t_mt *parsed_cmd, t_env *envp);
@@ -38,7 +38,7 @@ void		free_command(t_command *cmd);
 char		*get_cmd_path(char **split_path, const char *cmd);
 
 //ft_execmd.c
-int	process_command(t_mt *node, t_env *env, int is_child);
+int			process_command(t_mt *node, t_env *env, int is_child);
 
 //ft_assignation.c
 int			ft_assignation(t_mt *node, t_env *envp);
@@ -47,7 +47,7 @@ int			ft_assignation(t_mt *node, t_env *envp);
 char		*ft_expand(char *str, int state, t_env *envp);
 
 //ft_pipe_cmd.c
-void		execute_pipe(t_mt *node, t_env *env);
+int			execute_pipe(t_mt *node, t_env *env);
 int			update_last_status(int status);
 
 void		redirect_output(int fd);

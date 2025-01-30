@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:55:01 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/30 11:07:15 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:34:28 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	process_right_child(int pfd[2], t_mt *node, t_env *env)
 	exit(0);
 }
 
-void execute_pipe(t_mt *node, t_env *env)
+int execute_pipe(t_mt *node, t_env *env)
 {
 	int		pfd[2];
 	pid_t	pid_left;
@@ -88,4 +88,5 @@ void execute_pipe(t_mt *node, t_env *env)
 	if (pid_right == 0)
 		process_right_child(pfd, node, env);
 	process_father(pfd, 2, env);
+	return (0);
 }

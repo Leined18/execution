@@ -6,18 +6,23 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:27:24 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/30 10:39:35 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/30 15:54:29 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-void execute_tree(t_mt *node, t_env *env, int is_child)
+int	execute_tree(t_mt *node, t_env *env, int is_child)
 {
 	if (!node)
-		return;
+		return (1);
 	if (!is_ope_or_red(node))
-		process_command(node, env, is_child);
+	{
+		if (ft_strchr(node->key, '=')) //BORRAR ft_mtcheck_state(node, ASSIGNMENT) == 0 (cuando se arregle).
+			return (ft_assignation(node, env));
+		else
+			return (process_command(node, env, is_child));
+	}
 	else
-		execute_pipe(node, env);
+		return (execute_pipe(node, env));
 }
