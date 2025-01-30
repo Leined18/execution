@@ -25,7 +25,7 @@ typedef struct s_command
 /* ************************************************************************** */
 
 //execution.c
-void		execute_tree(t_mt *node, t_env *env);
+void		execute_tree(t_mt *node, t_env *env, int is_child);
 
 //ft_create_cmd.c
 t_command	*create_command(t_mt *parsed_cmd, t_env *envp);
@@ -37,11 +37,8 @@ void		free_command(t_command *cmd);
 //ft_get_cmd_path.c
 char		*get_cmd_path(char **split_path, const char *cmd);
 
-//ft_execmd copy.c
-int	process_command(t_mt *node, t_env *env);
 //ft_execmd.c
-// int			execution(t_command *cmd, t_env *envp, int is_child);
-// void		exec_command(t_command *cmd, char **env);
+int	process_command(t_mt *node, t_env *env, int is_child);
 
 //ft_assignation.c
 int			ft_assignation(t_mt *node, t_env *envp);
@@ -49,12 +46,9 @@ int			ft_assignation(t_mt *node, t_env *envp);
 //ft_expand.c
 char		*ft_expand(char *str, int state, t_env *envp);
 
-//ft_pipe_cmd copy.c
+//ft_pipe_cmd.c
 void		execute_pipe(t_mt *node, t_env *env);
 int			update_last_status(int status);
-
-//ft_pipe_cmd.c
-// int	exe_pipes(t_mt *node, t_env *envp);
 
 void		redirect_output(int fd);
 void		redirect_input(int fd);

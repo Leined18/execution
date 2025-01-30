@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:55:01 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/29 19:58:13 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:07:15 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	process_left_child(int pfd[2], t_mt *node, t_env *env)
 	close(pfd[0]);							// Cierra la lectura del pipe
 	dup2(pfd[1], STDOUT_FILENO);			// Redirige salida al pipe
 	close(pfd[1]);							// Cierra descriptor duplicado
-	execute_tree(node->vect[LEFT], env);	// Ejecuta el nodo izquierdo
+	execute_tree(node->vect[LEFT], env, 1);	// Ejecuta el nodo izquierdo
 	exit(0);
 }
 
@@ -58,7 +58,7 @@ void	process_right_child(int pfd[2], t_mt *node, t_env *env)
 	close(pfd[1]);               // Cierra la escritura del pipe
 	dup2(pfd[0], STDIN_FILENO);   // Redirige entrada desde el pipe
 	close(pfd[0]);               // Cierra descriptor duplicado
-	execute_tree(node->vect[RIGHT], env);  // Ejecuta el nodo derecho
+	execute_tree(node->vect[RIGHT], env, 1);  // Ejecuta el nodo derecho
 	exit(0);
 }
 
