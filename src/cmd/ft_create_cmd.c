@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:43 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/15 20:13:32 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:48:22 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,5 @@ t_command	*create_command(t_mt *parsed_cmd, t_env *envp)
 	new_command->command = ft_expand(parsed_cmd->data, parsed_cmd->values.state, envp);
 	new_command->args = mtbranch_array2d(parsed_cmd, envp);
 	new_command->cmd_path = get_cmd_path(envp->path, new_command->command);
-	new_command->next = NULL;
 	return (new_command);
 }

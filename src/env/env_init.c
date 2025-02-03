@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:51:27 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/21 19:49:10 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:50:59 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ t_env	*copy_envp(char **envp)
 	environ->input = NULL;
 	environ->prompt = NULL;
 	environ->last_status = 0;
+	environ->original_stdin = dup(STDIN_FILENO);
+	environ->original_stdout = dup(STDOUT_FILENO);
 	counter = 0;
 	while (counter < environ->num_env)
 	{

@@ -17,7 +17,6 @@ typedef struct s_command
 	char		*command;
 	char		*cmd_path;
 	char		**args;
-	t_command	*next;
 }			t_command;
 
 /* ************************************************************************** */
@@ -50,8 +49,12 @@ char		*ft_expand(char *str, int state, t_env *envp);
 int			execute_pipe(t_mt *node, t_env *env);
 int			update_last_status(int status);
 
-void		redirect_output(int fd);
-void		redirect_input(int fd);
+//ft_redirect_input.c
+void		redirect_input(t_mt *node, int open_mode);
+
+//ft_redirect_output.c
+void		redirect_output(t_mt *node, int open_mode);
+
 void		create_child(t_command *cmd, int *pipefd, int child_num);
 void		pipe_commands(t_command *cmd1, t_command *cmd2);
 void		handle_parent(int *pipefd, pid_t pid1, pid_t pid2);

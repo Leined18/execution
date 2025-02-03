@@ -26,6 +26,8 @@ typedef struct s_env
 	char		*prompt;
 	char		*input;
 	int			last_status;
+	int			original_stdin;
+	int			original_stdout;
 	t_builtin	builtins[BUILTINS];
 }			t_env;
 
