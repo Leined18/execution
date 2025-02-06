@@ -6,17 +6,11 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:32:22 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/03 18:35:20 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/05 19:53:25 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
-
-void	close_stdin_stdout(t_env *env)
-{
-	close(env->original_stdin);
-	close(env->original_stdout);
-}
 
 void	ft_env_free(t_env *environ)
 {

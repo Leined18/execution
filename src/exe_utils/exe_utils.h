@@ -21,4 +21,8 @@ size_t	ft_mtcount_node(t_mt *lst);
 //secure_open_file.c
 int		secure_open(char *file_name, int in_out);
 
+//in_out.c
+void	close_stdin_stdout(t_env *env);
+void	restore_stdin_stdout(t_env *env);
+
 #endif

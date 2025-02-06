@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:36:22 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/30 15:54:09 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/06 12:18:29 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_all_assignations(char **args)
 	i = 0;
 	while (args[i])
 	{
-		if (!ft_strchr(args[i], '=')) //BORRAR ft_mtcheck_state(node, ASSIGNMENT) != 0 cuando arreglado
+		if (!ft_strchr(args[i], '='))
 			return(i);
 		i++;
 	}

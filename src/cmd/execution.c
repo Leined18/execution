@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:27:24 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/03 18:33:07 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:56:08 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,34 @@ int	endizide_nodes(t_mt *node)
 	return (0);
 }
 
-int	manage_redirection(t_mt *node)
+int	manage_redirection(t_mt *node, t_env *env)
 {
-	if (ft_pmatch_str(node->key, "<", 1))
-		redirect_input(node, 0);
-	else if (ft_pmatch_str(node->key, ">", 1))
-		redirect_output(node, 1);
-	else if (ft_pmatch_str(node->key, ">>", 2))
-		redirect_output(node, 2);
-	// else if (ft_pmatch_str(node->key, "&>", 2))
-	// else if (ft_pmatch_str(node->key, "2>", 2))
-	return (0);
-}
+	int	result;
 
-void	restore_stdin_stdout(t_env *env)
-{
-	env->original_stdin = dup(STDIN_FILENO);
-	env->original_stdout = dup(STDOUT_FILENO);
+	if (ft_pmatch_str(node->key, "<", 1) == 0)
+		result = redirect_input(node, 0, env);
+	else if (ft_pmatch_str(node->key, ">", 1) == 0)
+		result = redirect_output(node, 1, env);
+	else if (ft_pmatch_str(node->key, ">>", 2) == 0)
+		result = redirect_output(node, 2, env);
+	else if (ft_pmatch_str(node->key, "<<", 2) == 0) //HERE_DOC
+		return (0);
+	node->values.state = END;
+	return (result);
 }
 
 int	execute_tree(t_mt *node, t_env *env, int is_child)
 {
+	int	result;
+
 	if (!node)
-		return (1);
+		return (0);
+	result = 0;
 	if (node->values.state != END)
 	{
 		if (!is_ope_or_red(node))
 		{
-			if (ft_mtcheck_state(node, ASSIGNMENT))
+			if (ft_mtcheck_state(node, COMMAND) && ft_strchr(node->key, '='))
 				ft_assignation(node, env);
 			else
 				process_command(node, env, is_child);
@@ -57,7 +57,9 @@ int	execute_tree(t_mt *node, t_env *env, int is_child)
 		else
 		{
 			if (ft_mtcheck_state(node, REDIRECTION))
-				manage_redirection(node);
+				result = manage_redirection(node, env);
+			else if (ft_mtcheck_state(node, PARENTESIS))
+				execute_tree(node->aux, env, is_child); //AQUI O HACER UNA EJECUCION GUARDANDO EL RESULTADO?
 			else
 			{
 				execute_pipe(node, env);
@@ -66,8 +68,10 @@ int	execute_tree(t_mt *node, t_env *env, int is_child)
 			}
 		}
 	}
-	execute_tree(node->vect[LEFT], env, is_child);
-	execute_tree(node->vect[RIGHT], env, is_child);
-	restore_stdin_stdout(env);
-	return (0);
+	if (result != -1)
+	{
+		execute_tree(node->vect[LEFT], env, is_child);
+		execute_tree(node->vect[RIGHT], env, is_child);
+	}
+	return (result);
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   secure_open.c                                      :+:      :+:    :+:   */
+/*   secure_open_file.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:55:28 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/03 17:03:55 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/05 19:26:31 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <fcntl.h>
+#include "exe.h"
 // Open file_name in mode input or output depending of the value of in_out.
 int	secure_open(char *file_name, int in_out)
 {
@@ -25,7 +25,7 @@ int	secure_open(char *file_name, int in_out)
 	if (fd == -1)
 	{
 		perror("Pipex - Error opening file");
-		exit (-1);
+		return (-1);
 	}
 	return (fd);
 }

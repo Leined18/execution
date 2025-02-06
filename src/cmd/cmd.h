@@ -50,10 +50,10 @@ int			execute_pipe(t_mt *node, t_env *env);
 int			update_last_status(int status);
 
 //ft_redirect_input.c
-void		redirect_input(t_mt *node, int open_mode);
+int			redirect_input(t_mt *node, int open_mode, t_env *env);
 
 //ft_redirect_output.c
-void		redirect_output(t_mt *node, int open_mode);
+int			redirect_output(t_mt *node, int open_mode, t_env *env);
 
 void		create_child(t_command *cmd, int *pipefd, int child_num);
 void		pipe_commands(t_command *cmd1, t_command *cmd2);
