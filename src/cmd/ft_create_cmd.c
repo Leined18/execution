@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:43 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/03 17:48:22 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:35:29 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,11 @@ t_command	*create_command(t_mt *parsed_cmd, t_env *envp)
 	new_command = malloc(sizeof(t_command));
 	if (!new_command)
 		ft_error("Error al crear el comando\n", 1);
-	new_command->command = ft_expand(parsed_cmd->data, parsed_cmd->values.state, envp);
+	new_command->command = ft_expand(parsed_cmd->data, parsed_cmd->values.state,
+			envp);
 	new_command->args = mtbranch_array2d(parsed_cmd, envp);
 	new_command->cmd_path = get_cmd_path(envp->path, new_command->command);
+	if (!*new_command->command)
+		return (free_command(new_command), NULL);
 	return (new_command);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:32:22 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/05 19:53:25 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:31:59 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	ft_env_free(t_env *environ)
 	if (environ->path)
 		free_array2d(environ->path);
 	if (environ->input)
-		free(environ->input);
+		free_null((void **)&environ->input);
 	if (environ->prompt)
-		free(environ->prompt);
+		free_null((void **)&environ->prompt);
 	close_stdin_stdout(environ);
 	free_null((void **)&environ);
 }
 
-void 	ft_env_free_func(void **environ)
+void	ft_env_free_func(void **environ)
 {
 	t_env	*env;
 
@@ -40,9 +40,9 @@ void 	ft_env_free_func(void **environ)
 	if (env->path)
 		free_array2d(env->path);
 	if (env->input)
-		free(env->input);
+		free_null((void **)&env->input);
 	if (env->prompt)
-		free(env->prompt);
+		free_null((void **)&env->prompt);
 	close_stdin_stdout(env);
 	free_null(environ);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:28:34 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/21 19:51:55 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:09:34 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,39 +35,36 @@ char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 			expanded = ft_strjoin(result, var_value);
 		else
 			expanded = ft_strjoin(result, "");
-		free(result);
 	}
-	if (str[start] == '?' && (str[start+1] == ' ' || str[start+1] == '\0'))
+	if (str[start] == '?' && (str[start + 1] == ' ' || str[start + 1] == '\0'))
 	{
 		aux = ft_itoa(envp->last_status);
 		expanded = ft_strjoin(result, aux);
-		(*i)++;
-		free(aux), free(result);
+		((*i)++, free(aux));
 	}
-	return (expanded);
-}//TENGO QUE ARREGLAR EL NUMERO DE LINEAS
-
+	return (free(result), expanded);
+}
 char	*ft_not_in_expansible(char *str, int i, char *result)
 {
-		char	*character;
-		char	*expanded;
+	char	*character;
+	char	*expanded;
 
-		character = ft_substr(str, i, 1);
-		expanded = ft_strjoin(result, character);
-		free(result);
-		free(character);
-		return (expanded);
+	character = ft_substr(str, i, 1);
+	expanded = ft_strjoin(result, character);
+	free(result);
+	free(character);
+	return (expanded);
 }
 
 char	*ft_expand(char *str, int state, t_env *envp)
 {
 	char	*result;
 	int		i;
-	
+
 	if (!str)
 		return (NULL);
 	if (ft_pmatch_str(str, "$?", 2) == 0)
-		return	(ft_itoa(envp->last_status));
+		return (ft_itoa(envp->last_status));
 	result = ft_strdup("");
 	i = 0;
 	while (str[i])
@@ -83,4 +80,4 @@ char	*ft_expand(char *str, int state, t_env *envp)
 	return (result);
 }
 
-//REVISAR ESTO DA ERROR: echo 'hola que tal '$HOSTNAME' adios'
+// REVISAR ESTO DA ERROR: echo 'hola que tal '$HOSTNAME' adios'

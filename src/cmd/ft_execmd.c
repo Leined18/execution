@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/30 10:53:26 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:39:04 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	exe_in_child(t_command *cmd, t_env *envp, char **array_envp)
 {
 	pid_t	pid;
 	int		status;
-	
+
 	pid = fork();
 	if (pid == 0) // hijo
 		execute_command(cmd, array_envp);
@@ -62,34 +62,36 @@ int	select_command(t_command *cmd, t_env *envp, int is_child)
 		{
 			status = bltn[i].func(cmd, envp);
 			if (is_child)
- 				exit(status);
+				exit(status);
 			return (status);
 		}
 		i++;
 	}
 	array_envp = mtconvert_array2d(envp->mt_env);
 	if (!is_child)
- 		return (exe_in_child(cmd, envp, array_envp));
+		return (exe_in_child(cmd, envp, array_envp));
 	execute_command(cmd, array_envp);
 	return (0);
 }
 
-int	process_command(t_mt *node, t_env *env, int is_child) // to build, execute commands
+int	process_command(t_mt *node, t_env *env, int is_child)
 {
-	t_command *cmd;
+	t_command	*cmd;
 
 	if (!node || !env)
 		return (0);
 	cmd = create_command(node, env);
-	//print_command(cmd);
-	if (ft_pmatch_str(cmd->command, "path", 4) == 0)
-		print_array2d(env->path);
-	else if (ft_pmatch_str(cmd->command, "vars", 4) == 0)
-		print_lst_data(env->mt_var);
-	else
-		select_command(cmd, env, is_child);
+	if (cmd)
+	{
+		// print_command(cmd);
+		if (ft_pmatch_str(cmd->command, "path", 4) == 0)
+			print_array2d(env->path);
+		else if (ft_pmatch_str(cmd->command, "vars", 4) == 0)
+			print_lst_data(env->mt_var);
+		else
+			select_command(cmd, env, is_child);
+		free_command(cmd);
+	}
 	node->values.state = END;
-	free_command(cmd);
 	return (1);
 }
-
