@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/10 12:39:04 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:31:23 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	execute_command(t_command *cmd, char **env)
 		if (access(cmd->cmd_path, X_OK) == 0)
 		{
 			execve(cmd->cmd_path, cmd->args, env);
-			perror("execve failed.");
+			ft_putstr_fd("execve failed", 2);
 		}
 		else
-			perror("Command not accessible.");
+			ft_putstr_fd("Command not accessible\n", 2);
 	}
 	else
-		perror("Command not found.");
+		ft_putstr_fd("Command not found\n", 2);
 	free_array2d(env);
 	exit(EXIT_FAILURE);
 }
@@ -36,10 +36,13 @@ int	exe_in_child(t_command *cmd, t_env *envp, char **array_envp)
 	int		status;
 
 	pid = fork();
-	if (pid == 0) // hijo
+	if (pid == 0)
+	{
 		execute_command(cmd, array_envp);
+	}
 	else if (pid < 0)
-		return (perror("FORK failed"), envp->last_status = 1, 1);
+		return (ft_putstr_fd("Command not accessible\n", 2),
+			envp->last_status = 1, 1);
 	waitpid(pid, &status, 0);
 	envp->last_status = update_last_status(status);
 	free_array2d(array_envp);
