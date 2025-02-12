@@ -6,17 +6,31 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:28:34 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/12 16:23:00 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:12:21 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
+char	*join_value_var(char *str, int *i, char *result, t_env *envp, int start)
+{
+	char	*var_name;
+	char	*var_value;
+
+	var_name = ft_substr(str, start, *i - start);
+	var_value = ft_getenv_ptr_value(var_name, envp->mt_env);
+	if (!var_value)
+		var_value = ft_getenv_ptr_value(var_name, envp->mt_var);
+	free(var_name);
+	if (var_value)
+		return (ft_strjoin(result, var_value));
+	else
+		return (ft_strjoin(result, ""));
+}
+
 char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 {
 	int		start;
-	char	*var_name;
-	char	*var_value;
 	char	*expanded;
 	char	*aux;
 
@@ -25,17 +39,7 @@ char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
 		(*i)++;
 	if (*i > start)
-	{
-		var_name = ft_substr(str, start, *i - start);
-		var_value = ft_getenv_ptr_value(var_name, envp->mt_env);
-		if (!var_value)
-			var_value = ft_getenv_ptr_value(var_name, envp->mt_var);
-		free(var_name);
-		if (var_value)
-			expanded = ft_strjoin(result, var_value);
-		else
-			expanded = ft_strjoin(result, "");
-	}
+		expanded = join_value_var(str, i, result, envp, start);
 	else if (str[start] == '?')
 	{
 		aux = ft_itoa(envp->last_status);
@@ -46,6 +50,7 @@ char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 		expanded = ft_strjoin(result, "");
 	return (free(result), expanded);
 }
+
 char	*ft_not_in_expansible(char *str, int i, char *result)
 {
 	char	*character;
