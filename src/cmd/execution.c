@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:27:24 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/10 10:59:42 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/12 19:42:57 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
-
-int	endizide_nodes(t_mt *node)
-{
-	if (!node || node->values.state == END)
-		return (0);
-	node->values.state = END;
-	endizide_nodes(node->vect[LEFT]);
-	endizide_nodes(node->vect[RIGHT]);
-	return (0);
-}
 
 int	manage_redirection(t_mt *node, t_env *env)
 {
