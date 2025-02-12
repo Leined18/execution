@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:28:34 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/10 12:09:34 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:23:00 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 		else
 			expanded = ft_strjoin(result, "");
 	}
-	if (str[start] == '?' && (str[start + 1] == ' ' || str[start + 1] == '\0'))
+	else if (str[start] == '?')
 	{
 		aux = ft_itoa(envp->last_status);
 		expanded = ft_strjoin(result, aux);
 		((*i)++, free(aux));
 	}
+	else
+		expanded = ft_strjoin(result, "");
 	return (free(result), expanded);
 }
 char	*ft_not_in_expansible(char *str, int i, char *result)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:43 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/10 12:35:29 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:43:29 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ t_command	*create_command(t_mt *parsed_cmd, t_env *envp)
 	new_command->cmd_path = get_cmd_path(envp->path, new_command->command);
 	if (!*new_command->command)
 		return (free_command(new_command), NULL);
+	print_command(new_command);
 	return (new_command);
 }
