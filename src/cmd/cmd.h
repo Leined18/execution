@@ -55,6 +55,9 @@ int			redirect_input(t_mt *node, int open_mode, t_env *env);
 // ft_redirect_output.c
 int			redirect_output(t_mt *node, int open_mode, t_env *env);
 
+// ft_redirect_heredoc.c
+int			redirect_heredoc(t_mt *node, t_env *env);
+
 void		create_child(t_command *cmd, int *pipefd, int child_num);
 void		pipe_commands(t_command *cmd1, t_command *cmd2);
 void		handle_parent(int *pipefd, pid_t pid1, pid_t pid2);

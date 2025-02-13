@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:27:24 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/12 19:42:57 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:55:14 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	manage_redirection(t_mt *node, t_env *env)
 	else if (ft_pmatch_str(node->key, ">>", 2) == 0)
 		result = redirect_output(node, 2, env);
 	else if (ft_pmatch_str(node->key, "<<", 2) == 0) // HERE_DOC
-		return (0);
+		result = redirect_heredoc(node, env);
 	node->values.state = END;
 	return (result);
 }
