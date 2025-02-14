@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:53:25 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/22 16:06:28 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:42:09 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int		export_builtin(t_command *cmd, t_env *envp)
 {
 	int		i;
 	char	**split_arg;
+	char	*value;
 
 	i = 1;
 	if (!cmd->args[i])
@@ -76,11 +77,15 @@ int		export_builtin(t_command *cmd, t_env *envp)
 		{
 			split_arg = ft_split(cmd->args[i], '=');
 			if (split_arg[1])
-				ft_setenv(split_arg[0], split_arg[1], envp, 1);
+			{
+				value = ft_clear_quotes(split_arg[1]);
+				ft_setenv(split_arg[0], value, envp, 1);
+				free(value);
+			}
 			if (ft_mtmigrate_one(&envp->mt_var, &envp->mt_env, split_arg[0]) == 0)
 				(envp->num_var--, envp->num_env++);
 			generate_path(split_arg[0], &envp);
-			free_array2d(split_arg);
+			(free_array2d(split_arg));
 			i++;
 		}
 	}

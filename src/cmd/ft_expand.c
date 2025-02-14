@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:28:34 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/12 17:12:21 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:19:24 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*ft_expand(char *str, int state, t_env *envp)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$' && state != SINGLE_QUOTE)
+		if (str[i] == '$' && (state != SINGLE_QUOTE && !ft_strchr(str, '\'')))
 			result = ft_in_expansible(str, &i, result, envp);
 		else
 		{

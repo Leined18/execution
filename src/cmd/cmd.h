@@ -41,6 +41,7 @@ int			process_command(t_mt *node, t_env *env, int is_child);
 
 // ft_assignation.c
 int			ft_assignation(t_mt *node, t_env *envp);
+char	*ft_clear_quotes(char *str);
 
 // ft_expand.c
 char		*ft_expand(char *str, int state, t_env *envp);
