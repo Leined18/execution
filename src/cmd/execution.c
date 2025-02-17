@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:27:24 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/13 17:55:14 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:41:41 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	manage_redirection(t_mt *node, t_env *env)
 		result = redirect_output(node, 1, env);
 	else if (ft_pmatch_str(node->key, ">>", 2) == 0)
 		result = redirect_output(node, 2, env);
-	else if (ft_pmatch_str(node->key, "<<", 2) == 0) // HERE_DOC
+	else if (ft_pmatch_str(node->key, "<<", 2) == 0)
 		result = redirect_heredoc(node, env);
 	node->values.state = END;
 	return (result);
@@ -41,6 +41,11 @@ int	ft_execute_tree(t_mt *node, t_env *env, int is_child)
 		{
 			if (ft_mtcheck_state(node, COMMAND) && ft_strchr(node->key, '='))
 				ft_assignation(node, env);
+			else if (ft_mtcheck_state(node, PARENTESIS))
+			{
+				ft_execute_tree(node->aux, env, is_child);
+				node->values.state = END;
+			}
 			else
 				process_command(node, env, is_child);
 		}
@@ -48,8 +53,6 @@ int	ft_execute_tree(t_mt *node, t_env *env, int is_child)
 		{
 			if (ft_mtcheck_state(node, REDIRECTION))
 				result = manage_redirection(node, env);
-			else if (ft_mtcheck_state(node, PARENTESIS))
-				ft_execute_tree(node->aux, env, is_child);
 			else
 			{
 				execute_pipe(node, env);
