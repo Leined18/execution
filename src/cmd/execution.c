@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:27:24 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/17 12:41:41 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:43:40 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_execute_tree(t_mt *node, t_env *env, int is_child)
 				ft_assignation(node, env);
 			else if (ft_mtcheck_state(node, PARENTESIS))
 			{
-				ft_execute_tree(node->aux, env, is_child);
+				ft_execute_tree(node->aux, env, 0);
 				node->values.state = END;
 			}
 			else
