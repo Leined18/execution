@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:55:01 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/10 11:00:07 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:18:56 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,5 @@ int execute_pipe(t_mt *node, t_env *env)
 	}
 	if (pid_right == 0)
 		process_right_child(pfd, node, env);
-	process_father(pfd, 2, env);
-	return (0);
+	return (process_father(pfd, 2, env));
 }

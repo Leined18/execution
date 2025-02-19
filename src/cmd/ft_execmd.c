@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/11 14:31:23 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:15:19 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ int	exe_in_child(t_command *cmd, t_env *envp, char **array_envp)
 
 	pid = fork();
 	if (pid == 0)
-	{
 		execute_command(cmd, array_envp);
-	}
 	else if (pid < 0)
 		return (ft_putstr_fd("Command not accessible\n", 2),
 			envp->last_status = 1, 1);
@@ -82,7 +80,7 @@ int	process_command(t_mt *node, t_env *env, int is_child)
 	t_command	*cmd;
 
 	if (!node || !env)
-		return (0);
+		return (-1);
 	cmd = create_command(node, env);
 	if (cmd)
 	{
@@ -96,5 +94,5 @@ int	process_command(t_mt *node, t_env *env, int is_child)
 		free_command(cmd);
 	}
 	node->values.state = END;
-	return (1);
+	return (0);
 }
