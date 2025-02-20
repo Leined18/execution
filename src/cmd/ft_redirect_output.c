@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redirect_output.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:50 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/11 14:29:55 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:18:48 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int	redirect_output(t_mt *node, int open_mode, t_env *env)
 		return (0);
 	fd = secure_open(node->aux->key, open_mode);
 	if (fd == -1)
-		return (-1);
+		return (env->last_status = 1, 1);
 	if (dup2(fd, STDOUT_FILENO) == -1)
 	{
 		ft_error("Error redirigiendo la salida estándar\n", 0);
-		return (-1);
+		return (env->last_status = 1, 1);
 	}
 	env->redirect.is_red_out = 1;
 	close(fd);
-	return (0);
+	return (env->last_status = 0, 0);
 }

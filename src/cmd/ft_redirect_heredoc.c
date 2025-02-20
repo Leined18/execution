@@ -6,18 +6,18 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 17:28:12 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/14 12:43:47 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:21:48 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-static int	error_here_doc(char *msg, char *buffer, char *bf_trim)
+static int	error_here_doc(char *msg, char *buffer, char *bf_trim, t_env *env)
 {
 	perror(msg);
 	free(buffer);
 	free(bf_trim);
-	return (-1);
+	return (env->last_status = 1, 1);
 }
 
 static void	reset_next_round(char*buffer, char *bf_trim)
@@ -40,7 +40,7 @@ static int	duplicate_heredoc_stdin(int fdhd[2], t_env *env)
 		return (ft_error("Error redirecting standard input.\n", 0), -1);
 	env->redirect.is_red_in = 1;
 	close(fdhd[READ_END]);
-	return (0);
+	return (env->last_status = 0, 0);
 }
 
 int	redirect_heredoc(t_mt *node, t_env *env)
@@ -64,7 +64,7 @@ int	redirect_heredoc(t_mt *node, t_env *env)
 			break ;
 		}
 		if (write(fdhd[WRITE_END], bf, ft_strlen(bf)) != (ssize_t)ft_strlen(bf))
-			return (error_here_doc("Error writing heredoc", bf, bf_trim));
+			return (error_here_doc("Error writing heredoc", bf, bf_trim, env));
 		reset_next_round(bf, bf_trim);
 	}
 	return (duplicate_heredoc_stdin(fdhd, env));

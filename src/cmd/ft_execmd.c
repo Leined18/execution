@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/19 17:15:19 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:33:00 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,12 @@ int	exe_in_child(t_command *cmd, t_env *envp, char **array_envp)
 	if (pid == 0)
 		execute_command(cmd, array_envp);
 	else if (pid < 0)
-		return (ft_putstr_fd("Command not accessible\n", 2),
-			envp->last_status = 1, 1);
+	{
+		ft_putstr_fd("Command not accessible\n", 2);
+		envp->last_status = 1;
+		free_array2d(array_envp);
+		return (1);
+	}
 	waitpid(pid, &status, 0);
 	envp->last_status = update_last_status(status);
 	free_array2d(array_envp);
