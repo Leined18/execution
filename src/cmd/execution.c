@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:27:24 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/20 15:51:14 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:00:54 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	manage_logic_operator(t_mt *node, t_env *env, int is_child)
 			ft_execute_tree(node->vect[RIGHT], env, is_child);
 		else
 			if (!is_child)
-				endizide_nodes(node);
+				endizide_nodes(node->vect[RIGHT]);
 	}
 	else if (ft_pmatch_str(node->key, "||", 2) == 0)
 	{
@@ -46,7 +46,7 @@ int	manage_logic_operator(t_mt *node, t_env *env, int is_child)
 			ft_execute_tree(node->vect[RIGHT], env, is_child);
 		else
 			if (!is_child)
-				endizide_nodes(node);
+				endizide_nodes(node->vect[RIGHT]);
 	}
 	node->values.state = END;
 	return (env->last_status);
@@ -80,19 +80,17 @@ int	ft_execute_tree(t_mt *node, t_env *env, int is_child)
 			else if (ft_pmatch_str(node->key, "|", 1) == 0)
 			{
 				result = execute_pipe(node, env); //BIEN
-				if (!is_child)
-					// evita que una segunda pipe anidada haga END todos los nodos ya que al ser hijo no quedaria guardado. Sólo lo hace si es el padre original.
+				if (!is_child) // evita que una segunda pipe anidada haga END todos los nodos ya que al ser hijo no quedaria guardado. Sólo lo hace si es el padre original.
 					endizide_nodes(node);
 			}
 			else
-				// ft_printf("manage_logic_operator\n"); //CONTINUAR MANAÑA AQUI
 				result = manage_logic_operator(node, env, is_child); //REVISAR
 		}
-	}
-	if (result == 0)
-	{
-		result = ft_execute_tree(node->vect[LEFT], env, is_child);
-		result = ft_execute_tree(node->vect[RIGHT], env, is_child);
+		if (result == 0)
+		{
+			result = ft_execute_tree(node->vect[LEFT], env, is_child);
+			result = ft_execute_tree(node->vect[RIGHT], env, is_child);
+		}
 	}
 	return (result);
 }
