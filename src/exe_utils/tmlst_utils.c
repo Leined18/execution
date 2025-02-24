@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:22:21 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/07 19:02:19 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:31:26 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,17 @@ size_t	ft_mtcount_node(t_mt *lst)
 
 	if (!lst)
 		return (0);
-	count = 1;
+	if (ft_mtcheck_state(lst, WILDCARD))
+		count = count_wildcard(lst->data);
+	else
+		count = 1;
 	aux = lst;
 	while (aux->vect[RIGHT])
 	{
-		count++;
+		if (ft_mtcheck_state(aux->vect[RIGHT], WILDCARD))
+			count = count + count_wildcard(aux->data);
+		else
+			count++;
 		aux = aux->vect[RIGHT];
 	}
 	return (count);

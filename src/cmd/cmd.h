@@ -60,6 +60,11 @@ int			redirect_output(t_mt *node, int open_mode, t_env *env);
 // ft_redirect_heredoc.c
 int			redirect_heredoc(t_mt *node, t_env *env);
 
+//wildcard.c
+int			ft_fnmatch(const char *pattern, const char *str);
+int			count_wildcard(char *pattern);
+void		expand_wildcard(char *pattern, char **args, size_t *i);
+
 void		create_child(t_command *cmd, int *pipefd, int child_num);
 void		pipe_commands(t_command *cmd1, t_command *cmd2);
 void		handle_parent(int *pipefd, pid_t pid1, pid_t pid2);

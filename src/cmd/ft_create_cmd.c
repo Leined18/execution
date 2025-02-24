@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:43 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/13 18:30:28 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:39:31 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,16 @@ char	**mtbranch_array2d(t_mt *list, t_env *envp)
 	list = list->aux;
 	while (list)
 	{
-		aux = ft_expand(list->data, list->values.state, envp);
-		if (*aux)
-			array[i++] = aux;
+		if (!ft_mtcheck_state(list, WILDCARD)) //MAÑANA ARREGLOs AQUI
+		{
+			aux = ft_expand(list->data, list->values.state, envp);
+			if (aux && *aux)
+				array[i++] = aux;
+			else
+				free(aux);
+		}
 		else
-			free(aux);
+			expand_wildcard(list->data, array, &i);
 		list = list->vect[RIGHT];
 	}
 	return (array);
@@ -62,6 +67,6 @@ t_command	*create_command(t_mt *parsed_cmd, t_env *envp)
 	new_command->cmd_path = get_cmd_path(envp->path, new_command->command);
 	if (!*new_command->command)
 		return (free_command(new_command), NULL);
-	//print_command(new_command);
+	print_command(new_command);
 	return (new_command);
 }
