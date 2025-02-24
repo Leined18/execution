@@ -25,7 +25,6 @@ typedef struct s_command
 
 // execution.c
 int			ft_execute_tree(t_mt *node, t_env *env, int is_child);
-int			endizide_nodes(t_mt *node);
 
 // ft_create_cmd.c
 t_command	*create_command(t_mt *parsed_cmd, t_env *envp);
