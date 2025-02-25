@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:43 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/24 19:39:31 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:20:07 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,27 @@ void	print_command(t_command *cmd)
 	ft_printf("-----------------------\n");
 }
 
+void	add_normal_token(t_mt *token, char **array, size_t *i, t_env *envp)
+{
+	char	*aux;
+
+	aux = ft_expand(token->data, token->values.state, envp);
+	if (aux && *aux)
+		array[(*i)++] = aux;
+	else
+		free (aux);
+}
+
 char	**mtbranch_array2d(t_mt *list, t_env *envp)
 {
 	char	**array;
 	size_t	list_size;
 	size_t	i;
-	char	*aux;
 
 	if (!list)
 		return (NULL);
 	i = 0;
-	list_size = ft_mtcount_node(list->aux);
+	list_size = ft_mtcount_node_wildcard(list->aux);
 	array = ft_calloc(1 + list_size + 1, sizeof(char *));
 	if (!array)
 		return (NULL);
@@ -39,14 +49,8 @@ char	**mtbranch_array2d(t_mt *list, t_env *envp)
 	list = list->aux;
 	while (list)
 	{
-		if (!ft_mtcheck_state(list, WILDCARD)) //MAÑANA ARREGLOs AQUI
-		{
-			aux = ft_expand(list->data, list->values.state, envp);
-			if (aux && *aux)
-				array[i++] = aux;
-			else
-				free(aux);
-		}
+		if (!ft_mtcheck_state(list, WILDCARD))
+			add_normal_token(list, array, &i, envp);
 		else
 			expand_wildcard(list->data, array, &i);
 		list = list->vect[RIGHT];
@@ -67,6 +71,6 @@ t_command	*create_command(t_mt *parsed_cmd, t_env *envp)
 	new_command->cmd_path = get_cmd_path(envp->path, new_command->command);
 	if (!*new_command->command)
 		return (free_command(new_command), NULL);
-	print_command(new_command);
+	// print_command(new_command);
 	return (new_command);
 }

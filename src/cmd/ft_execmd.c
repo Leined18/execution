@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/20 12:33:00 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:02:27 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	execute_command(t_command *cmd, char **env)
 		if (access(cmd->cmd_path, X_OK) == 0)
 		{
 			execve(cmd->cmd_path, cmd->args, env);
-			ft_putstr_fd("execve failed", 2);
+			ft_putstr_fd("Error: execve failed", 2);
 		}
 		else
-			ft_putstr_fd("Command not accessible\n", 2);
+			ft_putstr_fd("Error: Command not accessible\n", 2);
 	}
 	else
-		ft_putstr_fd("Command not found\n", 2);
+		ft_putstr_fd("Error: Command not found\n", 2);
 	free_array2d(env);
 	exit(EXIT_FAILURE);
 }

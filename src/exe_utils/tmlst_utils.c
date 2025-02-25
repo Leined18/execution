@@ -6,13 +6,13 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:22:21 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/24 19:31:26 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:56:49 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-size_t	ft_mtcount_node(t_mt *lst)
+size_t	ft_mtcount_node_wildcard(t_mt *lst)
 {
 	size_t	count;
 	t_mt	*aux;
@@ -27,9 +27,26 @@ size_t	ft_mtcount_node(t_mt *lst)
 	while (aux->vect[RIGHT])
 	{
 		if (ft_mtcheck_state(aux->vect[RIGHT], WILDCARD))
-			count = count + count_wildcard(aux->data);
+			count = count + count_wildcard(aux->vect[RIGHT]->data);
 		else
 			count++;
+		aux = aux->vect[RIGHT];
+	}
+	return (count);
+}	
+
+size_t	ft_mtcount_node(t_mt *lst)
+{
+	size_t	count;
+	t_mt	*aux;
+
+	if (!lst)
+		return (0);
+	count = 1;
+	aux = lst;
+	while (aux->vect[RIGHT])
+	{
+		count++;
 		aux = aux->vect[RIGHT];
 	}
 	return (count);

@@ -17,6 +17,7 @@ void	print_lst_data(t_mt *array);
 void	ft_mtdel_one(t_mt **first, t_mt *node);
 t_mt	*ft_mtpop_one(t_mt **first, char *find);
 size_t	ft_mtcount_node(t_mt *lst);
+size_t	ft_mtcount_node_wildcard(t_mt *lst);
 
 //secure_open_file.c
 int		secure_open(char *file_name, int in_out);
