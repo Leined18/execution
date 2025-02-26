@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/26 13:19:02 by mvidal-h          #+#    #+#             */
+/*   Updated: 2025/02/26 13:20:12 by mvidal-h         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef BUILTIN_H
 # define BUILTIN_H
 
@@ -5,11 +17,11 @@
 
 # include "libft.h"
 # include "types.h"
-#include "cmd.h"
+# include "cmd.h"
 
 //builtin.h
-void init_builtins(t_builtin *builtins);
-int execute_builtin(t_command *cmd, t_env *envp);
+void	init_builtins(t_builtin *builtins);
+int		execute_builtin(t_command *cmd, t_env *envp);
 
 //ft_cd.c
 int		cd_builtin(t_command *cmd, t_env *envp);

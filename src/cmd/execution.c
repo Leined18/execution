@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:27:24 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 10:33:45 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:14:24 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ int	manage_operators_redirections(t_mt *node, t_env *env, int is_child)
 	else if (ft_pmatch_str(node->key, "|", 1) == 0)
 	{
 		result = execute_pipe(node, env);
-		if (!is_child) // evita que una segunda pipe anidada haga END todos los nodos ya que al ser hijo no quedaria guardado. Sólo lo hace si es el padre original.
+		if (!is_child)
 			endizide_nodes(node);
 	}
-		else
-			result = manage_logic_operator(node, env, is_child);
+	else
+		result = manage_logic_operator(node, env, is_child);
 	return (result);
 }
 
