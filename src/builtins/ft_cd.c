@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/21 17:41:36 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:19:28 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@ char	*expand_home(char *where, t_env *envp)
 	home_value = ft_getenv_value("HOME", envp->mt_env);
 	ft_strlcat(expanded, home_value, len);
 	ft_strlcat(expanded, cleaned, len);
-	return(free(cleaned), free(home_value), expanded);
+	return (free(cleaned), free(home_value), expanded);
 }
 
 char	*get_expanded_path(char *path, t_env *envp)
 {
 	char	*expanded;
+
 	if (!path || ft_pmatch_str(path, "~", 1) == 0)
 		expanded = ft_getenv_value("HOME", envp->mt_env);
 	else if (ft_pmatch_str(path, "-", 1) == 0)

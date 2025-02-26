@@ -6,13 +6,13 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:53:30 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/22 16:07:00 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:18:15 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-void del_and_update(t_mt **list, t_mt *del, int *num, t_env **envp)
+void	del_and_update(t_mt **list, t_mt *del, int *num, t_env **envp)
 {
 	if (ft_pmatch_env(del->key, "PATH", 4) == 0)
 	{
@@ -44,7 +44,7 @@ int	unset_builtin(t_command *cmd, t_env *envp)
 		}
 		if (del)
 			del_and_update(list, del, num, &envp);
-		i++; 
+		i++;
 	}
 	return (envp->last_status = 0, 0);
 }

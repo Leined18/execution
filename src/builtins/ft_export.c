@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:53:25 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/14 16:59:21 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:58:58 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,13 @@ int	ft_mtmigrate_one(t_mt **src, t_mt **dest, char *migrate)
 		return (0);
 	}
 	return (1);
-
 }
 
 void	generate_path(char *var, t_env **envp)
 {
 	char	**array_envp;
-	
-	if (ft_pmatch_str(var, "PATH", 4) == 0) //Quizas mejora buscando si se ha modificado.
+
+	if (ft_pmatch_str(var, "PATH", 4) == 0)
 	{
 		if ((*envp)->path)
 		{
@@ -61,8 +60,13 @@ void	generate_path(char *var, t_env **envp)
 	}
 }
 
+static void	modify_counters(t_env *envp)
+{
+	envp->num_env++;
+	envp->num_var--;
+}
 
-int		export_builtin(t_command *cmd, t_env *envp)
+int	export_builtin(t_command *cmd, t_env *envp)
 {
 	int		i;
 	char	**split_arg;
@@ -82,8 +86,8 @@ int		export_builtin(t_command *cmd, t_env *envp)
 				ft_setenv(split_arg[0], value, envp, 1);
 				free(value);
 			}
-			if (ft_mtmigrate_one(&envp->mt_var, &envp->mt_env, split_arg[0]) == 0)
-				(envp->num_var--, envp->num_env++);
+			if (!ft_mtmigrate_one(&envp->mt_var, &envp->mt_env, split_arg[0]))
+				modify_counters(envp);
 			generate_path(split_arg[0], &envp);
 			free_array2d(split_arg);
 		}

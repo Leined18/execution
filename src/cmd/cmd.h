@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:46:10 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 11:48:53 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:06:06 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char		*get_cmd_path(char **split_path, const char *cmd);
 
 // ft_pipe_cmd.c
 int			execute_pipe(t_mt *node, t_env *env);
-int			update_last_status(int status);
 
 // ft_redirect_heredoc.c
 int			redirect_heredoc(t_mt *node, t_env *env);
@@ -66,6 +65,9 @@ int			redirect_input(t_mt *node, int open_mode, t_env *env);
 
 // ft_redirect_output.c
 int			redirect_output(t_mt *node, int open_mode, t_env *env);
+
+// ft_update_last_status.c
+int			update_last_status(int status);
 
 //ft_wildcard.c
 int			ft_fnmatch(const char *pattern, const char *str);

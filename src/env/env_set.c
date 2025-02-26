@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:51:27 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 11:32:44 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:32:35 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@ char	*build_new_env(const char *name, const char *value, int total_len)
 	return (str);
 }
 
+static void	replace_node(t_mt **list, const char *name, char *new_env)
+{
+	t_mt	*new_node;
+
+	new_node = ft_mtnew(new_env, new_env, STRING);
+	ft_mtreplace(list, ft_mtsearch_key(*list, name), new_node);
+}
+
 int	ft_setenv(const char *name, const char *value, t_env *envp, int is_env)
 {
 	int		total_len;
@@ -42,15 +50,15 @@ int	ft_setenv(const char *name, const char *value, t_env *envp, int is_env)
 	env_str = ft_getenv(name, *list);
 	if (env_str)
 	{
-		ft_mtreplace(list, ft_mtsearch_key(*list, name), ft_mtnew(new_env, new_env, STRING));
+		replace_node(list, name, new_env);
 		free(env_str);
 	}
-	else if (!is_env) // Si ya estamos en mt_var, añadimos al final
+	else if (!is_env)
 	{
 		ft_mtpush_data_right(list, new_env, new_env, STRING);
 		envp->num_var++;
 	}
-	else // Si no está en mt_env, intentamos con mt_var
+	else
 		return (free(new_env), ft_setenv(name, value, envp, 0));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:11 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/01/22 16:05:07 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:24:26 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ int	check_opt(char *opt)
 	return (free(clean_opt), 0);
 }
 
+// NO USADA DE MOMENTO. En la ultima vuelta del segundo while, no concatena el 
+// espacio porque he reservado el espacio justo para cada cadena + su espacio.
+// Pero al iniciar len en 0 el espacio de la ultima es usado para el \0, 
+// evitando asi que la ultima tenga un espacio(truco).
 char	*generate_echo_arg(char **args)
 {
 	char	*arg;
@@ -37,7 +41,7 @@ char	*generate_echo_arg(char **args)
 	while (args[i])
 	{
 		ft_strlcat(arg, args[i++], len);
-		ft_strlcat(arg, " ", len); //En la ultima vuelta no concatena el espacio porque he reservado el espacio justo para cada cadena + su espacio. Pero al iniciar len en 0 el espacio de la ultima es usado para el \0, evitando asi que la ultima tenga un espacio(truco).
+		ft_strlcat(arg, " ", len);
 	}
 	return (arg);
 }

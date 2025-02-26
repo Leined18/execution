@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:36:22 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/20 12:25:22 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:04:16 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_all_assignations(char **args)
 	while (args[i])
 	{
 		if (!ft_strchr(args[i], '='))
-			return(i);
+			return (i);
 		i++;
 	}
 	return (0);
@@ -61,10 +61,10 @@ int	create_assignations(t_command *cmd, t_mt *node, t_env *envp)
 	return (0);
 }
 
-int ft_assignation(t_mt *node, t_env *envp)
+int	ft_assignation(t_mt *node, t_env *envp)
 {
 	int			result;
-	t_command 	*cmd;
+	t_command	*cmd;
 
 	if (!node || !envp)
 		return (-1);

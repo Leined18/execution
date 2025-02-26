@@ -6,22 +6,19 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:28:34 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/14 15:19:24 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:25:40 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-char	*join_value_var(char *str, int *i, char *result, t_env *envp, int start)
+char	*join_value_var(char *var_name, char *result, t_env *envp)
 {
-	char	*var_name;
 	char	*var_value;
 
-	var_name = ft_substr(str, start, *i - start);
 	var_value = ft_getenv_ptr_value(var_name, envp->mt_env);
 	if (!var_value)
 		var_value = ft_getenv_ptr_value(var_name, envp->mt_var);
-	free(var_name);
 	if (var_value)
 		return (ft_strjoin(result, var_value));
 	else
@@ -33,18 +30,24 @@ char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 	int		start;
 	char	*expanded;
 	char	*aux;
+	char	*var_name;
 
 	start = ++(*i);
 	expanded = NULL;
 	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
 		(*i)++;
 	if (*i > start)
-		expanded = join_value_var(str, i, result, envp, start);
+	{
+		var_name = ft_substr(str, start, *i - start);
+		expanded = join_value_var(var_name, result, envp);
+		free(var_name);
+	}
 	else if (str[start] == '?')
 	{
 		aux = ft_itoa(envp->last_status);
 		expanded = ft_strjoin(result, aux);
-		((*i)++, free(aux));
+		(*i)++;
+		free(aux);
 	}
 	else
 		expanded = ft_strjoin(result, "");
@@ -86,5 +89,3 @@ char	*ft_expand(char *str, int state, t_env *envp)
 	}
 	return (result);
 }
-
-// REVISAR ESTO DA ERROR: echo 'hola que tal '$HOSTNAME' adios'
