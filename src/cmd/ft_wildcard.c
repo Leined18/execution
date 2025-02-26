@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wildcard.c                                         :+:      :+:    :+:   */
+/*   ft_wildcard.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 10:28:07 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/25 12:50:53 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:30:42 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int count_wildcard(char *pattern)
 	while ((entry = readdir(dir)) != NULL)
 	{
 		if (entry->d_name[0] == '.') // Ignorar archivos ocultos (los que empiezan con '.')
-		continue;
+			continue;
 		if (ft_fnmatch(pattern, entry->d_name))
 			count++;
 	}

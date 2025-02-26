@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exe_utils.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/26 11:10:54 by mvidal-h          #+#    #+#             */
+/*   Updated: 2025/02/26 11:38:00 by mvidal-h         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EXE_UTILS_H
 # define EXE_UTILS_H
 
@@ -9,6 +21,11 @@ size_t	array2d_len(char **array);
 void	print_array2d(char **array);
 char	**mtconvert_array2d(t_mt *list);
 
+// ft_perfect_match.c
+int		ft_pmatch_env(const char *s1, const char *s2, size_t n);
+int		ft_pmatch_str(const char *s1, const char *s2, size_t n);
+
+// prompt_utils.c
 int		pwd_is_home(t_mt *mt_env);
 char	*generate_prompt(t_mt *mt_env);
 

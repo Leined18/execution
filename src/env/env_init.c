@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:51:27 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/06 13:04:05 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:24:43 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,21 @@ char	**split_path_env(char *env[])
 	return (path_array);
 }
 
+void	initialize_environ(t_env *environ, int counter)
+{
+	environ->num_env = counter;
+	environ->mt_env = NULL;
+	environ->num_var = 0;
+	environ->mt_var = NULL;
+	environ->input = NULL;
+	environ->prompt = NULL;
+	environ->last_status = 0;
+	environ->redirect.is_red_in = 0;
+	environ->redirect.is_red_out = 0;
+	environ->redirect.original_stdin = dup(STDIN_FILENO);
+	environ->redirect.original_stdout = dup(STDOUT_FILENO);
+}
+
 // Genera una copia del entorno en una variable de tipo t_env
 t_env	*copy_envp(char **envp)
 {
@@ -52,17 +67,7 @@ t_env	*copy_envp(char **envp)
 		return (NULL);
 	while (envp[counter])
 		counter++;
-	environ->num_env = counter;
-	environ->mt_env = NULL;
-	environ->num_var = 0;
-	environ->mt_var = NULL;
-	environ->input = NULL;
-	environ->prompt = NULL;
-	environ->last_status = 0;
-	environ->redirect.is_red_in = 0;
-	environ->redirect.is_red_out = 0;
-	environ->redirect.original_stdin = dup(STDIN_FILENO);
-	environ->redirect.original_stdout = dup(STDOUT_FILENO);
+	initialize_environ(environ, counter);
 	counter = 0;
 	while (counter < environ->num_env)
 	{

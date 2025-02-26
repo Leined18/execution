@@ -6,71 +6,11 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/01/14 10:07:17 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:09:32 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
-
-// static void	del_content(void *content)
-// {
-// 	free(content);
-// }
-
-// int	free_nodes_lst(t_list **list)
-// {
-// 	t_list	*current;
-// 	t_list	*next;
-
-// 	if (list && *list)
-// 	{
-// 		current = *list;
-// 		while (current)
-// 		{
-// 			next = current->next;
-// 			ft_lstdelone(current, del_content);
-// 			current = next;
-// 		}
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
-// void	free_environment(t_env *environ)
-// {
-// 	free_nodes_lst(&environ->lst_env);
-// 	free_array2d(environ->path);
-// 	free(environ);
-// }
-
-/* void *cortexarchive(int count, size_t size, t_mt **list) FUTURO
-{
-	void *ptr;
-	t_mt *new_node;
-
-	ptr = malloc(count * size);
-
-	new_node = ft_mtnew(ptr);
-	ft_mtadd_back(list, new_node);
-	return (ptr);
-} */
-
-// static int	is_exit(t_command *cmd)
-// {
-// 	if (ft_pmatch_str(cmd->command, "exit", 4) == 0)
-// 	{
-// 		if (cmd->args)
-// 		{
-// 			if (!ft_isstrnum(cmd->args[0]))
-// 				return (1);
-// 			else if (cmd->args[1])
-// 				return (0);
-// 		}
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
 
 int	shell_loop(t_env *env)
 {

@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 14:26:05 by mvidal-h          #+#    #+#             */
-/*   Updated: 2024/11/25 15:54:56 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:45:22 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*ft_ptrrtrim(char const *s1, char const *set)
 {
-	char const *end;
+	char const	*end;
 
 	if (!s1 || !set)
 		return (NULL);
@@ -23,7 +23,6 @@ static char	*ft_ptrrtrim(char const *s1, char const *set)
 		end--;
 	return ((char *)end);
 }
-
 
 /*Allocate (with malloc) and returns a copy of s1, without the characters
 specified in set at the beginning of s1.*/

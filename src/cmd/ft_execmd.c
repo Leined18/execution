@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/25 14:02:27 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:29:10 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int	process_command(t_mt *node, t_env *env, int is_child)
 	cmd = create_command(node, env);
 	if (cmd)
 	{
-		// print_command(cmd);
 		if (ft_pmatch_str(cmd->command, "path", 4) == 0)
 			print_array2d(env->path);
 		else if (ft_pmatch_str(cmd->command, "vars", 4) == 0)

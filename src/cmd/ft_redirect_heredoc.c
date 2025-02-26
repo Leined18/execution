@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 17:28:12 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/20 15:21:48 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:56:38 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	redirect_heredoc(t_mt *node, t_env *env)
 		if (!bf)
 			continue ;
 		bf_trim = ft_strtrim(bf, "\n");
-		if (ft_pmatch_str(bf_trim, node->aux->key, ft_strlen(node->aux->key)) == 0)
+		if (!ft_pmatch_str(bf_trim, node->aux->key, ft_strlen(node->aux->key)))
 		{
 			(close_here_doc(fdhd, bf, bf_trim));
 			break ;
