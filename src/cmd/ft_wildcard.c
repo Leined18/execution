@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 10:28:07 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 13:10:18 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:37:14 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <string.h>
+#include "cmd.h"
 
 static void	move_both_forward(const char **pattern, const char **str)
 {
@@ -78,9 +79,35 @@ int	count_wildcard(char *pattern)
 	return (count);
 }
 
+// //Charge in args the files that match the pattern excluding hidden files
+// // (those that start with '.')
+// void	expand_wildcard(char *pattern, char **args, size_t *i)
+// {
+// 	struct dirent	*entry;
+// 	DIR				*dir;
+
+// 	dir = opendir(".");
+// 	if (!dir)
+// 	{
+// 		perror("opendir");
+// 		return ;
+// 	}
+// 	entry = readdir(dir);
+// 	while (entry != NULL)
+// 	{
+// 		if (entry->d_name[0] != '.')
+// 		{
+// 			if (ft_fnmatch(pattern, entry->d_name))
+// 				args[(*i)++] = strdup(entry->d_name);
+// 		}
+// 		entry = readdir(dir);
+// 	}
+// 	closedir(dir);
+// }
+
 //Charge in args the files that match the pattern excluding hidden files
 // (those that start with '.')
-void	expand_wildcard(char *pattern, char **args, size_t *i)
+void	expand_wildcard(char *pattern, t_cmd_args *args, size_t *i)
 {
 	struct dirent	*entry;
 	DIR				*dir;
@@ -97,7 +124,11 @@ void	expand_wildcard(char *pattern, char **args, size_t *i)
 		if (entry->d_name[0] != '.')
 		{
 			if (ft_fnmatch(pattern, entry->d_name))
-				args[(*i)++] = strdup(entry->d_name);
+			{
+				args->names[(*i)] = strdup(entry->d_name);
+				args->need_space[(*i)] = 1;
+				(*i)++;
+			}
 		}
 		entry = readdir(dir);
 	}

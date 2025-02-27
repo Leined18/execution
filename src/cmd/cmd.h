@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:46:10 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 19:06:06 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:22:00 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,17 @@
 # include "mt.h"
 # include "types.h"
 
+typedef struct s_cmd_args
+{
+	char	**names;
+	t_bool	*need_space;
+}			t_cmd_args;
+
 typedef struct s_command
 {
-	char	*command;
-	char	*cmd_path;
-	char	**args;
+	char		*command;
+	char		*cmd_path;
+	t_cmd_args	args;
 }			t_command;
 
 /* ************************************************************************** */
@@ -72,6 +78,6 @@ int			update_last_status(int status);
 //ft_wildcard.c
 int			ft_fnmatch(const char *pattern, const char *str);
 int			count_wildcard(char *pattern);
-void		expand_wildcard(char *pattern, char **args, size_t *i);
+void		expand_wildcard(char *pattern, t_cmd_args *args, size_t *i);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:28:34 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 18:25:40 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:46:18 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,22 @@ char	*join_value_var(char *var_name, char *result, t_env *envp)
 		return (ft_strjoin(result, ""));
 }
 
+int	is_in_single_quotes(char *str, int pos)
+{
+	int	in_quotes;
+	int	j;
+
+	in_quotes = 0;
+	j = 0;
+	while (j < pos)
+	{
+		if (str[j] == '\'')
+			in_quotes = !in_quotes;
+		j++;
+	}
+	return (in_quotes);
+}
+
 char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 {
 	int		start;
@@ -32,8 +48,13 @@ char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 	char	*aux;
 	char	*var_name;
 
+	if (is_in_single_quotes(str, *i))
+	{
+		expanded = ft_strjoin(result, "$");
+		(*i)++;
+		return (free(result), expanded);
+	}
 	start = ++(*i);
-	expanded = NULL;
 	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
 		(*i)++;
 	if (*i > start)
@@ -79,7 +100,7 @@ char	*ft_expand(char *str, int state, t_env *envp)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$' && (state != SINGLE_QUOTE && !ft_strchr(str, '\'')))
+		if (str[i] == '$' && state != SINGLE_QUOTE)
 			result = ft_in_expansible(str, &i, result, envp);
 		else
 		{

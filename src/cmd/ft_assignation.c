@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:36:22 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 18:04:16 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:33:03 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	create_assignations(t_command *cmd, t_mt *node, t_env *envp)
 	if (!cmd || !node || !envp)
 		return (1);
 	i = 0;
-	while (cmd->args[i])
+	while (cmd->args.names[i])
 	{
-		split_arg = ft_split(cmd->args[i], '=');
+		split_arg = ft_split(cmd->args.names[i], '=');
 		value = ft_clear_quotes(split_arg[1]);
 		ft_setenv(split_arg[0], value, envp, 1);
 		generate_path(split_arg[0], &envp);
@@ -69,13 +69,13 @@ int	ft_assignation(t_mt *node, t_env *envp)
 	if (!node || !envp)
 		return (-1);
 	cmd = create_command(node, envp);
-	result = check_all_assignations(cmd->args);
+	result = check_all_assignations(cmd->args.names);
 	if (result == 0)
 		create_assignations(cmd, node, envp);
 	else
 	{
 		restore_stdin_stdout(envp);
-		ft_printf("assignation: '%s' is not found.\n", cmd->args[result]);
+		ft_printf("assignation: '%s' is not found.\n", cmd->args.names[result]);
 		envp->last_status = result;
 	}
 	node->values.state = END;

@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:53:25 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 17:58:58 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:39:24 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ int	export_builtin(t_command *cmd, t_env *envp)
 	char	*value;
 
 	i = 1;
-	if (!cmd->args[i])
+	if (!(cmd->args).names[i])
 		ft_print_export(envp->mt_env);
 	else
 	{
-		while (cmd->args[i])
+		while (cmd->args.names[i])
 		{
-			split_arg = ft_split(cmd->args[i++], '=');
+			split_arg = ft_split(cmd->args.names[i++], '=');
 			if (split_arg[1])
 			{
 				value = ft_clear_quotes(split_arg[1]);
