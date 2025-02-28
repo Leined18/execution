@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 10:28:07 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/27 15:37:14 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:21:50 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,32 +78,6 @@ int	count_wildcard(char *pattern)
 	closedir(dir);
 	return (count);
 }
-
-// //Charge in args the files that match the pattern excluding hidden files
-// // (those that start with '.')
-// void	expand_wildcard(char *pattern, char **args, size_t *i)
-// {
-// 	struct dirent	*entry;
-// 	DIR				*dir;
-
-// 	dir = opendir(".");
-// 	if (!dir)
-// 	{
-// 		perror("opendir");
-// 		return ;
-// 	}
-// 	entry = readdir(dir);
-// 	while (entry != NULL)
-// 	{
-// 		if (entry->d_name[0] != '.')
-// 		{
-// 			if (ft_fnmatch(pattern, entry->d_name))
-// 				args[(*i)++] = strdup(entry->d_name);
-// 		}
-// 		entry = readdir(dir);
-// 	}
-// 	closedir(dir);
-// }
 
 //Charge in args the files that match the pattern excluding hidden files
 // (those that start with '.')

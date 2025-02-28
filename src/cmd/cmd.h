@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:46:10 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/27 16:22:00 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:37:56 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ void		print_command(t_command *cmd);
 
 // ft_execmd.c
 int			process_command(t_mt *node, t_env *env, int is_child);
+
+// ft_expand_utils.c
+char		*expand_last_status(char *result, int *i, t_env *envp);
+char		*join_value_var(char *var_name, char *result, t_env *envp);
+int			is_in_single_quotes(char *str, int pos);
 
 // ft_expand.c
 char		*ft_expand(char *str, int state, t_env *envp);

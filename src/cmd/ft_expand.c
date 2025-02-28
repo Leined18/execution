@@ -6,46 +6,16 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:28:34 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/27 17:46:18 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:12:18 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-char	*join_value_var(char *var_name, char *result, t_env *envp)
-{
-	char	*var_value;
-
-	var_value = ft_getenv_ptr_value(var_name, envp->mt_env);
-	if (!var_value)
-		var_value = ft_getenv_ptr_value(var_name, envp->mt_var);
-	if (var_value)
-		return (ft_strjoin(result, var_value));
-	else
-		return (ft_strjoin(result, ""));
-}
-
-int	is_in_single_quotes(char *str, int pos)
-{
-	int	in_quotes;
-	int	j;
-
-	in_quotes = 0;
-	j = 0;
-	while (j < pos)
-	{
-		if (str[j] == '\'')
-			in_quotes = !in_quotes;
-		j++;
-	}
-	return (in_quotes);
-}
-
 char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 {
 	int		start;
 	char	*expanded;
-	char	*aux;
 	char	*var_name;
 
 	if (is_in_single_quotes(str, *i))
@@ -64,12 +34,7 @@ char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 		free(var_name);
 	}
 	else if (str[start] == '?')
-	{
-		aux = ft_itoa(envp->last_status);
-		expanded = ft_strjoin(result, aux);
-		(*i)++;
-		free(aux);
-	}
+		expanded = expand_last_status(result, i, envp);
 	else
 		expanded = ft_strjoin(result, "");
 	return (free(result), expanded);
