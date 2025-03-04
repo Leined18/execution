@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:28:34 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/03 13:07:25 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:11:03 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,6 @@ char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 	char	*expanded;
 	char	*var_name;
 
-	// if (is_in_single_quotes(str, *i)) NO BORRAR HASTA COMPROBAR EN CAMPUS
-	// {
-	// 	expanded = ft_strjoin(result, "$");
-	// 	(*i)++;
-	// 	return (free(result), expanded);
-	// }
 	start = ++(*i);
 	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
 		(*i)++;
@@ -36,7 +30,7 @@ char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 	else if (str[start] == '?')
 		expanded = expand_last_status(result, i, envp);
 	else
-		expanded = ft_strjoin(result, "");
+		expanded = ft_strjoin(result, "$");
 	return (free(result), expanded);
 }
 
