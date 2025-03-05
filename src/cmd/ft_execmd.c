@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/27 16:35:21 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/05 09:22:22 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ int	exe_in_child(t_command *cmd, t_env *envp, char **array_envp)
 
 	pid = fork();
 	if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
 		execute_command(cmd, array_envp);
+	}
 	else if (pid < 0)
 	{
 		ft_putstr_fd("Command not accessible\n", 2);

@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_assignation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:36:22 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/27 16:33:03 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:06:38 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "types.h"
+#include "builtin.h"
 #include "cmd.h"
 #include "exe_utils.h"
-#include "builtin.h"
+#include "types.h"
 
 int	check_all_assignations(char **args)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (args[i])
@@ -31,6 +31,8 @@ int	check_all_assignations(char **args)
 
 char	*ft_clear_quotes(char *str)
 {
+	if (!str)
+		return (NULL);
 	if (str[0] == '\'')
 		return (ft_strtrim(str, "'"));
 	else if (str[0] == '"')

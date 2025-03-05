@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redirect_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 17:28:12 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 11:56:38 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/05 09:37:20 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	reset_next_round(char*buffer, char *bf_trim)
 {
 	free(buffer);
 	free(bf_trim);
-	ft_printf(">");
+	ft_printf("> ");
 }
 
 static void	close_here_doc(int fdhd[2], char	*buffer, char *bf_trim)
@@ -51,7 +51,7 @@ int	redirect_heredoc(t_mt *node, t_env *env)
 
 	if (pipe(fdhd) == -1)
 		return (-1);
-	ft_printf(">");
+	ft_printf("> ");
 	while (1)
 	{
 		bf = get_next_line(STDIN_FILENO);
