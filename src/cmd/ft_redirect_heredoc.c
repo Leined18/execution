@@ -3,34 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redirect_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 17:28:12 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/05 09:37:20 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:16:15 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-static int	error_here_doc(char *msg, char *buffer, char *bf_trim, t_env *env)
+static int	error_here_doc(char *msg, char *buffer, t_env *env)
 {
 	perror(msg);
 	free(buffer);
-	free(bf_trim);
 	return (env->last_status = 1, 1);
 }
 
-static void	reset_next_round(char*buffer, char *bf_trim)
+static void	close_here_doc(int fdhd[2], char *buffer)
 {
 	free(buffer);
-	free(bf_trim);
-	ft_printf("> ");
-}
-
-static void	close_here_doc(int fdhd[2], char	*buffer, char *bf_trim)
-{
-	free(buffer);
-	free(bf_trim);
 	close(fdhd[WRITE_END]);
 }
 
@@ -47,25 +38,24 @@ int	redirect_heredoc(t_mt *node, t_env *env)
 {
 	int		fdhd[2];
 	char	*bf;
-	char	*bf_trim;
 
 	if (pipe(fdhd) == -1)
 		return (-1);
-	ft_printf("> ");
 	while (1)
 	{
-		bf = get_next_line(STDIN_FILENO);
+		bf = readline("> ");
 		if (!bf)
 			continue ;
-		bf_trim = ft_strtrim(bf, "\n");
-		if (!ft_pmatch_str(bf_trim, node->aux->key, ft_strlen(node->aux->key)))
+		if (!ft_pmatch_str(bf, node->aux->key, ft_strlen(node->aux->key)))
 		{
-			(close_here_doc(fdhd, bf, bf_trim));
+			(close_here_doc(fdhd, bf));
 			break ;
 		}
 		if (write(fdhd[WRITE_END], bf, ft_strlen(bf)) != (ssize_t)ft_strlen(bf))
-			return (error_here_doc("Error writing heredoc", bf, bf_trim, env));
-		reset_next_round(bf, bf_trim);
+			return (error_here_doc("Error writing heredoc", bf, env));
+		if (write(fdhd[WRITE_END], "\n", 1) != 1)
+			return (error_here_doc("Error writing heredoc", bf, env));
+		free(bf);
 	}
 	return (duplicate_heredoc_stdin(fdhd, env));
 }
