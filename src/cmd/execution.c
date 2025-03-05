@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:27:24 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 13:14:24 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:05:12 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,15 @@ int	manage_logic_operator(t_mt *node, t_env *env, int is_child)
 	{
 		if (env->last_status == 0)
 			ft_execute_tree(node->vect[RIGHT], env, is_child);
-		else
-			if (!is_child)
-				endizide_nodes(node->vect[RIGHT]);
+		else if (!is_child)
+			endizide_nodes(node->vect[RIGHT]);
 	}
 	else if (ft_pmatch_str(node->key, "||", 2) == 0)
 	{
 		if (env->last_status != 0)
 			ft_execute_tree(node->vect[RIGHT], env, is_child);
-		else
-			if (!is_child)
-				endizide_nodes(node->vect[RIGHT]);
+		else if (!is_child)
+			endizide_nodes(node->vect[RIGHT]);
 	}
 	node->values.state = END;
 	return (env->last_status);

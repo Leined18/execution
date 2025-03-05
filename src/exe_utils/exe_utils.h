@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:10:54 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 11:38:00 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:46:49 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ int		free_array2d(char **array);
 size_t	array2d_len(char **array);
 void	print_array2d(char **array);
 char	**mtconvert_array2d(t_mt *list);
+
+// cmd_args_utils.c
+int		free_cmd_args2d(t_cmd_args *args);
+void	print_cmd_args2d(t_cmd_args args);
 
 // ft_perfect_match.c
 int		ft_pmatch_env(const char *s1, const char *s2, size_t n);

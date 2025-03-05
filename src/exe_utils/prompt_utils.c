@@ -31,16 +31,16 @@ char	*generate_prompt(t_mt *mt_env)
 	char	*pwd;
 	size_t	len;
 
-	len = ft_strlen(PURPLE) + ft_strlen("MINISHELL") + ft_strlen(GREEN);
+	len = ft_strlen(PURPLE_RL) + ft_strlen("MINISHELL") + ft_strlen(GREEN_RL);
 	len += get_len_env("PWD", mt_env, 1);
-	len += ft_strlen(RESET) + 4;
+	len += ft_strlen(RESET_RL) + 4;
 	str_prompt = ft_calloc(len, sizeof(char));
 	if (!str_prompt)
 		return (NULL);
-	ft_strlcat(str_prompt, PURPLE, len);
+	ft_strlcat(str_prompt, PURPLE_RL, len);
 	ft_strlcat(str_prompt, "MINISHELL", len);
 	ft_strlcat(str_prompt, ":", len);
-	ft_strlcat(str_prompt, GREEN, len);
+	ft_strlcat(str_prompt, GREEN_RL, len);
 	if (pwd_is_home(mt_env))
 		ft_strlcat(str_prompt, "~", len);
 	else
@@ -50,6 +50,6 @@ char	*generate_prompt(t_mt *mt_env)
 		free(pwd);
 	}
 	ft_strlcat(str_prompt, "$ ", len);
-	ft_strlcat(str_prompt, RESET, len);
+	ft_strlcat(str_prompt, RESET_RL, len);
 	return (str_prompt);
 }

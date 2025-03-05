@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 17:19:28 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:37:48 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int	cd_builtin(t_command *cmd, t_env *envp)
 	char	*path;
 
 	path = NULL;
-	if (cmd->args)
-		path = cmd->args[1];
+	if (cmd->args.names)
+		path = cmd->args.names[1];
 	prev_path = getcwd(NULL, 0);
 	if (prev_path == NULL)
 		return (perror("getcwd"), envp->last_status = 1, 1);

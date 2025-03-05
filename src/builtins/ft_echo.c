@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:11 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 17:24:26 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:46:18 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,18 @@ int	echo_builtin(t_command *cmd, t_env *envp)
 	int		num_args;
 
 	(void)envp;
-	num_args = array2d_len(cmd->args);
+	num_args = array2d_len(cmd->args.names);
 	if (num_args > 1)
 	{
 		i = 1;
-		opt = check_opt(cmd->args[i]);
+		opt = check_opt(cmd->args.names[i]);
 		i += opt;
-		while (cmd->args[i])
+		while (cmd->args.names[i])
 		{
-			ft_printf("%s", cmd->args[i]);
-			if (i++ < num_args - 1)
+			ft_printf("%s", cmd->args.names[i]);
+			if (cmd->args.need_space[i])
 				ft_printf(" ");
+			i++;
 		}
 		if (!opt)
 			ft_printf("\n");
