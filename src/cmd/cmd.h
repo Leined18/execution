@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:46:10 by mvidal-h          #+#    #+#             */
 /*   Updated: 2025/03/03 13:07:56 by mvidal-h         ###   ########.fr       */
@@ -39,6 +39,9 @@ typedef struct s_command
 
 // execution.c
 int			ft_execute_tree(t_mt *node, t_env *env, int is_child);
+
+// ft_execution_utils.c
+int			endizide_nodes(t_mt *node);
 
 // ft_assignation.c
 int			ft_assignation(t_mt *node, t_env *envp);
@@ -80,7 +83,7 @@ int			redirect_output(t_mt *node, int open_mode, t_env *env);
 // ft_update_last_status.c
 int			update_last_status(int status);
 
-//ft_wildcard.c
+// ft_wildcard.c
 int			ft_fnmatch(const char *pattern, const char *str);
 int			count_wildcard(char *pattern);
 void		expand_wildcard(char *pattern, t_cmd_args *args, size_t *i);
