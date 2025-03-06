@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:38 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/26 11:49:26 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:38:41 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	redirect_input(t_mt *node, int open_mode, t_env *env)
 {
 	int	fd;
 
+	restore_stdin_stdout(env);
 	fd = secure_open(node->aux->key, open_mode);
 	if (fd == -1)
 	{
