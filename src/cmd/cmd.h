@@ -6,7 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:46:10 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/03 13:07:56 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/06 09:51:45 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ typedef struct s_command
 
 // execution.c
 int			ft_execute_tree(t_mt *node, t_env *env, int is_child);
-
-// ft_execution_utils.c
-int			endizide_nodes(t_mt *node);
 
 // ft_assignation.c
 int			ft_assignation(t_mt *node, t_env *envp);
