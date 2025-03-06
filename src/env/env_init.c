@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:51:27 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 11:24:43 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:03:38 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,16 @@ void	initialize_environ(t_env *environ, int counter)
 	environ->redirect.original_stdout = dup(STDOUT_FILENO);
 }
 
+char	*initialize_path_history(t_mt *env)
+{
+	char	*path;
+
+	path = ft_strjoin(ft_getenv_ptr_value("HOME", env), "/.minishell_history");
+	if (!path)
+		return (NULL);
+	return (path);
+}
+
 // Genera una copia del entorno en una variable de tipo t_env
 t_env	*copy_envp(char **envp)
 {
@@ -79,6 +89,7 @@ t_env	*copy_envp(char **envp)
 		counter++;
 	}
 	environ->path = split_path_env(envp);
+	environ->path_history = initialize_path_history(environ->mt_env);
 	init_builtins(environ->builtins);
 	return (environ);
 }

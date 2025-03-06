@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:32:22 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/10 11:31:59 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:53:27 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	ft_env_free(t_env *environ)
 		free_null((void **)&environ->input);
 	if (environ->prompt)
 		free_null((void **)&environ->prompt);
+	if (environ->path_history)
+		free_null((void **)&environ->path_history);
 	close_stdin_stdout(environ);
 	free_null((void **)&environ);
 }
@@ -43,6 +45,8 @@ void	ft_env_free_func(void **environ)
 		free_null((void **)&env->input);
 	if (env->prompt)
 		free_null((void **)&env->prompt);
+	if (env->path_history)
+		free_null((void **)&env->path_history);
 	close_stdin_stdout(env);
 	free_null(environ);
 }
