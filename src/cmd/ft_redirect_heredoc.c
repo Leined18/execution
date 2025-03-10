@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 17:28:12 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/06 17:26:15 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/10 18:09:17 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	redirect_heredoc(t_mt *node, t_env *env)
 	int		fdhd[2];
 	char	*bf;
 
-	restore_stdin_stdout(env);
+	restore_stdin(env);
 	if (pipe(fdhd) == -1)
 		return (-1);
 	while (1)

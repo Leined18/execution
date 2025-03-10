@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:10:54 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/28 11:46:49 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/10 18:08:56 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int		secure_open(char *file_name, int in_out);
 
 //in_out.c
 void	close_stdin_stdout(t_env *env);
+void	restore_stdin(t_env *env);
+void	restore_stdout(t_env *env);
 void	restore_stdin_stdout(t_env *env);
 
 #endif
