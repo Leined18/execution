@@ -6,13 +6,13 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:28:34 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/04 16:11:03 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:46:21 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
+static char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 {
 	int		start;
 	char	*expanded;
@@ -34,7 +34,7 @@ char	*ft_in_expansible(char *str, int *i, char *result, t_env *envp)
 	return (free(result), expanded);
 }
 
-char	*ft_not_in_expansible(char *str, int i, char *result)
+static char	*ft_not_in_expansible(char *str, int i, char *result)
 {
 	char	*character;
 	char	*expanded;

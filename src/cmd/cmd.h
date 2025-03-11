@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:46:10 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/06 09:51:45 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:47:00 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ char		*join_value_var(char *var_name, char *result, t_env *envp);
 
 // ft_expand.c
 char		*ft_expand(char *str, int state, t_env *envp);
+
+// ft_expand_input.c
+char		*ft_expand_input(char *str, t_env *envp);
 
 // ft_free_command.c
 void		free_command(t_command *cmd);
