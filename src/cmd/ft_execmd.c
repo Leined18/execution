@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/05 09:22:22 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:11:18 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	execute_command(t_command *cmd, char **env)
 		if (access(cmd->cmd_path, X_OK) == 0)
 		{
 			execve(cmd->cmd_path, cmd->args.names, env);
-			ft_putstr_fd("Error: execve failed", 2);
+			ft_putstr_fd("Error: execve failed\n", 2);
 		}
 		else
 			ft_putstr_fd("Error: Command not accessible\n", 2);

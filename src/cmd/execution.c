@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:27:24 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/05 11:05:12 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:15:34 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	manage_commands(t_mt *node, t_env *env, int is_child)
 	int	result;
 
 	result = 0;
-	if (ft_mtcheck_state(node, COMMAND) && ft_strchr(node->key, '='))
+	if (ft_mtcheck_state(node, ASSIGNMENT) && ft_strchr(node->key, '='))
 		result = ft_assignation(node, env);
 	else if (ft_mtcheck_state(node, PARENTESIS))
 	{
