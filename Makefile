@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danpalac <danpalac@student.42.fr>          +#+  +:+       +#+         #
+#    By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 14:34:27 by danpalac          #+#    #+#              #
-#    Updated: 2025/01/13 11:23:07 by danpalac         ###   ########.fr        #
+#    Updated: 2025/03/12 13:17:49 by danpalac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,7 @@ CMD_DIR			:= $(SRC_DIR)cmd/
 ENV_DIR			:= $(SRC_DIR)env/
 UTILS_DIR		:= $(SRC_DIR)exe_utils/
 
-INCLUDES		:= $(INC)*.h $(BUILTINS_DIR)*.h $(CMD_DIR)*.h $(ENV_DIR)*.h $(UTILS_DIR)*.h
+INCLUDES		:= $(BUILTINS_DIR)*.h $(CMD_DIR)*.h $(ENV_DIR)*.h $(UTILS_DIR)*.h
 
 #==========COMMANDS============================================================#
 
@@ -90,7 +90,7 @@ RM			:= rm -rf
 AR			:= ar rcs
 LIB			:= ranlib
 MKDIR 		:= mkdir -p
-IFLAGS		:= -I$(LIB_DIR) -I$(INC) -I$(BUILTINS_DIR) -I$(CMD_DIR) -I$(ENV_DIR) -I$(UTILS_DIR)
+IFLAGS		:= -I$(LIB_DIR)$(INC) -I$(INC) -I$(BUILTINS_DIR) -I$(CMD_DIR) -I$(ENV_DIR) -I$(UTILS_DIR)
 LFLAGS		:= -L$(LIB_DIR) -lparse -lft -lmt -lreadline
 
 #==========FILES==============================================================#
@@ -115,7 +115,8 @@ $(NAME): $(LIBFT) $(MEMTRACK) $(PARSER) $(OBJS)
 	@echo "$(BOLD_BLUE)[$(BRIGHT_GREEN)$(NAME)$(DEF_COLOR)$(BOLD_BLUE)] compiled!$(DEF_COLOR)"
 	@echo "$(TURQUOISE)------------\n| Done! 👌 |\n------------$(DEF_COLOR)"
 	@$(MKDIR) $(LIB_DIR)
-	@cp -R $(INCLUDES) $(NAME) $(LIB_DIR)
+	@cp -r inc $(NAME) $(LIB_DIR)
+	@cp $(INCLUDES) $(LIB_DIR)$(INC)
 
 $(EXE): main.c $(NAME)
 	@$(CC) $(CFLAGS) $(IFLAGS) main.c $(NAME) $(LFLAGS) -o $(EXE)
