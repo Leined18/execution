@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:46:10 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/11 14:47:00 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:27:47 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ typedef struct s_command
 // execution.c
 int			ft_execute_tree(t_mt *node, t_env *env, int is_child);
 
+// ft_assign_with_command.c
+int			assign_with_command(t_mt *node, t_env *envp);
+
 // ft_assignation.c
 int			ft_assignation(t_mt *node, t_env *envp);
 char		*ft_clear_quotes(char *str);
@@ -69,6 +72,7 @@ void		free_command(t_command *cmd);
 char		*get_cmd_path(char **split_path, const char *cmd);
 
 // ft_pipe_cmd.c
+void		perror_and_exit(char *msg);
 int			execute_pipe(t_mt *node, t_env *env);
 
 // ft_redirect_heredoc.c

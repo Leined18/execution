@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:55:01 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/26 19:08:46 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/13 11:52:24 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //Makes father process waiting for the children to ensure that all of them 
 //finish correctly and avoid zombies process.
-int	process_father(int pfd[2], int num_children, t_env *env)
+int	process_pipe_father(int pfd[2], int num_children, t_env *env)
 {
 	int	i;
 	int	status;
@@ -76,5 +76,5 @@ int	execute_pipe(t_mt *node, t_env *env)
 		perror_and_exit("fork");
 	if (pid_right == 0)
 		process_right_child(pfd, node, env);
-	return (process_father(pfd, 2, env));
+	return (process_pipe_father(pfd, 2, env));
 }

@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:36:22 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/12 19:53:38 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/13 11:58:34 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,20 @@
 #include "cmd.h"
 #include "exe_utils.h"
 #include "types.h"
+
+int	is_all_assignations(t_mt *node)
+{
+	t_mt	*tmp;
+
+	tmp = node;
+	while (tmp)
+	{
+		if (!ft_mtcheck_state(tmp, ASSIGNMENT))
+			return (0);
+		tmp = tmp->vect[RIGHT];
+	}
+	return (1);
+}
 
 char	*ft_clear_quotes(char *str)
 {
@@ -47,13 +61,18 @@ int	ft_assignation(t_mt *node, t_env *envp)
 {
 	if (!node || !envp)
 		return (-1);
-	if (create_assignation(node->data, envp))
+	if (is_all_assignations(node))
 	{
-		restore_stdin_stdout(envp);
-		ft_printf("assignation is not possible.\n");
-		envp->last_status = 1;
-		return (1);
+		if (create_assignation(node->data, envp))
+		{
+			restore_stdin_stdout(envp);
+			ft_printf("assignation is not possible.\n");
+			envp->last_status = 1;
+			return (1);
+		}
+		node->values.state = END;
+		return (envp->last_status = 0, 0);
 	}
-	node->values.state = END;
-	return (envp->last_status = 0, 0);
+	else
+		return (assign_with_command(node, envp));
 }
