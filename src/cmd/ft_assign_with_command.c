@@ -6,12 +6,15 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:52:01 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/13 16:34:30 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/13 17:08:09 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
+/*
+Generates the arguments for the export command struct.
+*/
 static t_cmd_args	generate_args(t_mt *node, t_env *envp)
 {
 	t_cmd_args	args;
@@ -31,6 +34,9 @@ static t_cmd_args	generate_args(t_mt *node, t_env *envp)
 	return (args);
 }
 
+/*
+Creates a command special for export assignations.
+*/
 static t_command	*create_command_assign_export(t_mt *node, t_env *envp)
 {
 	t_command	*new_command;
@@ -46,6 +52,11 @@ static t_command	*create_command_assign_export(t_mt *node, t_env *envp)
 	return (new_command);
 }
 
+/*
+Process the assignations nodes and the command node, making the assignations
+exported to the environment, in case the command execute another shell.
+Finally it execute the command.
+*/
 void	process_child_assign(t_mt *node, t_env *envp)
 {
 	t_mt		*tmp;
@@ -65,6 +76,12 @@ void	process_child_assign(t_mt *node, t_env *envp)
 	process_command(tmp, envp, 1);
 }
 
+/*
+Father endizide the assignations nodes, the command node and
+assignations after the command node if they exist (because they
+don't have to be processed.) to avoid reprocessing them later.
+Also process waits for child to ensure that it finishes correctly.
+*/
 int	process_father_assign(t_mt *node, t_env *envp)
 {
 	int		status;
@@ -81,6 +98,11 @@ int	process_father_assign(t_mt *node, t_env *envp)
 	return (envp->last_status = update_last_status(status), 0);
 }
 
+/*
+Creates a child process to execute the assignations and the command.
+Assignations after commads are not processed. 
+In this way the assignations are only available for the command.
+*/
 int	assign_with_command(t_mt *node, t_env *envp)
 {
 	pid_t		pid;

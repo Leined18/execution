@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:36:22 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/13 11:58:34 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/13 17:08:29 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 #include "exe_utils.h"
 #include "types.h"
 
+/*
+Check if all the nodes are assignations. 
+Return 0 if a command exist in the list.
+Return 1 if all are assignations.
+*/
 int	is_all_assignations(t_mt *node)
 {
 	t_mt	*tmp;
@@ -29,6 +34,9 @@ int	is_all_assignations(t_mt *node)
 	return (1);
 }
 
+/*
+Cleans the quotes of a string.
+*/
 char	*ft_clear_quotes(char *str)
 {
 	if (!str)
@@ -41,6 +49,9 @@ char	*ft_clear_quotes(char *str)
 		return (ft_strdup(str));
 }
 
+/*
+Creates the new variable or reasign the value of an existing variable.
+*/
 int	create_assignation(char *cmd, t_env *envp)
 {
 	char	**split_cmd;
@@ -57,6 +68,11 @@ int	create_assignation(char *cmd, t_env *envp)
 	return (0);
 }
 
+/*
+It creates the assignation of variables (name=var). 
+If there are one or more assignations followed by a command the variables are 
+created just for the env of this command. After that they dissapear.
+*/
 int	ft_assignation(t_mt *node, t_env *envp)
 {
 	if (!node || !envp)
