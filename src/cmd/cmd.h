@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:46:10 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/13 16:27:47 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:25:33 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int			redirect_heredoc(t_mt *node, t_env *env);
 
 // ft_redirect_input.c
 int			redirect_input(t_mt *node, int open_mode, t_env *env);
+void		print_openfile_error(char *file);
 
 // ft_redirect_output.c
 int			redirect_output(t_mt *node, int open_mode, t_env *env);

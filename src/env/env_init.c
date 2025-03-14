@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:51:27 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/06 15:03:38 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:14:09 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	initialize_environ(t_env *environ, int counter)
 	environ->input = NULL;
 	environ->prompt = NULL;
 	environ->last_status = 0;
+	environ->error_infile_name = NULL;
 	environ->redirect.is_red_in = 0;
 	environ->redirect.is_red_out = 0;
 	environ->redirect.original_stdin = dup(STDIN_FILENO);

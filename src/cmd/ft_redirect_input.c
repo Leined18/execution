@@ -6,11 +6,18 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:38 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/13 17:52:54 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:20:16 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
+
+void	print_openfile_error(char *file)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(file, STDERR_FILENO);
+	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+}
 
 int	redirect_input(t_mt *node, int open_mode, t_env *env)
 {
@@ -21,6 +28,8 @@ int	redirect_input(t_mt *node, int open_mode, t_env *env)
 	if (fd == -1)
 	{
 		endizide_nodes(node);
+		if (!env->error_infile_name)
+			env->error_infile_name = ft_strdup(node->aux->key);
 		return (env->last_status = 1, 0);
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)

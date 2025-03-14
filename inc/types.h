@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 13:20:19 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/06 14:37:54 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:13:46 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_env
 	char					*prompt;
 	char					*input;
 	char					*path_history;
+	char					*error_infile_name;
 	int						last_status;
 	t_redirect				redirect;
 	t_builtin				builtins[BUILTINS];

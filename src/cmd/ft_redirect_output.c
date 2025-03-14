@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:50 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/20 15:18:48 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:13:53 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@ int	redirect_output(t_mt *node, int open_mode, t_env *env)
 	}
 	env->redirect.is_red_out = 1;
 	close(fd);
+	if (env->error_infile_name)
+		return (0);
 	return (env->last_status = 0, 0);
 }

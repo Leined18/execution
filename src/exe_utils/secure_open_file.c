@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:55:28 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/21 13:16:56 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:27:07 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,5 @@ int	secure_open(char *file_name, int in_out)
 		fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (in_out == 2)
 		fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd == -1)
-	{
-		perror("Error opening file");
-		return (-1);
-	}
 	return (fd);
 }
