@@ -6,13 +6,13 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
-/*   Updated: 2025/02/26 11:09:32 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/19 18:48:12 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
-int	shell_loop(t_env *env)
+int	feature_loop(t_env *env)
 {
 	t_mt		*parsed_cmd;
 	t_command	*cmd;
@@ -73,7 +73,7 @@ int	main(int ac, char **av, char **ev)
 	environ = copy_envp(ev);
 	if (!environ)
 		return (ft_error(ERROR, 0), 1);
-	shell_loop(environ);
+	feature_loop(environ);
 	ft_env_free(environ);
 	return (ft_successful(SUCCESS, 1), 0);
 }
