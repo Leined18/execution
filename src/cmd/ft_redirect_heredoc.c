@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 17:28:12 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/10 18:09:17 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/23 20:50:24 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int	redirect_heredoc(t_mt *node, t_env *env)
 		return (-1);
 	while (1)
 	{
-		bf = readline("> ");
+		bf = advanced_readline("> ");
 		if (!bf)
-			continue ;
+			return (ft_printf(SYNTAX_ERROR4, node->aux->key), 1);
 		if (!ft_pmatch_str(bf, node->aux->key, ft_strlen(node->aux->key)))
 		{
 			(close_here_doc(fdhd, bf));
