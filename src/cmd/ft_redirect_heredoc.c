@@ -6,11 +6,12 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 17:28:12 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/23 20:50:24 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:37:52 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
+#include "global_signal.h"
 
 static int	error_here_doc(char *msg, char *buffer, t_env *env)
 {
@@ -45,8 +46,19 @@ int	redirect_heredoc(t_mt *node, t_env *env)
 	while (1)
 	{
 		bf = advanced_readline("> ");
-		if (!bf)
+		if (!bf && g_sig_received != SIGINT)
 			return (ft_printf(SYNTAX_ERROR4, node->aux->key), 1);
+		if (!bf && g_sig_received == SIGINT)
+		{
+			g_sig_received = 0;
+			close_here_doc(fdhd, bf);
+			return (env->last_status = 130, 1);
+		}
+		if (!*bf)
+		{
+			free(bf);
+			continue ;
+		}
 		if (!ft_pmatch_str(bf, node->aux->key, ft_strlen(node->aux->key)))
 		{
 			(close_here_doc(fdhd, bf));
