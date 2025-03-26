@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/26 13:46:13 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:26:38 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,31 @@ char	*get_expanded_path(char *path, t_env *envp)
 	return (expanded);
 }
 
+void	create_dir_history(char *dir, t_env *envp)
+{
+	t_mt	*new;
+	char	**dir_split;
+	char	*elem_dir;
+	int		i;
+
+	if (envp->dir_history)
+		ft_mtclear(&envp->dir_history);
+	i = 0;
+	dir_split = ft_split(dir, '/');
+	if (!dir_split)
+		return ;
+	while (dir_split[i])
+	{
+		elem_dir = ft_strdup(dir_split[i++]);
+		new = ft_mtnew(elem_dir, elem_dir, STRING);
+		if (!new)
+			break ;
+		ft_mtaddlast(&envp->dir_history, new, RIGHT);
+	}
+	(free_array2d(dir_split), free(dir));
+}
+
+
 int	cd_builtin(t_command *cmd, t_env *envp)
 {
 	char	*prev_path;
@@ -74,8 +99,10 @@ int	cd_builtin(t_command *cmd, t_env *envp)
 		return (perror("cd"), envp->last_status = 1, 1);
 	}
 	else
-		ft_mtaddlast(&envp->dir_history, ft_mtnew(new_path, new_path, STRING),
-			RIGHT);
+	{
+		create_dir_history(getcwd(NULL, 0), envp);
+		print_lst_data(envp->dir_history);
+	}
 	free(new_path);
 	new_path = getcwd(NULL, 0);
 	ft_setenv("PWD", new_path, envp, 1);
