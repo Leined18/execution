@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:14 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 17:18:40 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:37:22 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	env_builtin(t_command *cmd, t_env *envp)
 			ft_printf("%s\n", (char *)(aux->data));
 			aux = aux->vect[RIGHT];
 		}
-		ft_printf("numero de entorno: %d\n", envp->num_env);
 		return (envp->last_status = 0, 0);
 	}
 	return (envp->last_status = 1, 1);

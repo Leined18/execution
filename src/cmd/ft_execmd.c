@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:18 by danpalac          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/03/12 09:11:18 by mvidal-h         ###   ########.fr       */
+=======
+/*   Updated: 2025/03/26 13:05:22 by danpalac         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +18,22 @@
 
 void	execute_command(t_command *cmd, char **env)
 {
+<<<<<<< Updated upstream
+=======
+	(signal(SIGINT, SIG_DFL), signal(SIGQUIT, SIG_DFL));
+>>>>>>> Stashed changes
 	if (cmd->cmd_path)
 	{
 		if (access(cmd->cmd_path, X_OK) == 0)
 		{
 			execve(cmd->cmd_path, cmd->args.names, env);
-			ft_putstr_fd("Error: execve failed\n", 2);
+			ft_printf_fd(2, "%s: execve failed\n", cmd->args.names[0]);
 		}
 		else
-			ft_putstr_fd("Error: Command not accessible\n", 2);
+			ft_printf_fd(2, "%s: Command not accessible\n", cmd->args.names[0]);
 	}
 	else
-		ft_putstr_fd("Error: Command not found\n", 2);
+		ft_printf_fd(2, "%s: Command not found\n", cmd->args.names[0]);
 	free_array2d(env);
 	exit(EXIT_FAILURE);
 }

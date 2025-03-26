@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/27 16:37:48 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:46:13 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,12 @@ int	cd_builtin(t_command *cmd, t_env *envp)
 	new_path = get_expanded_path(path, envp);
 	if (chdir(new_path) != 0)
 	{
-		free(new_path);
-		free(prev_path);
+		(free(new_path), free(prev_path));
 		return (perror("cd"), envp->last_status = 1, 1);
 	}
+	else
+		ft_mtaddlast(&envp->dir_history, ft_mtnew(new_path, new_path, STRING),
+			RIGHT);
 	free(new_path);
 	new_path = getcwd(NULL, 0);
 	ft_setenv("PWD", new_path, envp, 1);

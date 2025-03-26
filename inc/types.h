@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 13:20:19 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/14 12:13:46 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:46:29 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_env
 	int						last_status;
 	t_redirect				redirect;
 	t_builtin				builtins[BUILTINS];
+	t_mt					*dir_history;
 }							t_env;
 
 #endif

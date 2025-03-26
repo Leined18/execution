@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:51:27 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/14 12:14:09 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:47:59 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	initialize_environ(t_env *environ, int counter)
 	environ->redirect.is_red_out = 0;
 	environ->redirect.original_stdin = dup(STDIN_FILENO);
 	environ->redirect.original_stdout = dup(STDOUT_FILENO);
+	environ->dir_history = NULL;
 }
 
 char	*initialize_path_history(t_mt *env)
