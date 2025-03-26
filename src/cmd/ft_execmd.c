@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:18 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/26 13:57:46 by danpalac         ###   ########.fr       */
+/*   Updated: 2025/03/26 14:09:48 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ int	exe_in_child(t_command *cmd, t_env *envp, char **array_envp)
 
 	pid = fork();
 	if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
 		execute_command(cmd, array_envp);
-	}
 	else if (pid < 0)
 	{
 		ft_putstr_fd("Command not accessible\n", 2);
@@ -50,6 +47,9 @@ int	exe_in_child(t_command *cmd, t_env *envp, char **array_envp)
 		return (1);
 	}
 	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGINT
+			|| WTERMSIG(status) == SIGQUIT))
+		write(1, "\n", 1);
 	envp->last_status = update_last_status(status);
 	free_array2d(array_envp);
 	return (0);

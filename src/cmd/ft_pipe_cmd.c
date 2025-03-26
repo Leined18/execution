@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:55:01 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/13 11:52:24 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/20 13:05:27 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ int	process_pipe_father(int pfd[2], int num_children, t_env *env)
 	{
 		if (wait(&status) == -1)
 			return (perror("wait"), env->last_status = 1, 1);
+		if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGINT
+				|| WTERMSIG(status) == SIGQUIT))
+			write(1, "\n", 1);
 		last_exit_status = update_last_status(status);
 		i++;
 	}

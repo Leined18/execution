@@ -6,16 +6,21 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 01:12:30 by danpalac          #+#    #+#             */
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 /*   Updated: 2025/02/26 11:09:32 by mvidal-h         ###   ########.fr       */
 =======
 /*   Updated: 2025/03/26 11:32:03 by danpalac         ###   ########.fr       */
 >>>>>>> Stashed changes
+=======
+/*   Updated: 2025/03/20 14:18:04 by mvidal-h         ###   ########.fr       */
+>>>>>>> intento_sin_fork_exe
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exe.h"
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 int	shell_loop(t_env *env)
 =======
@@ -40,6 +45,9 @@ int	main(int ac, char **av, char **ev)
 
 /* int	feature_loop(t_env *env)
 >>>>>>> Stashed changes
+=======
+int	feature_loop(t_env *env)
+>>>>>>> intento_sin_fork_exe
 {
 	t_mt		*parsed_cmd;
 	t_command	*cmd;
@@ -55,7 +63,6 @@ int	main(int ac, char **av, char **ev)
 			add_history(env->input);
 			parsed_cmd = ft_parse_input(env->input);
 			cmd = create_command(parsed_cmd, env);
-			//print_command(cmd);
 			if (ft_pmatch_str(cmd->command, "path", 4) == 0)
 			{
 				print_array2d(env->path);
@@ -104,7 +111,7 @@ int	main(int ac, char **av, char **ev)
 	environ = copy_envp(ev);
 	if (!environ)
 		return (ft_error(ERROR, 0), 1);
-	shell_loop(environ);
+	feature_loop(environ);
 	ft_env_free(environ);
 	return (ft_successful(SUCCESS, 1), 0);
 }

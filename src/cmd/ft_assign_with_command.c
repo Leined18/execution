@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:52:01 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/13 17:08:09 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/19 19:28:31 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,9 @@ int	process_father_assign(t_mt *node, t_env *envp)
 	}
 	if (wait(&status) == -1)
 		return (perror("wait"), envp->last_status = 1, 1);
+	if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGINT
+			|| WTERMSIG(status) == SIGQUIT))
+		write(1, "\n", 1);
 	return (envp->last_status = update_last_status(status), 0);
 }
 
