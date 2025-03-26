@@ -6,11 +6,7 @@
 /*   By: danpalac <danpalac@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:54:18 by danpalac          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/03/12 09:11:18 by mvidal-h         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/26 13:05:22 by danpalac         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/03/26 13:57:46 by danpalac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +14,7 @@
 
 void	execute_command(t_command *cmd, char **env)
 {
-<<<<<<< Updated upstream
-=======
 	(signal(SIGINT, SIG_DFL), signal(SIGQUIT, SIG_DFL));
->>>>>>> Stashed changes
 	if (cmd->cmd_path)
 	{
 		if (access(cmd->cmd_path, X_OK) == 0)
