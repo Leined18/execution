@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:32:22 by danpalac          #+#    #+#             */
-/*   Updated: 2025/03/26 14:37:44 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:25:02 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	ft_env_free(t_env *environ)
 		free_null((void **)&environ->path_history);
 	if (environ->error_infile_name)
 		free_null((void **)&environ->error_infile_name);
-	if (environ->dir_history)
-		ft_mtclear(&environ->dir_history);
+	if (environ->prev_dir)
+		ft_mtclear(&environ->prev_dir);
 	close_stdin_stdout(environ);
 	free_null((void **)&environ);
 }
@@ -53,8 +53,8 @@ void	ft_env_free_func(void **environ)
 		free_null((void **)&env->path_history);
 	if (env->error_infile_name)
 		free_null((void **)&env->error_infile_name);
-	if (env->dir_history)
-		ft_mtclear(&env->dir_history);
+	if (env->prev_dir)
+		ft_mtclear(&env->prev_dir);
 	close_stdin_stdout(env);
 	free_null(environ);
 }

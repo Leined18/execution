@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 13:19:02 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/02/26 13:20:12 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/27 12:54:44 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@
 //builtin.h
 void	init_builtins(t_builtin *builtins);
 int		execute_builtin(t_command *cmd, t_env *envp);
+
+//ft_cd_utils.c
+void	set_prev_dir(char *dir, t_env *envp);
+char	*create_complete_path(t_mt *dir_history);
+int		move_valid_place(char **new_path, char **prev_path, t_env *env);
 
 //ft_cd.c
 int		cd_builtin(t_command *cmd, t_env *envp);

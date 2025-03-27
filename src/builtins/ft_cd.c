@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/26 15:26:38 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/27 12:54:32 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,31 +55,6 @@ char	*get_expanded_path(char *path, t_env *envp)
 	return (expanded);
 }
 
-void	create_dir_history(char *dir, t_env *envp)
-{
-	t_mt	*new;
-	char	**dir_split;
-	char	*elem_dir;
-	int		i;
-
-	if (envp->dir_history)
-		ft_mtclear(&envp->dir_history);
-	i = 0;
-	dir_split = ft_split(dir, '/');
-	if (!dir_split)
-		return ;
-	while (dir_split[i])
-	{
-		elem_dir = ft_strdup(dir_split[i++]);
-		new = ft_mtnew(elem_dir, elem_dir, STRING);
-		if (!new)
-			break ;
-		ft_mtaddlast(&envp->dir_history, new, RIGHT);
-	}
-	(free_array2d(dir_split), free(dir));
-}
-
-
 int	cd_builtin(t_command *cmd, t_env *envp)
 {
 	char	*prev_path;
@@ -95,17 +70,18 @@ int	cd_builtin(t_command *cmd, t_env *envp)
 	new_path = get_expanded_path(path, envp);
 	if (chdir(new_path) != 0)
 	{
-		(free(new_path), free(prev_path));
-		return (perror("cd"), envp->last_status = 1, 1);
+		// (free(new_path), free(prev_path));
+		// return (perror("cd"), envp->last_status = 1, 1);
+		return (move_valid_place(&new_path, &prev_path, envp));
 	}
 	else
 	{
-		create_dir_history(getcwd(NULL, 0), envp);
-		print_lst_data(envp->dir_history);
+		set_prev_dir(getcwd(NULL, 0), envp);
+		print_lst_data(envp->prev_dir);
+		free(new_path);
+		new_path = getcwd(NULL, 0);
+		ft_setenv("PWD", new_path, envp, 1);
+		ft_setenv("OLDPWD", prev_path, envp, 1);
+		return (free(prev_path), free(new_path), envp->last_status = 0, 0);
 	}
-	free(new_path);
-	new_path = getcwd(NULL, 0);
-	ft_setenv("PWD", new_path, envp, 1);
-	ft_setenv("OLDPWD", prev_path, envp, 1);
-	return (free(prev_path), free(new_path), envp->last_status = 0, 0);
 }
