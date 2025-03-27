@@ -6,7 +6,7 @@
 /*   By: mvidal-h <mvidal-h@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:47:06 by mvidal-h          #+#    #+#             */
-/*   Updated: 2025/03/27 12:54:32 by mvidal-h         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:11:59 by mvidal-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,20 @@ int	cd_builtin(t_command *cmd, t_env *envp)
 	if (cmd->args.names)
 		path = cmd->args.names[1];
 	prev_path = getcwd(NULL, 0);
-	if (prev_path == NULL)
-		return (perror("getcwd"), envp->last_status = 1, 1);
+	// if (prev_path == NULL)
+	// 	return (perror("getcwd"), envp->last_status = 1, 1);
 	new_path = get_expanded_path(path, envp);
+	ft_printf("BORRAR - new_path es: %s\n", new_path);
 	if (chdir(new_path) != 0)
 	{
+		ft_printf("BORRAR- ha fallado el chdir\n");
 		// (free(new_path), free(prev_path));
 		// return (perror("cd"), envp->last_status = 1, 1);
 		return (move_valid_place(&new_path, &prev_path, envp));
 	}
 	else
 	{
+		ft_printf("BORRAR exito en el chdir\n");
 		set_prev_dir(getcwd(NULL, 0), envp);
 		print_lst_data(envp->prev_dir);
 		free(new_path);
