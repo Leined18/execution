@@ -26,7 +26,7 @@ void	add_normal_token(t_mt *token, t_cmd_args *args, size_t *i, t_env *envp)
 {
 	char	*aux;
 
-	aux = ft_expand(token->data, token->values.state, envp);
+	aux = ft_expand(token->data, token->values.state, envp, 0);
 	if (aux && *aux)
 	{
 		args->names[*i] = aux;
@@ -61,7 +61,7 @@ t_cmd_args	mtbranch_array2d(t_mt *list, t_env *envp)
 	args.need_space = ft_calloc(1 + list_size + 1, sizeof(t_bool));
 	if (!args.need_space)
 		return (free(args.names), ((t_cmd_args){NULL, NULL}));
-	args.names[i] = ft_expand(list->data, list->values.state, envp);
+	args.names[i] = ft_expand(list->data, list->values.state, envp, 0);
 	args.need_space[i++] = list->values.boolean;
 	list = list->aux;
 	while (list)
@@ -80,7 +80,7 @@ t_command	*create_command(t_mt *parsed_cmd, t_env *envp)
 	if (!new_command)
 		ft_error("Error al crear el comando\n", 1);
 	new_command->command = ft_expand(parsed_cmd->data, parsed_cmd->values.state,
-			envp);
+			envp, 0);
 	new_command->args = mtbranch_array2d(parsed_cmd, envp);
 	new_command->cmd_path = get_cmd_path(envp->path, new_command->command);
 	if (!*new_command->command)

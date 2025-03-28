@@ -56,11 +56,12 @@ int			process_command(t_mt *node, t_env *env, int is_child);
 
 // ft_expand_utils.c
 char		*expand_last_status(char *result, int *i, t_env *envp);
+int			ft_check_eof(char *str);
 char		*join_value_var(char *var_name, char *result, t_env *envp);
 // int			is_in_single_quotes(char *str, int pos);
 
 // ft_expand.c
-char		*ft_expand(char *str, int state, t_env *envp);
+char		*ft_expand(char *str, int state, t_env *envp, int b);
 
 // ft_expand_input.c
 char		*ft_expand_input(char *str, t_env *envp);

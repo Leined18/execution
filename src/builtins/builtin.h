@@ -26,7 +26,7 @@ int		execute_builtin(t_command *cmd, t_env *envp);
 //ft_cd_utils.c
 void	set_prev_dir(char *dir, t_env *envp);
 char	*create_complete_path(t_mt *dir_history);
-int		move_valid_place(char **new_path, char **prev_path, t_env *env);
+int		move_valid_place(char **new_path, t_env *env, t_command *cmd);
 
 //ft_cd.c
 int		cd_builtin(t_command *cmd, t_env *envp);

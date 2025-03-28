@@ -57,12 +57,12 @@ int	redirect_heredoc(t_mt *node, t_env *env)
 		{
 			if (g_sig_received == SIGINT)
 				return (exit_sigint_here_doc(fdhd, env));
-			ft_printf(SYNTAX_ERROR4, node->aux->key);
-			close(fdhd[WRITE_END]);
+			(ft_printf(SYNTAX_ERROR4, node->aux->key), close(fdhd[WRITE_END]));
 			return (dup_heredoc_stdin(fdhd, env));
 		}
 		if (!ft_pmatch_str(bf, node->aux->key, ft_strlen(node->aux->key)))
 			return (close_here_doc(fdhd, bf), dup_heredoc_stdin(fdhd, env), 0);
+		bf = ft_expand(bf, ft_check_eof(node->aux->key), env, 1);
 		if (write(fdhd[WRITE_END], bf, ft_strlen(bf)) != (ssize_t)ft_strlen(bf)
 			|| write(fdhd[WRITE_END], "\n", 1) != 1)
 			return (error_here_doc("Error writing heredoc", bf, env));

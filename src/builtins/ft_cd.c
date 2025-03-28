@@ -59,29 +59,19 @@ int	cd_builtin(t_command *cmd, t_env *envp)
 {
 	char	*prev_path;
 	char	*new_path;
-	char	*path;
 
-	path = NULL;
-	if (cmd->args.names)
-		path = cmd->args.names[1];
+	new_path = get_expanded_path(cmd->args.names[1], envp);
 	prev_path = getcwd(NULL, 0);
-	// if (prev_path == NULL)
-	// 	return (perror("getcwd"), envp->last_status = 1, 1);
-	new_path = get_expanded_path(path, envp);
-	ft_printf("BORRAR - new_path es: %s\n", new_path);
-	if (chdir(new_path) != 0)
+	if (chdir(new_path) != 0 && prev_path)
 	{
-		ft_printf("BORRAR- ha fallado el chdir\n");
-		// (free(new_path), free(prev_path));
-		// return (perror("cd"), envp->last_status = 1, 1);
-		return (move_valid_place(&new_path, &prev_path, envp));
+		(free(new_path), free(prev_path));
+		return (perror("cd"), envp->last_status = 1, 1);
 	}
+	if (prev_path == NULL)
+		return (envp->last_status = 1, move_valid_place(&new_path, envp, cmd));
 	else
 	{
-		ft_printf("BORRAR exito en el chdir\n");
-		set_prev_dir(getcwd(NULL, 0), envp);
-		print_lst_data(envp->prev_dir);
-		free(new_path);
+		(set_prev_dir(getcwd(NULL, 0), envp), free(new_path));
 		new_path = getcwd(NULL, 0);
 		ft_setenv("PWD", new_path, envp, 1);
 		ft_setenv("OLDPWD", prev_path, envp, 1);

@@ -46,7 +46,7 @@ static char	*ft_not_in_expansible(char *str, int i, char *result)
 	return (expanded);
 }
 
-char	*ft_expand(char *str, int state, t_env *envp)
+char	*ft_expand(char *str, int state, t_env *envp, int b)
 {
 	char	*result;
 	int		i;
@@ -67,5 +67,7 @@ char	*ft_expand(char *str, int state, t_env *envp)
 			i++;
 		}
 	}
+	if (b)
+		free(str);
 	return (result);
 }

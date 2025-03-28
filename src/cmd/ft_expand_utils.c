@@ -36,3 +36,12 @@ char	*expand_last_status(char *result, int *i, t_env *envp)
 	free(aux);
 	return (expanded);
 }
+
+int	ft_check_eof(char *str)
+{
+	if (!str)
+		return (0);
+	if (*str == '\'' || *str == '\"')
+		return (3);
+	return (1);
+}

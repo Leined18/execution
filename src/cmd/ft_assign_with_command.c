@@ -27,9 +27,9 @@ static t_cmd_args	generate_args(t_mt *node, t_env *envp)
 	args.need_space = ft_calloc(1 + 1 + 1, sizeof(t_bool));
 	if (!args.need_space)
 		return (free(args.names), ((t_cmd_args){NULL, NULL}));
-	args.names[0] = ft_expand("export", COMMAND, envp);
+	args.names[0] = ft_expand("export", COMMAND, envp, 0);
 	args.need_space[0] = 1;
-	args.names[1] = ft_expand(node->data, node->values.state, envp);
+	args.names[1] = ft_expand(node->data, node->values.state, envp, 0);
 	args.need_space[1] = node->values.boolean;
 	return (args);
 }
@@ -44,7 +44,7 @@ static t_command	*create_command_assign_export(t_mt *node, t_env *envp)
 	new_command = malloc(sizeof(t_command));
 	if (!new_command)
 		ft_error("Error al crear el comando\n", 1);
-	new_command->command = ft_expand("export", COMMAND, envp);
+	new_command->command = ft_expand("export", COMMAND, envp, 0);
 	new_command->args = generate_args(node, envp);
 	new_command->cmd_path = NULL;
 	if (!*new_command->command)
